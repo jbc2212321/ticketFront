@@ -18,13 +18,9 @@ export default new Vuex.Store({
           //管理员
           state.identity=1
           break
-        case '2':
-          //病人
-          state.identity=2
-          break
-        case '3':
-          //医生
-          state.identity=3
+        case '0':
+          //用户
+          state.identity=0
           break
         default:
           break

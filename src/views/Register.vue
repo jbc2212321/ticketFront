@@ -83,7 +83,7 @@
         //   label: '患者'
         // },
           {
-          value: '2',
+          value: '0',
           label: '用户'
         }, {
           value: '1',
