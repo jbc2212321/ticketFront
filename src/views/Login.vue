@@ -112,7 +112,7 @@
         //   label: '患者'
         // },
           {
-          value: '3',
+          value: '0',
           label: '用户'
         }, {
           value: '1',
@@ -234,19 +234,20 @@
             this.$session.set('phone', this.username)
             switch (this.value) {
               case '1':
+                console.log("管理员",this.value)
                 this.$router.push({
                   path: 'admin/UserManagement'
                 })
                 break
               case '2':
-                // console.log(this.value)
+
                 this.$router.push({
                   path: 'patient/MyDoctor'
                 }).catch(() => {
                 })
                 break
-              case '3':
-                // console.log(this.value)
+              case '0':
+                console.log("用户",this.value)
                 this.$router.push({
                   path: 'user/index'
                 }).catch(() => {

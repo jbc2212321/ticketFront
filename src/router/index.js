@@ -280,7 +280,7 @@ const routes = [
         component: DoctorAppointment,
         meta: {
           requireAuth: true,
-          identity: 3
+          identity: 0
         }
       },
       {
@@ -289,7 +289,7 @@ const routes = [
         component: DoctorData,
         meta: {
           requireAuth: true,
-          identity: 3
+          identity: 0
         }
       },
       {
@@ -298,13 +298,13 @@ const routes = [
         component: MyPatient,
         meta: {
           requireAuth: true,
-          identity: 3
+          identity: 0
         }
       },
     ],
     meta: {
       requireAuth: true,
-      identity: 3
+      identity: 0
     },
     beforeEnter: (to, from, next) => {
       if (to.meta.identity !== store.state.identity) {
