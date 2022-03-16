@@ -29,7 +29,7 @@
         <el-upload
                 :limit="1"
                 class="upload-demo"
-                action="http://localhost:8096/user/upload"
+                :action=this.apiUrl+api
                 :on-change="handleChange"
                 :file-list="fileList">
             <el-button type="primary" plain size="mini" round>上传</el-button>
@@ -44,6 +44,7 @@
     data () {
       return {
         url: '',
+        api:"user/upload",
         offices: [{
           value: '口腔科',
           label: '口腔科',
