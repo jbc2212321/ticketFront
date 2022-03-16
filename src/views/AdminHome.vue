@@ -31,12 +31,12 @@
                     </el-menu-item>
                 </router-link>
 
-<!--                <router-link to="UploadCsv" class="a">-->
-<!--                    <el-menu-item index="4">-->
-<!--                        <i class="el-icon-upload2"></i>-->
-<!--                        <span slot="title">上传加密</span>-->
-<!--                    </el-menu-item>-->
-<!--                </router-link>-->
+                <router-link to="UploadCsv" class="a">
+                    <el-menu-item index="4">
+                        <i class="el-icon-upload2"></i>
+                        <span slot="title">上传加密</span>
+                    </el-menu-item>
+                </router-link>
 
                 <router-link to="TodoList" class="a">
                     <el-menu-item index="5">

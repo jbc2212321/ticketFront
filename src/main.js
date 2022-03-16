@@ -10,6 +10,9 @@ import Axios from 'axios'
 import VueSession from 'vue-session'
 import qs from 'qs'
 import Moment from 'moment'
+import apiUrl from './components/Global.vue'
+
+Vue.prototype.apiUrl = apiUrl.apiUrl;
 Vue.prototype.$axios = Axios
 // Axios.defaults.baseURL = 'http://115.157.200.156:8096/'
  Axios.defaults.baseURL = 'http://localhost:8096/'
