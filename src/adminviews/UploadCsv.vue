@@ -14,8 +14,8 @@
         <br><br>
         <el-upload
                 class="upload-demo"
-                action="http://115.157.200.156:8096/uploadFile"
-                accept=".csv"
+                action="http://localhost:8096/user/upload"
+                accept=".png"
                 :on-preview="handlePreview"
                 :on-remove="handleRemove"
                 :on-success="handle_success"
@@ -26,6 +26,14 @@
             <div slot="tip" class="el-upload__tip">只能上传csv文件</div>
         </el-upload>
 
+        <el-upload
+                :limit="1"
+                class="upload-demo"
+                action="http://localhost:8096/user/upload"
+                :on-change="handleChange"
+                :file-list="fileList">
+            <el-button type="primary" plain size="mini" round>上传</el-button>
+        </el-upload>
 
     </div>
 </template>
