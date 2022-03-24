@@ -6,7 +6,7 @@
             <!--            <el-row class="tac" align="top">-->
             <el-menu
                     height="800px"
-                    default-active="2"
+                    default-active="4"
                     class="el-menu-vertical-demo"
                     border-right-width="0px"
                     @open="handleOpen111"
@@ -31,12 +31,20 @@
 <!--                    </el-menu-item>-->
 <!--                </router-link>-->
 
-                <router-link to="DoctorData"  class="a">
+<!--                <router-link to="DoctorData"  class="a">-->
+<!--                    <el-menu-item index="4">-->
+<!--                        <i class="el-icon-tickets"></i>-->
+<!--                        <span slot="title">个人资料</span>-->
+<!--                    </el-menu-item>-->
+<!--                </router-link>-->
+
+                <router-link to="Upload" class="a">
                     <el-menu-item index="4">
-                        <i class="el-icon-tickets"></i>
-                        <span slot="title">个人资料</span>
+                        <i class="el-icon-message-solid"></i>
+                        <span slot="title">上传小票</span>
                     </el-menu-item>
                 </router-link>
+
             </el-menu>
 
             <el-container>
@@ -67,7 +75,7 @@
                     </el-col>
                 </el-header>
                 <el-main>
-                    <router-view></router-view>
+                    <div style="height: 800px;overflow: auto"><router-view></router-view></div>
                 </el-main>
                 <!--        <div style="height: 1000px; overflow: auto"><router-view></router-view></div>-->
 <!--                <el-footer><br><br><br>Copyright 发际线与我作队</el-footer>-->
@@ -315,12 +323,12 @@
         line-height: 818px;
     }
 
-    .el-main {
-        background-color: #ffffff;
-        color: #333;
-        text-align: center;
-        line-height: 0;
-    }
+    /*.el-main {*/
+    /*    background-color: #ffffff;*/
+    /*    color: #333;*/
+    /*    text-align: center;*/
+    /*    line-height: 0;*/
+    /*}*/
 
     h1 {
         font-size: 25px;
@@ -342,5 +350,98 @@
         color: #FFF !important;
         background-color:#22be9f;
         border-color:rgba(255, 255, 255, 0);
+    }
+</style>
+<style scoped>
+    .a {
+        text-decoration: none;
+    }
+
+    .el-header {
+        background-color: #F3F3F4;
+        color: #333;
+        text-align: right;
+        line-height: 20px;
+        padding: 10px 5px 0 0;
+    }
+
+    .el-footer {
+        background-color: #ffffff;
+        color: #333;
+        text-align: center;
+        line-height: 10px;
+    }
+
+    .el-aside {
+        background-color: #2F4050;
+        color: #333;
+        text-align: left;
+        line-height: 818px;
+    }
+
+    /*.el-main {*/
+    /*    background-color: #ffffff;*/
+    /*    color: #333;*/
+    /*    text-align: center;*/
+    /*    line-height: 0;*/
+    /*}*/
+
+    .el-menu-vertical-demo:not(.el-menu--collapse) {
+        width: 200px;
+        min-height: 400px;
+    }
+
+    .el-dropdown-link {
+        cursor: pointer;
+        color: #439bf3;
+    }
+
+    .el-icon-arrow-down {
+        font-size: 12px;
+    }
+
+    h1 {
+        font-size: 25px;
+        font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+    }
+</style>
+
+<style scoped>
+    h3 {
+        color: #f0ebe7;
+    }
+
+    .el-menu {
+        border-right-style: none;
+        border-right-width: 0;
+    }
+
+    .el-menu-vertical-demo.el-menu--collapse.el-menu {
+        border-right-style: solid;
+        border-right-width: 4px;
+    }
+
+    .el-menu-vertical-demo.el-menu {
+        border-right-style: solid;
+        border-right-width: 4px;
+    }
+
+    .el-button--menu {
+        color: #FFF !important;
+        background-color: #18A689;
+        border-color: rgba(255, 255, 255, 0);
+    }
+
+    .el-button--menu:focus {
+        color: #FFF !important;
+        background-color: #18A689;
+        border-color: rgba(255, 255, 255, 0);
+    }
+
+    .el-button--menu:active,
+    .el-button--menu:hover {
+        color: #FFF !important;
+        background-color: #22be9f;
+        border-color: rgba(255, 255, 255, 0);
     }
 </style>

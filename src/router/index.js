@@ -19,6 +19,7 @@ import MyAppointment from '../patientviews/MyAppointment'
 import DoctorAppointment from '../doctorviews/DoctorAppointment'
 import LogManagement from '../adminviews/LogManagement'
 import TodoList from '../adminviews/TodoList'
+import Upload from '../doctorviews/Upload'
 
 Vue.use(VueRouter)
 
@@ -190,7 +191,7 @@ const routes = [
           requireAuth: true,
           identity: 2
         },
-      }
+      },
     ],
     beforeEnter: (to, from, next) => {
       if (to.meta.identity !== store.state.identity) {
@@ -301,6 +302,14 @@ const routes = [
           identity: 0
         }
       },
+      {
+        path: '/user/Upload',
+        component: Upload,
+        meta: {
+          requireAuth: true,
+          identity: 0
+        },
+      }
     ],
     meta: {
       requireAuth: true,
