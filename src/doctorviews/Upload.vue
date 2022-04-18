@@ -12,9 +12,10 @@
             <!--            </el-select>-->
         </template>
         <br><br>
+<!--        action="http://localhost:8096/user/upload"-->
         <el-upload
                 class="upload-demo"
-                action="http://localhost:8096/user/upload"
+                action="http://localhost:5000/invoice/vat_rec.do"
                 accept=".jpeg,.png"
                 :on-preview="handlePreview"
                 :on-remove="handleRemove"
@@ -24,10 +25,10 @@
                 :on-exceed="handleExceed">
             <el-button id="initSlide" type="primary" @click="uploadImage">点击上传</el-button>
             <el-button id="initSlide2" type="primary">重新识别</el-button>
-            <div slot="tip" class="el-upload__tip">只能上传csv文件</div>
+<!--            <div slot="tip" class="el-upload__tip">只能上传csv文件</div>-->
         </el-upload>
 
-        <el-button type="text" @click="dialogTableVisible = true">打开嵌套表格的 Dialog</el-button>
+        <el-button type="text" @click="dialogTableVisible = true">识别结果展示</el-button>
 
         <el-dialog :visible.sync="dialogTableVisible" width="1000px" top="10px">
             <el-form model="form" :rules="rules" class="form_class">
@@ -132,10 +133,10 @@
                                         <el-input type="textarea" v-model="CommodityAmount" rows="5"></el-input>
                                     </td>
                                     <td>
-                                        <el-input type="textarea" v-model="TotalAmount" rows="5"></el-input>
+                                        <el-input type="textarea" v-model="CommodityTaxRate" rows="5"></el-input>
                                     </td>
                                     <td>
-                                        <el-input type="textarea" v-model="CommodityTaxRate" rows="5"></el-input>
+                                        <el-input type="textarea" v-model="TotalAmount" rows="5"></el-input>
                                     </td>
                                 </tr>
 
@@ -216,7 +217,7 @@
             </el-form>
             <br>
             <el-col :span="4" :offset="11">
-                <el-button type="primary" round>确 认</el-button>
+                <el-button type="primary" round @click="saveTicket">确 认</el-button>
             </el-col>
             <br>
         </el-dialog>
@@ -346,10 +347,11 @@
         this.$message.warning(`当前限制选择 1 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`)
       },
 
-      addTicket: function () {
+      saveTicket: function () {
+        console.log("weism:",this.AmountInWords)
         this.$axios(
           {
-            url: 'addTicket',
+            url: 'user/saveTicket',
             method: 'post',
             data: {
               username: this.username,
@@ -366,18 +368,18 @@
               PurchaserAddress: this.PurchaserAddress,
               PurchaserBank: this.PurchaserBank,
               Password: this.Password,
-              CommodityName: this.CommodityName,
-              CommodityType: this.CommodityType,
-              CommodityUnit: this.CommodityUnit,
-              CommodityNum: this.CommodityNum,
-              CommodityPrice: this.CommodityPrice,
-              CommodityAmount: this.CommodityAmount,
-              TotalAmount: this.TotalAmount,
-              CommodityTaxRate: this.CommodityTaxRate,
-              CommodityTax: this.CommodityTax,
-              TotalTax: this.TotalTax,
-              AmountInWords: this.AmountInWords,
-              AmountInFiguers: this.AmountInFiguers,
+              CommodityName: this.CommodityName+"",
+              CommodityType: this.CommodityType+"",
+              CommodityUnit: this.CommodityUnit+"",
+              CommodityNum: this.CommodityNum+"",
+              CommodityPrice: this.CommodityPrice+"",
+              CommodityAmount: this.CommodityAmount+"",
+              TotalAmount: this.TotalAmount+"",
+              CommodityTaxRate: this.CommodityTaxRate+"",
+              CommodityTax: this.CommodityTax+"",
+              TotalTax: this.TotalTax+"",
+              AmountInWords: this.AmountInWords+"",
+              AmountInFiguers: this.AmountInFiguers+"",
               SellerName: this.SellerName,
               SellerRegisterNum: this.SellerRegisterNum,
               SellerAddress: this.SellerAddress,
@@ -399,6 +401,37 @@
 </script>
 
 <style scoped>
+    .btn{
+        width:16em;
+        margin-left:0rem;
+        margin-top: 0rem;
+        text-align: center;
+    }
+    #wsInputDiv{
+        width: 18em;
+        opacity: 0.7;
+    }
+    .result-item{
+        list-style:none;
+        padding:0;
+        position:relative;
+        margin:0 0 14px;
+        overflow:hidden
+    }
+    .form-control,.result-name{
+        display:inline-block;
+        vertical-align:top;
+        font-size:14px;
+        color:#333;
+        line-height:20px
+    }
+    .result-name{
+        width: 90px;
+    }
+    .form-control{
+        width: 196px;
+    }
+
     #UploadCsv {
         padding: 20px 0 0 20px;
     }
