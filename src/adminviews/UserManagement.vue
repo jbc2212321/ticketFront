@@ -9,6 +9,14 @@
                 @filter-change="handleFilterChange"
                 stripe
                 style="width: 100%">
+          <el-table-column
+            prop="test"
+            label="测试用"
+            sortable
+            width="180"
+            column-key="num">
+          </el-table-column>
+
             <el-table-column
                     prop="num"
                     label="编号"
@@ -235,15 +243,15 @@
         return this.tableData.slice((this.currentPage - 1) * this.pagesize, this.currentPage * this.pagesize)
       }
     },
-    mounted () {
-      this.$axios({
-        url: 'getAllDocAndPatient',
-        method: 'get',
-      }).then(res => {
-        this.AllAccount = res.data
-      })
-
-    },
+    // mounted () {
+    //   this.$axios({
+    //     url: 'getAllDocAndPatient',
+    //     method: 'get',
+    //   }).then(res => {
+    //     this.AllAccount = res.data
+    //   })
+    //
+    // },
     methods: {
       filterTag (value, row) {
         return row.tag === value

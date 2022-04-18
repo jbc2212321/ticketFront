@@ -239,13 +239,13 @@
                   path: 'admin/UserManagement'
                 })
                 break
-              case '2':
-
-                this.$router.push({
-                  path: 'patient/MyDoctor'
-                }).catch(() => {
-                })
-                break
+              // case '2':
+              //
+              //   this.$router.push({
+              //     path: 'patient/MyDoctor'
+              //   }).catch(() => {
+              //   })
+              //   break
               case '0':
                 console.log("用户",this.value)
                 this.$router.push({

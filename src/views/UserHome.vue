@@ -70,7 +70,7 @@
                     <router-view></router-view>
                 </el-main>
                 <!--        <div style="height: 1000px; overflow: auto"><router-view></router-view></div>-->
-<!--                <el-footer><br><br><br>Copyright 发际线与我作队</el-footer>-->
+<!--                <el-footer><br><br><br>用户</el-footer>-->
             </el-container>
         </el-container>
 

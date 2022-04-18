@@ -8,17 +8,18 @@ import Error404 from '@/views/Error404'
 import AdminHome from '@/views/AdminHome'
 import UserManagement from '@/adminviews/UserManagement'
 import Register from '@/views/Register'
-import MyDoctor from '../patientviews/MyDoctor'
-import MyCase from '../patientviews/MyCase'
-import MyData from '../patientviews/MyData'
-import DoctorData from '../doctorviews/DoctorData'
-import DoctorHome from '../views/DoctorHome'
-import MyPatient from '../doctorviews/MyPatient'
+import MyDoctor from '../userviews/MyDoctor'
+import MyCase from '../userviews/MyCase'
+import MyData from '../userviews/MyData'
+import DoctorData from '../userviews_nu/DoctorData'
+import DoctorHome from '../views/UserHome'
+import MyPatient from '../userviews_nu/MyPatient'
 import UploadCsv from '../adminviews/UploadCsv'
-import MyAppointment from '../patientviews/MyAppointment'
-import DoctorAppointment from '../doctorviews/DoctorAppointment'
+import MyAppointment from '../userviews/MyAppointment'
+import DoctorAppointment from '../userviews_nu/DoctorAppointment'
 import LogManagement from '../adminviews/LogManagement'
 import TodoList from '../adminviews/TodoList'
+import UserHome from "@/views/UserHome";
 
 Vue.use(VueRouter)
 
@@ -151,44 +152,44 @@ const routes = [
     }
   },
   {
-    path: '/patient',
-    name: 'PatientHome',
-    component: () => import(/* webpackChunkName: "patient" */ '../views/PatientHome.vue'),
+    path: '/user',
+    name: 'UserHome',
+    component: () => import(/* webpackChunkName: "user" */ '../views/UserHome.vue'),
     meta: {
       requireAuth: true,
-      identity: 2
+      identity: 0
     },
     children: [
       {
-        path: '/patient/MyDoctor',
+        path: '/user/MyDoctor',
         component: MyDoctor,
         meta: {
           requireAuth: true,
-          identity: 2
+          identity: 0
         },
       },
       {
-        path: '/patient/MyCase',
+        path: '/user/MyCase',
         component: MyCase,
         meta: {
           requireAuth: true,
-          identity: 2
+          identity: 0
         },
       },
       {
-        path: '/patient/MyData',
+        path: '/user/MyData',
         component: MyData,
         meta: {
           requireAuth: true,
-          identity: 2
+          identity: 0
         },
       },
       {
-        path: '/patient/MyAppointment',
+        path: '/user/MyAppointment',
         component: MyAppointment,
         meta: {
           requireAuth: true,
-          identity: 2
+          identity: 0
         },
       }
     ],
@@ -202,12 +203,12 @@ const routes = [
     }
   },
   {
-    path: '/patient/MyAppointment',
+    path: '/user/MyAppointment',
     name: 'MyAppointment',
     component: MyAppointment,
     meta: {
       requireAuth: true,
-      identity: 2
+      identity: 0
     },
     beforeEnter: (to, from, next) => {
       if (to.meta.identity !== store.state.identity) {
@@ -219,12 +220,12 @@ const routes = [
     }
   },
   {
-    path: '/patient/MyDoctor',
+    path: '/user/MyDoctor',
     name: 'MyDoctor',
     component: MyDoctor,
     meta: {
       requireAuth: true,
-      identity: 2
+      identity: 0
     },
     beforeEnter: (to, from, next) => {
       if (to.meta.identity !== store.state.identity) {
@@ -236,12 +237,12 @@ const routes = [
     }
   },
   {
-    path: '/patient/MyCase',
+    path: '/user/MyCase',
     name: 'MyCase',
     component: MyCase,
     meta: {
       requireAuth: true,
-      identity: 2
+      identity: 0
     },
     beforeEnter: (to, from, next) => {
       if (to.meta.identity !== store.state.identity) {
@@ -253,12 +254,12 @@ const routes = [
     }
   },
   {
-    path: '/patient/MyData',
+    path: '/user/MyData',
     name: 'MyData',
     component: MyData,
     meta: {
       requireAuth: true,
-      identity: 2
+      identity: 0
     },
     beforeEnter: (to, from, next) => {
       if (to.meta.identity !== store.state.identity) {
@@ -269,13 +270,17 @@ const routes = [
       }
     }
   },
+
+  // /*Doctor*/
+
+  //User
   {
     path: '/user',
-    name: 'DoctorHome',
-    component: DoctorHome,
+    name: 'UserHome',
+    component: UserHome,
     children: [
       {
-        path: '/doctor/DoctorAppointment',
+        path: '/user/DoctorAppointment',
         name: 'DoctorAppointment',
         component: DoctorAppointment,
         meta: {
@@ -284,7 +289,7 @@ const routes = [
         }
       },
       {
-        path: '/doctor/DoctorData',
+        path: '/user/DoctorData',
         name: 'DoctorData',
         component: DoctorData,
         meta: {
@@ -317,7 +322,7 @@ const routes = [
     }
   },
   {
-    path: '/doctor/DoctorAppointment',
+    path: '/user/DoctorAppointment',
     name: 'DoctorAppointment',
     component: DoctorAppointment,
     meta: {
@@ -335,12 +340,12 @@ const routes = [
     }
   },
   {
-    path: '/doctor/DoctorData',
+    path: '/user/DoctorData',
     name: 'DoctorData',
     component: DoctorData,
     meta: {
       requireAuth: true,
-      identity: 3
+      identity: 0
     },
     beforeEnter: (to, from, next) => {
       if (to.meta.identity !== store.state.identity) {
@@ -353,12 +358,12 @@ const routes = [
     }
   },
   {
-    path: '/doctor/MyPatient',
+    path: '/user/MyPatient',
     name: 'MyPatient',
     component: MyPatient,
     meta: {
       requireAuth: true,
-      identity: 3
+      identity: 0
     },
     beforeEnter: (to, from, next) => {
       if (to.meta.identity !== store.state.identity) {

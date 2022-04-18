@@ -27,21 +27,21 @@
                 <router-link to="/admin/LogManagement" class="a">
                     <el-menu-item index="3" class="a">
                         <i class="el-icon-document"></i>
-                        <span slot="title">日志管理</span>
+                        <span slot="title">审核查看</span>
                     </el-menu-item>
                 </router-link>
 
                 <router-link to="UploadCsv" class="a">
                     <el-menu-item index="4">
                         <i class="el-icon-upload2"></i>
-                        <span slot="title">上传加密</span>
+                        <span slot="title">上传音频</span>
                     </el-menu-item>
                 </router-link>
 
                 <router-link to="TodoList" class="a">
                     <el-menu-item index="5">
                         <i class="el-icon-message-solid"></i>
-                        <span slot="title">待办事项</span>
+                        <span slot="title">待办审核</span>
                     </el-menu-item>
                 </router-link>
             </el-menu>
@@ -81,7 +81,7 @@
                     <router-view></router-view>
                 </div>
                 <!--                <el-main ><router-view></router-view></el-main>-->
-                <el-footer><br><br><br>小票识别系统</el-footer>
+                <el-footer><br><br><br>数字音乐版权保护系统</el-footer>
             </el-container>
         </el-container>
         <!--    <el-button type="primary" round @click="submit">跳转</el-button>-->
@@ -243,7 +243,7 @@
       },
       batchOperate (command) {
         switch (command) {
-          case 'loginout':
+          case 'logout':
             this.outLogin()
             break
           case 'change':
@@ -253,15 +253,16 @@
       },
       outLogin () {
         this.$axios({
-          url: 'userLoginOut',
+          url: 'LogOut',
           method: 'post',
           data: {
             phone: this.$session.get('phone'),
             state: this.$store.state.identity
           }
         }).then(res => {
+          alert()
           this.$session.remove('phone')
-          this.$store.commit('OutLogin')
+          this.$store.commit('OutLog')
           this.$router.push({
             path: '/'
           })

@@ -12,28 +12,30 @@
             <!--            </el-select>-->
         </template>
         <br><br>
+<!--      accept=".png,.jpg"   -->
         <el-upload
                 class="upload-demo"
                 action="http://localhost:8096/user/upload"
-                accept=".png"
+                accept=".wav"
+
                 :on-preview="handlePreview"
                 :on-remove="handleRemove"
                 :on-success="handle_success"
                 :show-file-list="false"
-                :beforeUpload="beforeAvatarUpload"
+
                 :on-exceed="handleExceed">
             <el-button id="initSlide" type="primary">点击上传</el-button>
-            <div slot="tip" class="el-upload__tip">只能上传csv文件</div>
+<!--  :beforeUpload="beforeAvatarUpload"          <div slot="tip" class="el-upload__tip">只能上传csv文件</div>-->
         </el-upload>
 
-        <el-upload
-                :limit="1"
-                class="upload-demo"
-                :action=this.apiUrl+api
-                :on-change="handleChange"
-                :file-list="fileList">
-            <el-button type="primary" plain size="mini" round>上传</el-button>
-        </el-upload>
+<!--        <el-upload-->
+<!--                :limit="1"-->
+<!--                class="upload-demo"-->
+<!--                :action=this.apiUrl+api-->
+<!--                :on-change="handleChange"-->
+<!--                :file-list="fileList">-->
+<!--            <el-button type="primary" plain size="mini" round>上传</el-button>-->
+<!--        </el-upload>-->
 
     </div>
 </template>
@@ -64,11 +66,12 @@
       // })
     },
     methods: {
+      // 限制上传大小
       beforeAvatarUpload (file) {
-        const isLt2M = file.size / 1024 / 1024 < 1
+        const isLt2M = file.size /100/ 1024 / 1024 < 1
         if (!isLt2M) {
           this.$message({
-            message: '上传文件大小不能超过 1MB!',
+            message: '上传文件大小不能超过 100MB!',
             type: 'warning'
           })
         }

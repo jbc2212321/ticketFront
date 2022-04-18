@@ -176,7 +176,7 @@
           if (res.data === '手机号已被注册!') {
             this.clearAll()
             this.$message({
-              message: '改手机号已被注册！',
+              message: '该手机号已被注册！',
               type: 'error',
               duration: 2000,
             })
