@@ -1,4 +1,5 @@
 <template>
+
 <div id="UploadCsv">
         <template>
             <!--            <span class="demonstration">科室：</span>-->
@@ -28,9 +29,10 @@
 <!--            <div slot="tip" class="el-upload__tip">只能上传csv文件</div>-->
         </el-upload>
 
-        <el-button type="text" @click="dialogTableVisible = true">识别结果展示</el-button>
+        <el-button type="text" @click=merge>识别结果展示</el-button>
 
-      <el-button type="text" @click="merge">合并测试</el-button>
+      <el-button type="text" @click="printImg">打印测试</el-button>
+    <br><br><br><br>
 
         <el-dialog :visible.sync="dialogTableVisible" width="1000px" top="10px">
             <el-form model="form" class="form_class">
@@ -39,6 +41,7 @@
                 <div class="invoiceHeader">
                   <div class="invoiceHeader-left">
                     <ul class="headerLeft">
+
                       <li>
                         <!-- <img src="./qrcode.png" alt=""> -->
                         <br>
@@ -110,14 +113,14 @@
                       </tr>
                       <tr class="invoice-list">
 <!--                        <table :data="CommodityName"></table>-->
-                        <td>{{CommodityName}}</td>
+                         <td>{{CommodityName}}</td>
                         <td>{{CommodityType}}</td>
                         <td>{{CommodityUnit}}</td>
                         <td>{{CommodityNum}}</td>
                         <td>{{CommodityPrice}}</td>
-                        <td>{{CommodityAmount}}</td>
-                        <td>{{CommodityTaxRate}}</td>
-                        <td>{{CommodityTax}}</td>
+                          <td style="text-align:right;white-space:pre" >{{CommodityAmount}}</td>
+                        <td style="text-align:right">{{CommodityTaxRate}}</td>
+                          <td style="text-align:right;white-space:pre">{{CommodityTax}}</td>
                       </tr>
 
 
@@ -336,7 +339,7 @@
           CommodityTax:'7'
         }, {
           rowNum: 3,
-          CommodityName:'QingJiang',
+          CommodityName:'QingJiang11111111111111111111',
           CommodityType: '1',
           CommodityUnit: '2',
           CommodityNum: '3',
@@ -421,9 +424,7 @@
       // 增加行
       addRow () {
         var list = {
-
           rowNum: '',
-
           CommodityName: this.CommodityName,
           CommodityType: this.CommodityType,
           CommodityUnit: this.CommodityUnit,
@@ -432,16 +433,40 @@
           CommodityAmount: this.CommodityAmount,
           CommodityTaxRate: this.CommodityTaxRate,
           CommodityTax: this.CommodityTax,
-
          }
         this.tableData.push(list)
       },
 
       merge(){
-
-        for (let i = 0; i < this.tableData.length; i++) {
-          alert(this.tableData(i).CommodityName)
+        this.dialogTableVisible=true
+        this.CommodityName=''
+        this.CommodityType=''
+         this.CommodityUnit=''
+         this.CommodityNum=''
+         this.CommodityPrice=''
+         this.CommodityAmount=''
+         this.CommodityTaxRate=''
+         this.CommodityTax=''
+        // console.log('weis:',this.InvoiceTypeOrg)
+        // console.log("是这个吗：",this.tableData[0])
+        // console.log('整个;',this.tableData)
+        for (let i=0; i< this.tableData.length; i++){
+          this.CommodityName+=this.tableData[i].CommodityName+'\n'
+          this.CommodityType+=this.tableData[i].CommodityType+'\n'
+          this.CommodityUnit+=this.tableData[i].CommodityUnit+'\n'
+          this.CommodityNum+=this.tableData[i].CommodityNum+'\n'
+          this.CommodityPrice+=this.tableData[i].CommodityPrice+'\n'
+          this.CommodityAmount+=this.tableData[i].CommodityAmount+' \n'
+          if(i===this.tableData.length-1){this.CommodityTaxRate+=this.tableData[i].CommodityTaxRate+'\n'}
+          else {this.CommodityTaxRate+=this.tableData[i].CommodityTaxRate+'%\n'}
+          this.CommodityTax+=this.tableData[i].CommodityTax+' \n'
+          // console.log("i;",this.tableData[i].CommodityName)
         }
+
+
+        // for (let key in this.tableData) {
+        //   console.log(key + ':' + this.tableData[key]);
+        // }
         },
 
 
@@ -586,6 +611,9 @@
 </script>
 
 <style scoped>
+    .rright{
+        :align="right"
+    }
     .btn{
         width:16em;
         margin-left:0rem;
@@ -633,6 +661,8 @@
     }
 
     .invoicMain {
+        white-space:pre-line;
+        /*千万不要删*/
         width: 920px;
         margin: 0 auto;
         font-size: 14px;
