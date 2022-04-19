@@ -35,6 +35,7 @@
     <br><br><br><br>
 
         <el-dialog :visible.sync="dialogTableVisible" width="1000px" top="10px">
+          <div ref="exportPdf">
             <el-form model="form" class="form_class">
               <div class="invoicMain">
                 <!-- head start -->
@@ -186,10 +187,12 @@
               </div>
             </el-form>
             <br>
-            <el-col :span="4" :offset="11">
-                <el-button type="primary" round @click="saveTicket">确 认</el-button>
+            <el-col :span="8" :offset="11">
+              <el-button type="primary" round @click="saveTicket">确 认</el-button>
+              <!--              <el-button type="primary" round v-print="'#printTest'">打 印</el-button>-->
+              <el-button type="primary" @click="toImg">打印</el-button>
             </el-col>
-            <br>
+            <br></div>
         </el-dialog>
   <br>
   机器编号：
@@ -313,6 +316,8 @@
 
 
 <script>
+  import html2canvas from 'html2canvas'; // 转为图片
+  import printJS from 'print-js' // 打印
   export default {
     name: 'Upload',
     data () {
@@ -415,6 +420,36 @@
       // })
     },
     methods: {
+      //转图片打印
+      toImg() { // 转图片打印
+        html2canvas(this.$refs.exportPdf, {
+          backgroundColor: '#ffffff',
+          useCORS: true,
+          // width: window.screen.availWidth,
+          // height: window.screen.availHeight,
+          // windowHeight: document.body.scrollHeight,
+          // y:window.pageYOffset
+
+          width: 960,
+          height: 590,
+          windowHeight: 1250,
+          y:0
+        }).then((canvas) => {
+          // let url = canvas.toDataURL('image/jpeg', 1.0)
+          const url = canvas.toDataURL()
+          this.img = url
+          //打印图片
+          // alert("打印")
+          // printJS({
+          //   printable: url,
+          //   type: 'image',
+          //   documentTitle: '打印图片'
+          // })
+          //base64格式图片打印查看
+          console.log(url)
+        })
+      },
+
 
 
       // 获取表格选中时的数据

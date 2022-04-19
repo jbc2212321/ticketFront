@@ -11,6 +11,8 @@ import VueSession from 'vue-session'
 import qs from 'qs'
 import Moment from 'moment'
 import apiUrl from './components/Global.vue'
+import html2canvas from 'html2canvas'; // 转为图片
+import printJS from 'print-js' // 打印
 
 Vue.prototype.apiUrl = apiUrl.apiUrl;
 Vue.prototype.$axios = Axios
