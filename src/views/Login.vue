@@ -230,8 +230,10 @@
               type: 'error'
             })
           } else {
+            console.log(res.data.message)
             this.changeLogin(this.value)
             this.$session.set('phone', this.username)
+            this.$session.set('userId', res.data.message)
             switch (this.value) {
               case '1':
                 console.log("管理员",this.value)
@@ -248,6 +250,7 @@
                 break
               case '0':
                 console.log("用户",this.value)
+                console.log("res:",res)
                 this.$router.push({
                   path: 'user/index'
                 }).catch(() => {
