@@ -410,6 +410,8 @@
 
         dialogTableVisible: false,
 
+        //发票图片
+        ticketImg:'',
       }
     },
     mounted () {
@@ -438,6 +440,7 @@
           // let url = canvas.toDataURL('image/jpeg', 1.0)
           const url = canvas.toDataURL()
           this.img = url
+          this.ticketImg=url
           //打印图片
           // alert("打印")
           // printJS({
@@ -594,11 +597,28 @@
 
       saveTicket: function () {
         console.log("weism:",this.AmountInWords)
+          html2canvas(this.$refs.exportPdf, {
+            backgroundColor: '#ffffff',
+            useCORS: true,
+            width: 960,
+            height: 590,
+            windowHeight: 1250,
+            y:0
+          }).then((canvas) => {
+            // let url = canvas.toDataURL('image/jpeg', 1.0)
+            const url = canvas.toDataURL()
+            this.img = url
+            this.ticketImg=url
+            //base64格式图片打印查看
+            console.log(url)
+          })
+
         this.$axios(
           {
             url: 'user/saveTicket',
             method: 'post',
             data: {
+              ticketImg:this.ticketImg,
               username: this.username,
               password: this.password,
               phone: this.phoneNumber,
