@@ -17,12 +17,12 @@
                     :collapse="isCollapse"
             >
 
-<!--                <router-link to="MyPatient" class="a">-->
-<!--                    <el-menu-item index="2">-->
-<!--                        <i class="el-icon-s-custom"></i>-->
-<!--                        <span slot="title">病患列表</span>-->
-<!--                    </el-menu-item>-->
-<!--                </router-link>-->
+                <router-link to="Show" class="a">
+                    <el-menu-item index="2">
+                        <i class="el-icon-s-custom"></i>
+                        <span slot="title">小票展示</span>
+                    </el-menu-item>
+                </router-link>
 
 <!--                <router-link to="DoctorAppointment"  class="a">-->
 <!--                    <el-menu-item index="3">-->
@@ -75,7 +75,7 @@
                     </el-col>
                 </el-header>
                 <el-main>
-                    <div style="height: 800px;overflow: auto"><router-view></router-view></div>
+                    <div><router-view></router-view></div>
                 </el-main>
                 <!--        <div style="height: 1000px; overflow: auto"><router-view></router-view></div>-->
 <!--                <el-footer><br><br><br>Copyright 发际线与我作队</el-footer>-->

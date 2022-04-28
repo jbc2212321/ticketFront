@@ -77,7 +77,7 @@
                         </el-dropdown>
                     </el-col>
                 </el-header>
-                <div style="height: 800px;overflow: auto">
+                <div >
                     <router-view></router-view>
                 </div>
                 <!--                <el-main ><router-view></router-view></el-main>-->

@@ -151,57 +151,57 @@ const routes = [
       }
     }
   },
-  {
-    path: '/patient',
-    name: 'PatientHome',
-    component: () => import(/* webpackChunkName: "patient" */ '../views/PatientHome.vue'),
-    meta: {
-      requireAuth: true,
-      identity: 2
-    },
-    children: [
-      {
-        path: '/patient/MyDoctor',
-        component: MyDoctor,
-        meta: {
-          requireAuth: true,
-          identity: 2
-        },
-      },
-      {
-        path: '/patient/MyCase',
-        component: MyCase,
-        meta: {
-          requireAuth: true,
-          identity: 2
-        },
-      },
-      {
-        path: '/patient/MyData',
-        component: MyData,
-        meta: {
-          requireAuth: true,
-          identity: 2
-        },
-      },
-      {
-        path: '/patient/MyAppointment',
-        component: MyAppointment,
-        meta: {
-          requireAuth: true,
-          identity: 2
-        },
-      },
-    ],
-    beforeEnter: (to, from, next) => {
-      if (to.meta.identity !== store.state.identity) {
-        alert('用户身份不匹配!')
-        next({ path: '/' })
-      } else {
-        next()
-      }
-    }
-  },
+  // {
+  //   path: '/patient',
+  //   name: 'PatientHome',
+  //   component: () => import(/* webpackChunkName: "patient" */ '../views/PatientHome.vue'),
+  //   meta: {
+  //     requireAuth: true,
+  //     identity: 2
+  //   },
+  //   children: [
+  //     {
+  //       path: '/patient/MyDoctor',
+  //       component: MyDoctor,
+  //       meta: {
+  //         requireAuth: true,
+  //         identity: 2
+  //       },
+  //     },
+  //     {
+  //       path: '/patient/MyCase',
+  //       component: MyCase,
+  //       meta: {
+  //         requireAuth: true,
+  //         identity: 2
+  //       },
+  //     },
+  //     {
+  //       path: '/patient/MyData',
+  //       component: MyData,
+  //       meta: {
+  //         requireAuth: true,
+  //         identity: 2
+  //       },
+  //     },
+  //     {
+  //       path: '/patient/MyAppointment',
+  //       component: MyAppointment,
+  //       meta: {
+  //         requireAuth: true,
+  //         identity: 2
+  //       },
+  //     },
+  //   ],
+  //   beforeEnter: (to, from, next) => {
+  //     if (to.meta.identity !== store.state.identity) {
+  //       alert('用户身份不匹配!')
+  //       next({ path: '/' })
+  //     } else {
+  //       next()
+  //     }
+  //   }
+  // },
   {
     path: '/patient/MyAppointment',
     name: 'MyAppointment',
@@ -275,27 +275,27 @@ const routes = [
     name: 'DoctorHome',
     component: DoctorHome,
     children: [
+      // {
+      //   path: '/doctor/DoctorAppointment',
+      //   name: 'DoctorAppointment',
+      //   component: DoctorAppointment,
+      //   meta: {
+      //     requireAuth: true,
+      //     identity: 0
+      //   }
+      // },
+      // {
+      //   path: '/doctor/DoctorData',
+      //   name: 'DoctorData',
+      //   component: DoctorData,
+      //   meta: {
+      //     requireAuth: true,
+      //     identity: 0
+      //   }
+      // },
       {
-        path: '/doctor/DoctorAppointment',
-        name: 'DoctorAppointment',
-        component: DoctorAppointment,
-        meta: {
-          requireAuth: true,
-          identity: 0
-        }
-      },
-      {
-        path: '/doctor/DoctorData',
-        name: 'DoctorData',
-        component: DoctorData,
-        meta: {
-          requireAuth: true,
-          identity: 0
-        }
-      },
-      {
-        path: '/user/index',
-        name: 'Index',
+        path: '/user/Show',
+        name: 'Show',
         component: MyPatient,
         meta: {
           requireAuth: true,
@@ -362,12 +362,12 @@ const routes = [
     }
   },
   {
-    path: '/doctor/MyPatient',
+    path: '/user/Show',
     name: 'MyPatient',
     component: MyPatient,
     meta: {
       requireAuth: true,
-      identity: 3
+      identity: 0
     },
     beforeEnter: (to, from, next) => {
       if (to.meta.identity !== store.state.identity) {

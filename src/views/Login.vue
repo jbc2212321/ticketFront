@@ -252,7 +252,7 @@
                 console.log("用户",this.value)
                 console.log("res:",res)
                 this.$router.push({
-                  path: 'user/index'
+                  path: 'user/Upload'
                 }).catch(() => {
                 })
                 break

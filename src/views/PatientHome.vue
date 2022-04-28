@@ -98,7 +98,7 @@
         </el-header>
 
 <!--        <el-main>Main</el-main>-->
-        <div style="height: 800px;overflow: auto"><router-view></router-view></div>
+        <div><router-view></router-view></div>
       <el-footer><br><br><br>Copyright  JBC</el-footer>
 
     </el-container>
