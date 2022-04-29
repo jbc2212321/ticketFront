@@ -1,21 +1,12 @@
 <template>
     <div id="LogManagement">
         <template>
-            <el-date-picker
-                    v-model="date"
-                    align="right"
-                    type="date"
-                    placeholder="选择日期"
-            >
-            </el-date-picker>
-            <el-button @click="chooseDate" type="primary">提交筛选</el-button>
-
             <el-table
                     ref="filterTable"
+                    :data="ManageData"
                     @filter-change="handleFilterChange"
-                    :data="PageData.slice((this.currentPage - 1) * this.pagesize, this.currentPage * this.pagesize)"
                     style="width: 100%"
-                    height="550px"
+                    height="800px"
                     stripe>
 
                 <el-table-column
@@ -28,7 +19,7 @@
                 </el-table-column>
 
                 <el-table-column
-                        prop="id"
+                        prop="userid"
                         label="用户ID"
                         width="200"
                         align="center"
@@ -36,83 +27,40 @@
                 </el-table-column>
 
                 <el-table-column
-                        prop="account"
-                        column-key="status"
-                        label="用户类型"
+                        prop="username"
+                        label="用户名"
                         width="150"
-                        align="center"
-                        :filters="filters"
-                        :filter-method="filterTag">
-                    <template slot-scope="scope">
-                        <el-tag
-                                :type="scope.row.account === '管理员' ? 'warning' :scope.row.account === '病人' ? 'primary'
-                : scope.row.account === '医生' ? 'success':'danger'"
-                                disable-transitions>{{scope.row.account}}
-                        </el-tag>
-                    </template>
-                </el-table-column>
-
-                <el-table-column
-                        prop="action"
-                        label="操作内容"
                         align="center">
-                    <template slot-scope="scope">
-                        <div class="white">
-                            <el-tag
-                                    :effect="scope.row.action === '登录' ? 'plain' :scope.row.action === '查看病人列表' ? 'plain'
-              : scope.row.action === '添加用户' ? 'plain': scope.row.action === '删除医生或病患' ? 'plain'
-              : scope.row.action === '查询预约' ? 'plain': scope.row.action === '登出' ? 'plain'
-              : scope.row.action === '查询' ? 'light': scope.row.action === '修改密码' ? 'light'
-              : scope.row.action === '上传' ? 'light': scope.row.action === '修改医生权限' ? 'light'
-              : scope.row.action === '查看日志' ? 'light': scope.row.action === '删除日志' ? 'light'
-              : scope.row.action === '绘制图表' ? 'dark': scope.row.action === '修改个人信息' ? 'dark'
-              : scope.row.action === '预约医生' ? 'dark': scope.row.action === '同意预约' ? 'dark'
-              : scope.row.action === '查看用户管理界面' ? 'dark': scope.row.action === '取消预约' ? 'dark':'dark'"
-
-                                    :type="scope.row.action === '登录' ? 'success' :scope.row.action === '修改个人信息' ? 'info'
-              : scope.row.action === '添加用户' ? 'warning': scope.row.action === '删除医生或病患' ? 'danger'
-              : scope.row.action === '修改医生权限' ? 'primary': scope.row.action === '登出' ? 'danger'
-              : scope.row.action === '查询' ? 'info': scope.row.action === '修改密码' ? 'success'
-              : scope.row.action === '上传' ? 'warning': scope.row.action === '查看用户管理界面' ? 'primary'
-              : scope.row.action === '查看日志' ? 'info': scope.row.action === '删除日志' ? 'danger'
-              : scope.row.action === '绘制图表' ? 'primary': scope.row.action === '查看病人列表' ? 'info'
-              : scope.row.action === '预约医生' ? 'warning': scope.row.action === '同意预约' ? 'success'
-              : scope.row.action === '查询预约' ? 'primary': scope.row.action === '取消预约' ? 'danger':'danger'"
-
-                                    disable-transitions>{{scope.row.action}}
-                            </el-tag>
-                        </div>
-                    </template>
                 </el-table-column>
+
                 <el-table-column
-                        prop="time"
-                        label="执行时间"
+                        prop="songid"
+                        label="歌曲id"
                         width="300"
                         sortable
                         align="center"
                 >
                 </el-table-column>
 
+              <el-table-column
+                prop="songname"
+                label="歌曲名"
+                align="center"
+              >
+              </el-table-column>
+
                 <el-table-column
                         prop="manage"
                         label="管理"
                         width="200">
-                    <template slot-scope="scope">
-                        <el-button size="small" type="danger" @click="deleteRow(scope.row)">删除</el-button>
-                    </template>
+                  <template slot-scope="scope">
+                    <el-button size="small" type="primary" @click="agree(scope.row)">同意</el-button>
+                    <el-button size="small" type="danger" @click="refuse(scope.row)">拒绝</el-button>
+                  </template>
                 </el-table-column>
             </el-table>
         </template>
         <br>
-        <el-pagination
-                @size-change="handleSizeChange"
-                @current-change="handleCurrentChange"
-                :current-page="currentPage"
-                :page-sizes="[5, 8, 15, 20]"
-                :page-size="pagesize"
-                layout="total, sizes, prev, pager, next, jumper"
-                :total="PageData.length">
-        </el-pagination>
     </div>
 </template>
 
@@ -121,23 +69,41 @@
     name: 'LogManagement',
     data () {
       return {
-        date: '',
-        currentPage: 1,
-        pagesize: 8,
-        PageData: [],
-        filters: [{
-          text: '病人',
-          value: '病人'
-        }, {
-          text: '医生',
-          value: '医生'
-        }, {
-          text: '管理员',
-          value: '管理员'
-        }],
-        filterList: [],
-        AllData: [],
-        resultData: [],
+        ManageData:[
+          {
+            num:'1',
+            songid:'2',
+            songname:'3',
+            userid:'4',
+            username:'5',
+            manage:''
+          },
+          {
+            num:'2',
+            songid:'2',
+            songname:'3',
+            userid:'4',
+            username:'5',
+            manage:''
+          }
+        ]
+        // date: '',
+        // currentPage: 1,
+        // pagesize: 8,
+        // PageData: [],
+        // filters: [{
+        //   text: '病人',
+        //   value: '病人'
+        // }, {
+        //   text: '医生',
+        //   value: '医生'
+        // }, {
+        //   text: '管理员',
+        //   value: '管理员'
+        // }],
+        // filterList: [],
+        // AllData: [],
+        // resultData: [],
       }
     },
     mounted () {
@@ -169,28 +135,78 @@
       }
     },
     methods: {
-      chooseDate () {
-        if (this.date === '') {
-          this.$message({
-            showClose: true,
-            message: '请先选择日期！',
-            type: 'warning'
+
+      agree (row) {
+        this.$confirm('操作后将不可更改, 是否确认?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.$axios({
+            url: 'updateTodoList',
+            method: 'post',
+            data: {
+              num: row.num,
+              state: 1,
+              content: row.content,
+              phone: row.tel,
+              type: row.type
+            }
+          }).then(res => {
+            this.$axios({
+              url: 'getTodoListReset',
+              method: 'get',
+            }).then(res => {
+              this.resetData = res.data
+            })
+            this.$message({
+              type: 'success',
+              message: '操作成功!'
+            })
           })
-          return
-        }
-        this.$axios({
-          url: 'getAllLogByDate',
-          method: 'post',
-          data: {
-            date: this.date
-          }
-        }).then(res => {
-          this.AllData = res.data
-          this.PageData = [...res.data]
-          this.currentPage = 1
-          this.pagesize = 8
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消操作'
+          })
         })
       },
+      refuse (row) {
+        this.$confirm('操作后将不可更改, 是否确认?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.$axios({
+            url: 'updateTodoList',
+            method: 'post',
+            data: {
+              num: row.num,
+              state: 2,
+              content: row.content,
+              phone: row.tel,
+              type: row.type
+            }
+          }).then(res => {
+            this.$axios({
+              url: 'getTodoListReset',
+              method: 'get',
+            }).then(res => {
+              this.resetData = res.data
+            })
+            this.$message({
+              type: 'success',
+              message: '操作成功!'
+            })
+          })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消操作'
+          })
+        })
+      },
+
       axios () {
         this.$axios({
           url: 'getAllLog',
@@ -212,39 +228,6 @@
       },
       handleFilterChange (value) {
         this.filterList = value.status
-      },
-      deleteRow (row) {
-        this.$confirm('执行删除操作后不可恢复, 是否确认操作?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
-          this.$axios({
-            url: 'deleteLogByNum',
-            method: 'post',
-            data: {
-              num: row['num']
-            }
-          }).then(res => {
-            this.$axios({
-              url: 'getAllLog',
-              method: 'get'
-            }).then(res => {
-              this.AllData = res.data
-              this.PageData = [...res.data]
-              this.$message({
-                type: 'success',
-                message: '操作成功!'
-              })
-            })
-
-          })
-        }).catch(() => {
-          this.$message({
-            type: 'info',
-            message: '已取消操作'
-          })
-        })
       },
       //   handleClose(done) {
       //   this.$confirm('确认关闭？')

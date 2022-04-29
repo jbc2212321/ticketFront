@@ -1,297 +1,44 @@
 <template>
     <div id="List">
-        <template>
-            <!-- 点击查询病历弹出的对话框 -->
-            <el-dialog
-                    :visible.sync="dialogVisible"
-                    width="39%"
-                    height="600px"
-                    :before-close="handleClose">
-      <span>
-        <template>
-          <span class="demonstration">科室：</span>
-          <el-select v-model="value0" placeholder="选择科室" @change="selectChanged">
-            <el-option
-                    v-for="item in offices"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value">
-            </el-option>
-          </el-select>
-        </template>
-        <template>
-          <span class="demonstration">&#8194; 体检项目：</span>
-          <el-select v-model="value1" multiple placeholder="选择项目" @change="selectProject">
-            <el-option
-                    v-for="item in types"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value">
-            </el-option>
-          </el-select>
-          <br><br>
-          <span class="demonstration">选择需要添加筛选条件的项目：</span>
-          <el-select v-model="value2" placeholder="请选择">
-            <el-option
-                    v-for="item in screen"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value">
-            </el-option>
-          </el-select>
-          <br><br>
-          <span class="demonstration">筛选区间</span>
-          <el-input-number size="mini" v-model="min" @change="handleChange" :min="0" :max="999"
-                           label="最小值"></el-input-number>
-          <span class="demonstration">至</span>
-          <el-input-number size="mini" v-model="max" @change="handleChange" :min="0" :max="999" label="最大值"
-                           value="999"></el-input-number>
-            <span class="demonstration"></span>
-          <el-button type="primary" @click="screenSubmit" size="mini">提交筛选</el-button>
-        </template>
-        <br><br>
-        <template>
-          <div class="block">
-            <span class="demonstration">时间区间</span>
-            <el-date-picker
-                    size="mini"
-                    v-model="date1"
-                    align="right"
-                    type="date"
-                    placeholder="选择日期"
-                    :picker-options="pickerOptions">
-            </el-date-picker>
+<!--      用户查看所有获得授权认证的版权列表-->
+      <el-table
+        ref="filterTable"
+        :data="tableData"
+        style="width: 100%"
+        height="800">
 
-            <span class="demonstration">至</span>
-            <el-date-picker
-                    size="mini"
-                    v-model="date2"
-                    align="right"
-                    type="date"
-                    placeholder="选择日期"
-                    :picker-options="pickerOptions">
-            </el-date-picker>
-          </div>
-        </template>
-        <br>
-        <el-col :span="4" :offset="18"><el-button @click="submit" type="primary">提交</el-button></el-col>
-        <br><br>
+        <el-table-column
+          prop="num"
+          label="歌曲编号"
+          sortable
+          width="240"
+          column-key="num">
+        </el-table-column>
 
-      </span>
-            </el-dialog>
+        <el-table-column
+          prop="songid"
+          label="歌曲ID"
+          width="240">
+        </el-table-column>
 
-            <el-dialog title="根据体检单绘制图表" :visible.sync="dialogFormVisible"
-                       width="27%"
-                       height="400px">
-                <el-form :model="form">
-                    <el-form-item label="绘制图表类型">
-                        <el-select v-model="form.type" placeholder="请选图表类型">
-                            <el-option label="折线图" value="折线图"></el-option>
-                            <el-option label="柱状图" value="柱状图"></el-option>
-                        </el-select>
-                    </el-form-item>
-                </el-form>
-                <div slot="footer" class="dialog-footer">
-                    <el-button @click="dialogFormVisible = false">取 消</el-button>
-                    <el-button type="primary" @click="showChart">确 定</el-button>
-                </div>
-            </el-dialog>
+        <el-table-column
+          prop="songname"
+          label="歌曲名"
+          align="center"
+        >
+        </el-table-column>
 
-            <el-dialog title="图表" :visible.sync="isShowLine"
-                       width="80%"
-                       height="600px"
-                       :before-close="handleCloseChart">
-                <ve-line :data="chartData" :settings="chartSettings"></ve-line>
-            </el-dialog>
-
-            <el-dialog title="图表" :visible.sync="isShowHistogram"
-                       width="80%"
-                       height="600px"
-                       :before-close="handleCloseChart">
-                <ve-histogram :data="chartData" :settings="chartSettings"></ve-histogram>
-            </el-dialog>
-
-            <!-- 主界面 -->
-            <el-button @click="beforeDialog">查询体检单</el-button>
-            <el-button type="primary" @click="GeneratingCharts">生成图表</el-button>
-            <el-table
-                    :data="PageData"
-                    style="width: 100%"
-                    height="580">
-
-                <el-table-column
-                        prop="tableId"
-                        label="体检单号"
-                        sortable
-                        width="120"
-                        column-key="num">
-                </el-table-column>
-
-                <el-table-column
-                        prop="office"
-                        label="科室"
-                        width="180">
-                    <template slot-scope="scope">
-                        <el-tag
-                                :type="scope.row.office === '口腔科' ? 'primary' : 'success'"
-                                disable-transitions>{{scope.row.office}}
-                        </el-tag>
-                    </template>
-                </el-table-column>
-
-                <el-table-column
-                        prop="date"
-                        label="体检日期">
-                    <!-- :formatter="formatter"> -->
-                </el-table-column>
-
-                <!-- 操作按键（查看）此部分后续可能需要更改 -->
-                <el-table-column
-                        prop="tag"
-                        label="操作"
-                        width="200">
-                    <template slot-scope="scope">
-                        <el-button
-                                size="mini"
-                                @click="handleEdit(scope.$index, scope.row)">查看
-                        </el-button>
-                    </template>
-                </el-table-column>
-
-            </el-table>
-        </template>
-
-
-        <el-pagination
-                @size-change="handleSizeChange"
-                @current-change="handleCurrentChange"
-                :current-page="currentPage"
-                :page-sizes="[5, 9, 15, 20]"
-                :page-size="9"
-                layout="total, sizes, prev, pager, next, jumper"
-                :total="CaseData.length">
-        </el-pagination>
-
-        <!--        血液科体检报告单-->
-        <el-dialog
-                :visible.sync="BloodVisible"
-                width="60%"
-                :before-close="handleClose">
-      <span>
-        <div class='title'>体检单号：{{examinationNo}}</div>
-        <table border="1"
-               cellspacing="0px"
-               style="margin:auto;"
-               width="800px">
-    <tr height="50" style="text-align: center;">
-        <td width="100">姓名</td>
-        <td width="100">{{patientName}}</td>
-        <td width="100">性别</td>
-        <td width="100">{{sex}}</td>
-        <td width="100">体检日期</td>
-        <td width="100">{{examinationDate}}</td>
-    </tr>
-    <tr height="50" style="text-align: center;">
-      <td width="100">代号</td>
-      <td width="200" colspan="2">项目</td>
-      <td width="200" colspan="2">结果</td>
-      <td width="100">参考值</td>
-    </tr>
-            <!-- 白细胞 -->
-    <tr height="50" style="text-align: center;">
-      <td width="100">WBC</td>
-      <td width="200" colspan="2">白细胞</td>
-      <td width="200" colspan="2">{{wbc}}</td>   <!-- 检测值 -->
-      <td width="100">4--10 10^9/L</td>
-    </tr>
-            <!-- 红细胞 -->
-    <tr height="50" style="text-align: center;">
-      <td width="100">RBC</td>
-      <td width="200" colspan="2">红细胞</td>
-      <td width="200" colspan="2">{{rbc}}</td>   <!-- 检测值 -->
-      <td width="100">3.5--5.5</td>
-    </tr>
-            <!-- 血小板 -->
-    <tr height="50" style="text-align: center;">
-      <td width="100">PLT</td>
-      <td width="200" colspan="2">血小板</td>
-      <td width="200" colspan="2">{{plt}}</td>   <!-- 检测值 -->
-      <td width="100">100-300 10^9/L</td>
-    </tr>
-        <tr height="50" style="text-align: center;">
-          <td width="100">
-       建议
-          </td>
-          <td width="500" colspan="5">
-              <p>{{proposal_plt}}</p>
-                <p>{{proposal_wbc}}</p>
-               <p>{{proposal_rbc}}</p>
-
-          </td>
-        </tr>
-
-</table></span>
-        </el-dialog>
-        <!--        血液科体检报告单-->
-
-        <!--口腔科体检报告单-->
-        <el-dialog
-                :visible.sync="ToothVisible"
-                width="60%"
-                :before-close="handleClose">
-      <span>
-        <div class='title'>体检单号：{{examinationNo}}</div>
-        <table border="1"
-               cellspacing="0px"
-               style="margin:auto;"
-               width="800px">
-    <tr height="50" style="text-align: center;">
-        <td width="100">姓名</td>
-        <td width="100">{{patientName}}</td>
-        <td width="100">性别</td>
-        <td width="100">{{sex}}</td>
-        <td width="100">体检日期</td>
-        <td width="100">{{examinationDate}}</td>
-    </tr>
-    <tr height="50" style="text-align: center;">
-      <td width="50" td rowspan="4">口腔</td>
-      <td width="150" colspan="2">项目</td>
-      <td width="200" colspan="3">结果</td>
-    </tr>
-            <!-- 叩痛 pain -->
-    <tr height="50" style="text-align: center;">
-      <td width="150" colspan="2">叩痛</td> <!-- pain -->
-      <td width="200" colspan="3">{{pain}}</td> <!-- 检测值 由轻到重五个等级1-5 -->
-    </tr>
-            <!-- 松动度 mobility -->
-    <tr height="50" style="text-align: center;">
-      <td width="150" colspan="2">松动度</td>  <!-- mobility -->
-      <td width="200" colspan="3">{{mobility}}</td>  <!-- 检测值 不松动-严重由1-3表示 -->
-    </tr>
-            <!-- 牙石 tartar -->
-    <tr height="50" style="text-align: center;">
-      <td width="150" colspan="2">牙石</td> <!-- tartar -->
-      <td width="200" colspan="3">{{tartar}}</td> <!-- 检测值 有无牙石 牙石数量从少到多由1-5表示 -->
-    </tr>
-    <tr height="50" style="text-align: center;">
-      <td width="100">
-   建议
-      </td>
-      <td width="500" colspan="5">
-          <p>  {{proposal_tartar}}</p>
-          <p>{{proposal_mobility}}</p>
-            <p> {{proposal_pain}}</p>
-
-      </td>
-    </tr>
-
-            <!--            {{proposal[proposal_tartar]}}-->
-            <!--            {{proposal[proposal_mobility]}}-->
-            <!--            {{proposal[proposal_pain]}}-->
-
-</table></span>
-        </el-dialog>
-        <!--口腔科体检报告单-->
+        <el-table-column
+          prop="userid"
+          label="所属用户id"
+          width="180">
+        </el-table-column>
+        <el-table-column
+          prop="username"
+          label="所属用户名"
+          width="180">
+        </el-table-column>
+      </el-table>
     </div>
 </template>
 

@@ -26,12 +26,6 @@
                         prop="songname"
                         label="歌曲名"
                         >
-                    <template slot-scope="scope">
-                        <el-tag
-                                :type="scope.row.tag === '口腔科' ? 'primary' : 'success'"
-                                disable-transitions>{{scope.row.tag}}
-                        </el-tag>
-                    </template>
                 </el-table-column>
 
                 <el-table-column
@@ -48,7 +42,6 @@
 <!--                    </template>-->
                 </el-table-column>
             </el-table>
-          {{time}}
         </template>
     </div>
 </template>
@@ -58,21 +51,28 @@
     name: 'Inquiry', //用户查询已获得的版权、提交版权的审核状态
     data () {
       return {
-        time:'123',
-        // tableData:{
-        //   num:'',
-        //   songid:'',
-        //   songname:'',
-        //   userid:'',
-        //   username:'',
-        //   status:'',
-        // },
-        // filter: '',
-        // trans: {
-        //   0: '待通过',
-        //   1: '通过',
-        //   2: '不通过',
-        // },
+        tableData:[{
+          num:'1',
+          songid:'123',
+          songname:'123',
+          userid:'123',
+          username:'123',
+          status:'0',
+        },
+          {
+            num:'2',
+            songid:'234',
+            songname:'2123',
+            userid:'1223',
+            username:'2123',
+            status:'1',
+          }],
+        filter: '',
+        trans: {
+          0: '待通过',
+          1: '通过',
+          2: '不通过',
+        },
       }
     },
     computed: {
@@ -98,10 +98,10 @@
         url: 'getAllDoc',
         method: 'get',
       }).then(res => {
-        this.DocList = res.data
+        this.DocList = res.data //修改
       })
 
-      //初始化列表
+      //初始化列表 axios
       this.$axios({
         url: 'getRelationship',
         method: 'post',
@@ -109,8 +109,8 @@
           PatientPhone: this.$session.get('phone')
         }
       }).then(res => {
-        this.AfterList = res.data
-        console.log(this.AfterList)
+        this.tableData = res.data
+        console.log(this.tableData)
       })
     },
     methods: {

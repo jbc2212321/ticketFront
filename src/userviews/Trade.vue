@@ -1,36 +1,19 @@
 <template>
-    <div id="MyData">
+    <div id="Trade">
+<!--     版权交易 -->
+
         <el-form ref="form"  label-width="80px" >
 
-            <el-form-item label="姓名"><el-col :span="7" >
-                <el-input v-model="patientName" :disabled="true"></el-input>
+            <el-form-item label="歌曲id"><el-col :span="7" >
+                <el-input v-model="songid"></el-input>
             </el-col></el-form-item>
 
-            <el-form-item label="联系电话"><el-col :span="7">
-                <el-input v-model="phoneNo" :disabled="true"></el-input>
+            <el-form-item label="买方id"><el-col :span="7">
+                <el-input v-model="userid" ></el-input>
             </el-col></el-form-item>
 
-            <el-form-item label="病人账户"><el-col :span="7">
-                <el-input v-model="paccountNo" :disabled="true"></el-input>
-            </el-col></el-form-item>
-
-            <el-form-item label="病人编号"><el-col :span="7">
-                <el-input v-model="patientID" :disabled="true"></el-input>
-            </el-col></el-form-item>
-
-            <el-form-item label="性别"><el-col :span="7">
-                <el-select v-model="sex" placeholder="选择性别">
-                    <el-option label="男性" value="m"></el-option>
-                    <el-option label="女性" value="f"></el-option>
-                </el-select>
-            </el-col></el-form-item>
-
-            <el-form-item label="出生日期"><el-col :span="7">
-                <el-date-picker type="date" placeholder="选择日期" v-model="birthday" style="width: 100%;"></el-date-picker>
-            </el-col></el-form-item>
-
-            <el-col :span="7" :offset="2">
-            <el-button type="primary" @click="onSubmit">提交修改</el-button>
+            <el-col :span="4" :offset="3">
+            <el-button type="primary" @click="onSubmit">提交交易</el-button>
 <!--            <el-button type="danger">清空</el-button>-->
             </el-col>
 
@@ -44,21 +27,15 @@
     name: 'MyData',
     data() {
       return {
-
-          patientID: '',
-          paccountNo: '',
-          patientName: '',
-          phoneNo: '',
-          birthday: '',
-          sex: '',
-
+          songid:'',
+          userid:''
       }
     },
     mounted () {
         this.$axios({
           url:"getPatientDetail",
           method:"post",
-          data:{   
+          data:{
             phone:this.$session.get("phone")
           }
         }).then(res=>{
@@ -98,7 +75,8 @@
 </script>
 
 <style scoped>
-    #MyData {
-        padding: 1cm 0 0 12cm
+    #Trade {
+        /*padding: 1cm 0 0 12cm;*/
+        height:800px
     }
 </style>

@@ -20,14 +20,14 @@
                 <router-link to="/admin/LogManagement" class="a">
                     <el-menu-item index="2">
                         <i class="el-icon-s-custom"></i>
-                        <span slot="title">审核查看</span>
+                        <span slot="title">待审核授权</span>
                     </el-menu-item>
                 </router-link>
 
                 <router-link to="/admin/TradeList" class="a">
                     <el-menu-item index="3" class="a">
                         <i class="el-icon-document"></i>
-                        <span slot="title">代办交易</span>
+                        <span slot="title">待审核交易</span>
                     </el-menu-item>
                 </router-link>
 
@@ -38,10 +38,10 @@
 <!--                    </el-menu-item>-->
 <!--                </router-link>-->
 
-                <router-link to="TodoList" class="a">
+                <router-link to="VerifyHistory" class="a">
                     <el-menu-item index="5">
                         <i class="el-icon-message-solid"></i>
-                        <span slot="title">待办审核</span>
+                        <span slot="title">历史授权查看</span>
                     </el-menu-item>
                 </router-link>
             </el-menu>

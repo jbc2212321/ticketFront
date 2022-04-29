@@ -1,5 +1,5 @@
 <template>
-    <div id="TodoList">
+    <div id="TradeList">
         <template>
 <!--            <el-button-->
 <!--                    onclick="document.getElementById('reset').style.display='block';document.getElementById('delete').style.display='none'">-->
@@ -11,12 +11,12 @@
 <!--            </el-button>-->
 
 
-            <div id="reset" style="display:block">
+            <div id="reset">
                 <el-table
                         ref="filterTable"
-                        :data="resetData"
+                        :data="tableData"
                         style="width: 100%"
-                        height="600"
+                        height="800"
                         stripe
                         header-cell-style="center">
 
@@ -24,68 +24,65 @@
                             prop="num"
                             label="编号"
                             sortable
-                            width="80"
+                            width="120"
                             column-key="num"
                             align="center">
                     </el-table-column>
 
-                    <el-table-column
-                            prop="name"
-                            label="用户名"
-                            width="120"
-                            align="center">
-                    </el-table-column>
+                  <el-table-column
+                    prop="songid"
+                    label="歌曲id"
+                    sortable
+                    width="200"
+                    align="center">
+                  </el-table-column>
+
+                  <el-table-column
+                    prop="songname"
+                    label="歌曲名"
+                    sortable
+                    align="center">
+                  </el-table-column>
 
                     <el-table-column
-                            prop="id"
-                            label="用户ID"
-                            width="150"
-                            align="center">
-                    </el-table-column>
-
-                    <el-table-column
-                            prop="type"
-                            label="账户类型"
-                            width="100"
-                            align="center">
-                        <template slot-scope="scope">
-                            <el-tag
-                                    :type="scope.row.type === '病人' ? 'primary' :
-                                    scope.row.type === '医生' ? 'success' : 'warning'"
-                                    disable-transitions>{{scope.row.type}}
-                            </el-tag>
-                        </template>
-                    </el-table-column>
-
-                    <el-table-column
-                            prop="tel"
-                            label="手机号"
-                            width="150"
-                            align="center">
-                    </el-table-column>
-
-                    <el-table-column
-                            prop="content"
-                            label="申请内容"
-                            align="center">
-                    </el-table-column>
-
-                    <el-table-column
-                            prop="time"
-                            label="提交时间"
+                            prop="sellername"
+                            label="原作者名"
                             width="200"
                             align="center">
                     </el-table-column>
 
+                  <el-table-column
+                    prop="sellerid"
+                    label="原作者id"
+                    width="200"
+                    align="center">
+                  </el-table-column>
+
+
                     <el-table-column
-                            prop="state"
-                            label="处理状态"
-                            width="180"
+                            prop="buyer"
+                            label="购买者名"
+                            width="200"
+                            align="center">
+                    </el-table-column>
+
+                  <el-table-column
+                    prop="buyerid"
+                    label="购买者id"
+                    width="200"
+                    align="center">
+                  </el-table-column>
+
+                    <el-table-column
+                            prop="type"
+                            label="交易类型"
+                            width="200"
                             align="center">
                         <template slot-scope="scope">
                             <el-tag
-                                    :type="scope.row.state === 0 ? 'info' : scope.row.state === 1 ? 'success':'danger'"
-                                    disable-transitions>{{trans[scope.row.state]}}
+                                    :type="scope.row.type === '授权' ? 'primary' :
+                                    scope.row.type === '转让' ? 'success' : 'warning'"
+                                    disable-transitions>{{scope.row.type}}
                             </el-tag>
                         </template>
                     </el-table-column>
@@ -103,91 +100,6 @@
                 </el-table>
             </div>
 
-            <div id="delete" style="display: none">
-                <el-table
-                        ref="filterTable"
-                        :data="deleteData"
-                        style="width: 100%"
-                        height="600"
-                        stripe
-                        header-cell-style="center">
-
-                    <el-table-column
-                            prop="num"
-                            label="编号"
-                            sortable
-                            width="80"
-                            column-key="num"
-                            align="center">
-                    </el-table-column>
-
-                    <el-table-column
-                            prop="name"
-                            label="病人姓名"
-                            width="120"
-                            align="center">
-                    </el-table-column>
-
-                    <el-table-column
-                            prop="id"
-                            label="病人ID"
-                            width="80"
-                            align="center">
-                    </el-table-column>
-
-                    <el-table-column
-                            prop="doctorName"
-                            label="医生姓名"
-                            width="120"
-                            align="center">
-                    </el-table-column>
-
-                    <el-table-column
-                            prop="doctorId"
-                            label="医生ID"
-                            width="80"
-                            align="center">
-                    </el-table-column>
-
-
-                    <el-table-column
-                            prop="content"
-                            label="申请内容"
-                            align="center">
-                    </el-table-column>
-
-                    <el-table-column
-                            prop="time"
-                            label="提交时间"
-                            width="200"
-                            align="center">
-                    </el-table-column>
-
-                    <el-table-column
-                            prop="state"
-                            label="处理状态"
-                            width="180"
-                            align="center">
-                        <template slot-scope="scope">
-                            <el-tag
-                                    :type="scope.row.state === 0 ? 'info' : scope.row.state === 1 ? 'success':'danger'"
-                                    disable-transitions>{{trans[scope.row.state]}}
-                            </el-tag>
-                        </template>
-                    </el-table-column>
-
-                    <el-table-column
-                            prop="tag"
-                            label="操作"
-                            width="200">
-                        <template slot-scope="scope">
-                            <el-button size="small" type="primary" @click="agreeDelete(scope.row)">同意</el-button>
-                            <el-button size="small" type="danger" @click="refuseDelete(scope.row)">拒绝</el-button>
-                        </template>
-                    </el-table-column>
-
-                </el-table>
-            </div>
         </template>
 
 
@@ -196,11 +108,14 @@
 
 <script>
   export default {
-    name: 'TodoList',
+    name: 'TradeList',
     data () {
       return {
-        resetData: [],
-        deleteData: [],
+        tableData:[
+          {},
+          {}
+        ],
+
         trans: {
           0: '待处理',
           1: '已处理'

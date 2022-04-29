@@ -9,7 +9,7 @@ import Inquiry from '../userviews/Inquiry'
 import Trade from '../userviews/Trade'
 import Upload from '../userviews/Upload'
 import LogManagement from '../adminviews/LogManagement'
-import TodoList from '../adminviews/TodoList'
+import VerifyHistory from '../adminviews/VerifyHistory'
 import TradeList from "@/adminviews/TradeList";
 import List from "@/userviews/List"
 import Login from "@/views/Login";
@@ -31,8 +31,8 @@ const routes = [
     component: AdminHome,
     children: [
       {
-        path: '/admin/TodoList', //审核模块
-        component: TodoList,
+        path: '/admin/VerifyHistory', //审核模块
+        component: VerifyHistory,
         meta: {
           requireAuth: true,
           identity: 1
@@ -86,9 +86,9 @@ const routes = [
     }
   },
   {
-    path: '/admin/TodoList',
-    name: 'TodoList',
-    component: TodoList,
+    path: '/admin/VerifyHistory',
+    name: 'VerifyHistory',
+    component: TradeList,
     meta: {
       requireAuth: true,
       identity: 0
@@ -121,7 +121,7 @@ const routes = [
   },
   {
     path: '/admin/TradeList',
-    name: 'UploadCsv',
+    name: 'TradeList',
     component: TradeList,
     meta: {
       requireAuth: true,
