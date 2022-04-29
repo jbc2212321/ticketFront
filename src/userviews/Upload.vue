@@ -1,71 +1,107 @@
 <template>
-    <div id="UploadCsv">
-        <template>
-            <!--            <span class="demonstration">科室：</span>-->
-            <!--            <el-select v-model="value0" placeholder="选择科室" >-->
-            <!--                <el-option-->
-            <!--                        v-for="item in offices"-->
-            <!--                        :key="item.value"-->
-            <!--                        :label="item.label"-->
-            <!--                        :value="item.value">-->
-            <!--                </el-option>-->
-            <!--            </el-select>-->
-        </template>
-        <br><br>
-<!--      accept=".png,.jpg"   -->
-        <el-upload
-                class="upload-demo"
-                action="http://localhost:8096/user/upload"
-                accept=".wav"
+    <div id="Upload">
 
-                :on-preview="handlePreview"
-                :on-remove="handleRemove"
-                :on-success="handle_success"
-                :show-file-list="false"
-
-                :on-exceed="handleExceed">
-            <el-button id="initSlide" type="primary">点击上传</el-button>
-<!--  :beforeUpload="beforeAvatarUpload"          <div slot="tip" class="el-upload__tip">只能上传csv文件</div>-->
-        </el-upload>
-
-<!--        <el-upload-->
-<!--                :limit="1"-->
-<!--                class="upload-demo"-->
-<!--                :action=this.apiUrl+api-->
-<!--                :on-change="handleChange"-->
-<!--                :file-list="fileList">-->
-<!--            <el-button type="primary" plain size="mini" round>上传</el-button>-->
-<!--        </el-upload>-->
-
+      <br>
+      <el-col :span="6">
+      歌曲名称:
+      <el-input
+        placeholder="请输入内容"
+        v-model="songid"
+        :disabled="true">
+      </el-input>
+      </el-col>
+      <br>
+      <br>
+      <br>
+      <el-col :span="6">
+      编号:
+      <el-input
+        placeholder="请输入内容"
+        v-model="songname"
+        :disabled="true">
+      </el-input>
+      </el-col>
+      <br>
+      <br>
+      <br>
+      <el-col :span="6">
+      作者ID:
+      <el-input
+        placeholder="请输入内容"
+        v-model="userid"
+        :disabled="true">
+      </el-input>
+      </el-col>
+      <br>
+      <br>
+      <br>
+      <el-col :span="6">
+      作者名:
+      <el-input
+        placeholder="请输入内容"
+        v-model="username"
+        :disabled="true">
+      </el-input>
+      </el-col>
+      <br>
+      <br>
+      <br> <br>
+      <el-col :span="3" :offset="1">
+      <el-upload
+        class="upload-demo"
+        action="http://localhost:8096/user/upload"
+        accept=".wav"
+        :on-preview="handlePreview"
+        :on-remove="handleRemove"
+        :on-success="handle_success"
+        :show-file-list="false"
+        :on-exceed="handleExceed">
+        <el-button id="initSlide" type="primary">点击上传</el-button>
+      </el-upload>
+      </el-col>
+        <el-col :span="2">
+      <el-button type="primary">申请版权</el-button>
+      </el-col>
+      <br>
+      <br> <br>
+      <el-button type="primary" @click="openFullScreen1" v-loading.fullscreen.lock="fullscreenLoading">测试Loading</el-button>
     </div>
 </template>
 
 <script>
   export default {
-    name: 'UploadCsv',
+    name: 'Upload',
     data () {
       return {
-        url: '',
-        api:"user/upload",
-        offices: [{
-          value: '口腔科',
-          label: '口腔科',
-        }, {
-          value: '血液科',
-          label: '血液科'
-        }],
-        value0: '',//科室
-
+        fullscreenLoading: false
       }
     },
-    mounted () {
-      // this.$notify({
-      //   title: '提示',
-      //   message: '血液科csv请以B开头命名，口腔科请以T开头命名',
-      //   duration: 0
-      // })
+    open () {
+      this.$notify({
+        title: '提示',
+        message: '歌曲已存在，请勿重复上传',
+        duration: 0
+      })
     },
     methods: {
+      openFullScreen1() {
+        this.fullscreenLoading = true;
+        setTimeout(() => {
+          this.fullscreenLoading = false;
+        }, 2000);
+      },
+      // openFullScreen2() {
+      //   const loading = this.$loading({
+      //     lock: true,
+      //     text: 'Loading',
+      //     spinner: 'el-icon-loading',
+      //     background: 'rgba(0, 0, 0, 0.7)'
+      //   });
+      //   setTimeout(() => {
+      //     loading.close();
+      //   }, 2000);
+      // },
+
       // 限制上传大小
       beforeAvatarUpload (file) {
         const isLt2M = file.size /100/ 1024 / 1024 < 1
@@ -82,12 +118,6 @@
           this.$message({
             showClose: true,
             message: '命名不正确！',
-            type: 'error'
-          })
-        } else if (res === '表名与csv内容冲突') {
-          this.$message({
-            showClose: true,
-            message: '表名与csv内容冲突！',
             type: 'error'
           })
         } else if (res === '内容不合法') {
@@ -118,7 +148,7 @@
 </script>
 
 <style scoped>
-    #UploadCsv {
-        padding: 20px 0 0 20px;
-    }
+#Upload{
+  height:800px
+}
 </style>

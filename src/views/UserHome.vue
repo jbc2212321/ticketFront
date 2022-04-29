@@ -1,11 +1,10 @@
 <template>
-    <div id="Doctor">
+    <div id="UserHome">
         <el-container>
             <!--        <el-aside >-->
             <!--          <el-menu :default-openeds="['1']">-->
             <!--            <el-row class="tac" align="top">-->
             <el-menu
-                    height="800px"
                     default-active="2"
                     class="el-menu-vertical-demo"
                     border-right-width="0px"
@@ -26,14 +25,14 @@
 
                 <router-link to="Inquiry"  class="a">
                     <el-menu-item index="3">
-                        <i class="el-icon-message-solid"></i>
-                        <span slot="title">版权状态</span>
+                        <i class="el-icon-search"></i>
+                        <span slot="title">版权查询</span>
                     </el-menu-item>
                 </router-link>
 
                 <router-link to="Trade"  class="a">
                     <el-menu-item index="4">
-                        <i class="el-icon-tickets"></i>
+                        <i class="el-icon-notebook-2"></i>
                         <span slot="title">版权交易</span>
                     </el-menu-item>
                 </router-link>
@@ -325,8 +324,8 @@
     .el-main {
         background-color: #ffffff;
         color: #333;
-        text-align: center;
-        line-height: 0;
+        /*text-align: center;*/
+        /*line-height: 760px;*/
     }
 
     h1 {

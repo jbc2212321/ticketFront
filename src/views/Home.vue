@@ -5,7 +5,7 @@
         <el-aside>
           <el-menu :default-openeds="['1']">
             <el-submenu index="1">
-              <template slot="title"><i class="el-icon-menu"></i>智慧医疗-管理员</template>
+              <template slot="title"><i class="el-icon-menu"></i>数字音乐版权保护系统-管理员</template>
               <el-menu-item index="1-1" ><router-link to="/admin/LogManagement">用户管理</router-link></el-menu-item>
               <el-menu-item index="1-2">日志管理</el-menu-item>
               <el-menu-item index="1-3">数据查询</el-menu-item>
@@ -15,10 +15,10 @@
         </el-aside>
       </el-aside>
       <el-container>
-        <el-header><h1>小票管理系统</h1></el-header>
+        <el-header><h1>数字音乐版权保护系统</h1></el-header>
         <div style="height: 800px;overflow: auto"><router-view></router-view></div>
 <!--        <el-main ><router-view></router-view></el-main>-->
-        <el-footer><br><br><br>小票管理系统</el-footer>
+        <el-footer><br><br><br>数字音乐版权保护系统</el-footer>
       </el-container>
     </el-container>
 <!--    <el-button type="primary" round @click="submit">跳转</el-button>-->
@@ -34,7 +34,10 @@ export default {
   name: 'Home',
   data () {
     return {
-
+        songid:'',
+        songname:'',
+        userid:'',
+        username:'',
     }
   },
   methods: {
@@ -73,8 +76,8 @@ export default {
 .el-main {
   /* background-color: #ffffff;
   color: #333; */
-  text-align: left;
-  line-height: 760px;
+  /*text-align: left;*/
+  /*line-height: 760px;*/
 }
 h1{
   font-size:25px;

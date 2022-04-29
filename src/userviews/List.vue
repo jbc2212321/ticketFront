@@ -1,5 +1,5 @@
 <template>
-    <div id="MyCase">
+    <div id="List">
         <template>
             <!-- 点击查询病历弹出的对话框 -->
             <el-dialog

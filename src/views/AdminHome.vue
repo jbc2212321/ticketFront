@@ -325,7 +325,7 @@
     .el-main {
         background-color: #ffffff;
         color: #333;
-        text-align: center;
+        /*text-align: center;*/
         line-height: 0;
     }
 
