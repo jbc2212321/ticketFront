@@ -236,7 +236,7 @@
               case '1':
                 console.log("管理员",this.value)
                 this.$router.push({
-                  path: 'admin/UserManagement'
+                  path: 'admin/LogManagement'
                 })
                 break
               // case '2':
@@ -249,7 +249,7 @@
               case '0':
                 console.log("用户",this.value)
                 this.$router.push({
-                  path: 'user/index'
+                  path: 'user/Upload'
                 }).catch(() => {
                 })
                 break

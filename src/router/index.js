@@ -1,25 +1,18 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
-import Login from '@/views/Login'
 import store from '../store'
-import Chart from '@/views/Chart'
 import Error404 from '@/views/Error404'
 import AdminHome from '@/views/AdminHome'
-import UserManagement from '@/adminviews/UserManagement'
 import Register from '@/views/Register'
-import MyDoctor from '../userviews/MyDoctor'
-import MyCase from '../userviews/MyCase'
-import MyData from '../userviews/MyData'
-import DoctorData from '../userviews_nu/DoctorData'
-import DoctorHome from '../views/UserHome'
-import MyPatient from '../userviews_nu/MyPatient'
-import UploadCsv from '../adminviews/UploadCsv'
-import MyAppointment from '../userviews/MyAppointment'
-import DoctorAppointment from '../userviews_nu/DoctorAppointment'
+import Inquiry from '../userviews/Inquiry'
+import Trade from '../userviews/Trade'
+import Upload from '../userviews/Upload'
 import LogManagement from '../adminviews/LogManagement'
 import TodoList from '../adminviews/TodoList'
-import UserHome from "@/views/UserHome";
+import TradeList from "@/adminviews/TradeList";
+import List from "@/userviews/List"
+import Login from "@/views/Login";
 
 Vue.use(VueRouter)
 
@@ -38,7 +31,7 @@ const routes = [
     component: AdminHome,
     children: [
       {
-        path: '/admin/TodoList',
+        path: '/admin/TodoList', //审核模块
         component: TodoList,
         meta: {
           requireAuth: true,
@@ -46,7 +39,7 @@ const routes = [
         },
       },
       {
-        path: '/admin/LogManagement',
+        path: '/admin/LogManagement', //查看已审核的信息
         component: LogManagement,
         meta: {
           requireAuth: true,
@@ -54,21 +47,30 @@ const routes = [
         },
       },
       {
-        path: '/admin/UserManagement',
-        component: UserManagement,
-        meta: {
-          requireAuth: true,
-          identity: 1
-        },
-      },
-      {
-        path: '/admin/UploadCsv',
-        component: UploadCsv,
+        path: '/admin/TradeLIst', //查看已审核的信息
+        component: TradeList,
         meta: {
           requireAuth: true,
           identity: 1
         },
       }
+      // ,
+      // {
+      //   path: '/admin/UserManagement',
+      //   component: UserManagement,
+      //   meta: {
+      //     requireAuth: true,
+      //     identity: 1
+      //   },
+      // },
+      // {
+      //   path: '/admin/UploadCsv',
+      //   component: UploadCsv,
+      //   meta: {
+      //     requireAuth: true,
+      //     identity: 1
+      //   },
+      // }
     ],
     meta: {
       requireAuth: true,
@@ -118,26 +120,9 @@ const routes = [
     }
   },
   {
-    path: '/admin/UploadCsv',
+    path: '/admin/TradeList',
     name: 'UploadCsv',
-    component: UploadCsv,
-    meta: {
-      requireAuth: true,
-      identity: 0
-    },
-    beforeEnter: (to, from, next) => {
-      if (to.meta.identity !== store.state.identity) {
-        alert('用户身份不匹配!')
-        next({ path: '/' })
-      } else {
-        next()
-      }
-    }
-  },
-  {
-    path: '/admin/UserManagement',
-    name: 'UserManagement',
-    component: UserManagement,
+    component: TradeList,
     meta: {
       requireAuth: true,
       identity: 0
@@ -161,32 +146,32 @@ const routes = [
     },
     children: [
       {
-        path: '/user/MyDoctor',
-        component: MyDoctor,
+        path: '/user/Upload',
+        component: Upload,
         meta: {
           requireAuth: true,
           identity: 0
         },
       },
       {
-        path: '/user/MyCase',
-        component: MyCase,
+        path: '/user/Inquiry',
+        component: Inquiry,
         meta: {
           requireAuth: true,
           identity: 0
         },
       },
       {
-        path: '/user/MyData',
-        component: MyData,
+        path: '/user/Trade',
+        component: Trade,
         meta: {
           requireAuth: true,
           identity: 0
         },
       },
       {
-        path: '/user/MyAppointment',
-        component: MyAppointment,
+        path: '/user/List',
+        component: List,
         meta: {
           requireAuth: true,
           identity: 0
@@ -203,9 +188,9 @@ const routes = [
     }
   },
   {
-    path: '/user/MyAppointment',
-    name: 'MyAppointment',
-    component: MyAppointment,
+    path: '/user/Upload',
+    name: 'Upload',
+    component: Upload,
     meta: {
       requireAuth: true,
       identity: 0
@@ -220,9 +205,9 @@ const routes = [
     }
   },
   {
-    path: '/user/MyDoctor',
-    name: 'MyDoctor',
-    component: MyDoctor,
+    path: '/user/Inquiry',
+    name: 'Inquiry',
+    component: Inquiry,
     meta: {
       requireAuth: true,
       identity: 0
@@ -237,9 +222,9 @@ const routes = [
     }
   },
   {
-    path: '/user/MyCase',
-    name: 'MyCase',
-    component: MyCase,
+    path: '/user/Trade',
+    name: 'Trade',
+    component: Trade,
     meta: {
       requireAuth: true,
       identity: 0
@@ -254,9 +239,9 @@ const routes = [
     }
   },
   {
-    path: '/user/MyData',
-    name: 'MyData',
-    component: MyData,
+    path: '/user/List',
+    name: 'List',
+    component: List,
     meta: {
       requireAuth: true,
       identity: 0
@@ -271,110 +256,110 @@ const routes = [
     }
   },
 
-  // /*Doctor*/
-
-  //User
-  {
-    path: '/user',
-    name: 'UserHome',
-    component: UserHome,
-    children: [
-      {
-        path: '/user/DoctorAppointment',
-        name: 'DoctorAppointment',
-        component: DoctorAppointment,
-        meta: {
-          requireAuth: true,
-          identity: 0
-        }
-      },
-      {
-        path: '/user/DoctorData',
-        name: 'DoctorData',
-        component: DoctorData,
-        meta: {
-          requireAuth: true,
-          identity: 0
-        }
-      },
-      {
-        path: '/user/index',
-        name: 'Index',
-        component: MyPatient,
-        meta: {
-          requireAuth: true,
-          identity: 0
-        }
-      },
-    ],
-    meta: {
-      requireAuth: true,
-      identity: 0
-    },
-    beforeEnter: (to, from, next) => {
-      if (to.meta.identity !== store.state.identity) {
-        alert('用户身份不匹配!')
-        console.log('???')
-        next({ path: '/' })
-      } else {
-        next()
-      }
-    }
-  },
-  {
-    path: '/user/DoctorAppointment',
-    name: 'DoctorAppointment',
-    component: DoctorAppointment,
-    meta: {
-      requireAuth: true,
-      identity: 3
-    },
-    beforeEnter: (to, from, next) => {
-      if (to.meta.identity !== store.state.identity) {
-        alert('用户身份不匹配!')
-        console.log('???')
-        next({ path: '/' })
-      } else {
-        next()
-      }
-    }
-  },
-  {
-    path: '/user/DoctorData',
-    name: 'DoctorData',
-    component: DoctorData,
-    meta: {
-      requireAuth: true,
-      identity: 0
-    },
-    beforeEnter: (to, from, next) => {
-      if (to.meta.identity !== store.state.identity) {
-        alert('用户身份不匹配!')
-        console.log('???')
-        next({ path: '/' })
-      } else {
-        next()
-      }
-    }
-  },
-  {
-    path: '/user/MyPatient',
-    name: 'MyPatient',
-    component: MyPatient,
-    meta: {
-      requireAuth: true,
-      identity: 0
-    },
-    beforeEnter: (to, from, next) => {
-      if (to.meta.identity !== store.state.identity) {
-        alert('用户身份不匹配!')
-        console.log('???')
-        next({ path: '/' })
-      } else {
-        next()
-      }
-    }
-  },
+  // // /*Doctor*/
+  //
+  // //User
+  // {
+  //   path: '/user',
+  //   name: 'UserHome',
+  //   component: UserHome,
+  //   children: [
+  //     {
+  //       path: '/user/DoctorAppointment',
+  //       name: 'DoctorAppointment',
+  //       component: DoctorAppointment,
+  //       meta: {
+  //         requireAuth: true,
+  //         identity: 0
+  //       }
+  //     },
+  //     {
+  //       path: '/user/DoctorData',
+  //       name: 'DoctorData',
+  //       component: DoctorData,
+  //       meta: {
+  //         requireAuth: true,
+  //         identity: 0
+  //       }
+  //     },
+  //     {
+  //       path: '/user/index',
+  //       name: 'Index',
+  //       component: MyPatient,
+  //       meta: {
+  //         requireAuth: true,
+  //         identity: 0
+  //       }
+  //     },
+  //   ],
+  //   meta: {
+  //     requireAuth: true,
+  //     identity: 0
+  //   },
+  //   beforeEnter: (to, from, next) => {
+  //     if (to.meta.identity !== store.state.identity) {
+  //       alert('用户身份不匹配!')
+  //       console.log('???')
+  //       next({ path: '/' })
+  //     } else {
+  //       next()
+  //     }
+  //   }
+  // },
+  // {
+  //   path: '/user/DoctorAppointment',
+  //   name: 'DoctorAppointment',
+  //   component: DoctorAppointment,
+  //   meta: {
+  //     requireAuth: true,
+  //     identity: 3
+  //   },
+  //   beforeEnter: (to, from, next) => {
+  //     if (to.meta.identity !== store.state.identity) {
+  //       alert('用户身份不匹配!')
+  //       console.log('???')
+  //       next({ path: '/' })
+  //     } else {
+  //       next()
+  //     }
+  //   }
+  // },
+  // {
+  //   path: '/user/DoctorData',
+  //   name: 'DoctorData',
+  //   component: DoctorData,
+  //   meta: {
+  //     requireAuth: true,
+  //     identity: 0
+  //   },
+  //   beforeEnter: (to, from, next) => {
+  //     if (to.meta.identity !== store.state.identity) {
+  //       alert('用户身份不匹配!')
+  //       console.log('???')
+  //       next({ path: '/' })
+  //     } else {
+  //       next()
+  //     }
+  //   }
+  // },
+  // {
+  //   path: '/user/MyPatient',
+  //   name: 'MyPatient',
+  //   component: MyPatient,
+  //   meta: {
+  //     requireAuth: true,
+  //     identity: 0
+  //   },
+  //   beforeEnter: (to, from, next) => {
+  //     if (to.meta.identity !== store.state.identity) {
+  //       alert('用户身份不匹配!')
+  //       console.log('???')
+  //       next({ path: '/' })
+  //     } else {
+  //       next()
+  //     }
+  //   }
+  // },
   {
     path: '/',
     name: 'login',
@@ -391,16 +376,16 @@ const routes = [
       keepAlive: true,
     }
   },
-  {
-    path: '/chart',
-    name: 'chart',
-    component: Chart
-  },
-  {
-    path: '/about',
-    name: 'About',
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-  },
+  // {
+  //   path: '/chart',
+  //   name: 'chart',
+  //   component: Chart
+  // },
+  // {
+  //   path: '/about',
+  //   name: 'About',
+  //   component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+  // },
 
   {
     path: '/*',

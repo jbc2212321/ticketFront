@@ -17,26 +17,33 @@
                     :collapse="isCollapse"
             >
 
-<!--                <router-link to="MyPatient" class="a">-->
-<!--                    <el-menu-item index="2">-->
-<!--                        <i class="el-icon-s-custom"></i>-->
-<!--                        <span slot="title">病患列表</span>-->
-<!--                    </el-menu-item>-->
-<!--                </router-link>-->
-
-<!--                <router-link to="DoctorAppointment"  class="a">-->
-<!--                    <el-menu-item index="3">-->
-<!--                        <i class="el-icon-message-solid"></i>-->
-<!--                        <span slot="title">我的预约</span>-->
-<!--                    </el-menu-item>-->
-<!--                </router-link>-->
-
-                <router-link to="DoctorData"  class="a">
-                    <el-menu-item index="4">
-                        <i class="el-icon-tickets"></i>
-                        <span slot="title">个人资料</span>
+                <router-link to="Upload" class="a">
+                    <el-menu-item index="2">
+                        <i class="el-icon-s-custom"></i>
+                        <span slot="title">上传认证</span>
                     </el-menu-item>
                 </router-link>
+
+                <router-link to="Inquiry"  class="a">
+                    <el-menu-item index="3">
+                        <i class="el-icon-message-solid"></i>
+                        <span slot="title">版权状态</span>
+                    </el-menu-item>
+                </router-link>
+
+                <router-link to="Trade"  class="a">
+                    <el-menu-item index="4">
+                        <i class="el-icon-tickets"></i>
+                        <span slot="title">版权交易</span>
+                    </el-menu-item>
+                </router-link>
+
+              <router-link to="List"  class="a">
+                <el-menu-item index="5">
+                  <i class="el-icon-tickets"></i>
+                  <span slot="title">版权列表</span>
+                </el-menu-item>
+              </router-link>
             </el-menu>
 
             <el-container>

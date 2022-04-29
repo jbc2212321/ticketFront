@@ -17,26 +17,26 @@
                     :collapse="isCollapse"
             >
 
-                <router-link to="/admin/UserManagement" class="a">
+                <router-link to="/admin/LogManagement" class="a">
                     <el-menu-item index="2">
                         <i class="el-icon-s-custom"></i>
-                        <span slot="title">用户管理</span>
-                    </el-menu-item>
-                </router-link>
-
-                <router-link to="/admin/LogManagement" class="a">
-                    <el-menu-item index="3" class="a">
-                        <i class="el-icon-document"></i>
                         <span slot="title">审核查看</span>
                     </el-menu-item>
                 </router-link>
 
-                <router-link to="UploadCsv" class="a">
-                    <el-menu-item index="4">
-                        <i class="el-icon-upload2"></i>
-                        <span slot="title">上传音频</span>
+                <router-link to="/admin/TradeList" class="a">
+                    <el-menu-item index="3" class="a">
+                        <i class="el-icon-document"></i>
+                        <span slot="title">代办交易</span>
                     </el-menu-item>
                 </router-link>
+
+<!--                <router-link to="UploadCsv" class="a">-->
+<!--                    <el-menu-item index="4">-->
+<!--                        <i class="el-icon-upload2"></i>-->
+<!--                        <span slot="title">上传音频</span>-->
+<!--                    </el-menu-item>-->
+<!--                </router-link>-->
 
                 <router-link to="TodoList" class="a">
                     <el-menu-item index="5">
