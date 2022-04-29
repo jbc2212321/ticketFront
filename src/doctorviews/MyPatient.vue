@@ -30,7 +30,7 @@
                         width="200">
                     <template slot-scope="scope">
                         <el-tag
-                                :type="scope.row.type === '增值税发票' ? 'primary' : 'success'"
+                                :type="scope.row.type === '收款票据' ? 'primary' : 'success'"
                                 disable-transitions>{{scope.row.type}}
                         </el-tag>
                     </template>
@@ -120,13 +120,7 @@
         mobility: '',  //松动度
         tartar: '',    //牙石
         ToothVisible: false,
-        patientList: [
-          {
-            num: '6922547823636381696',
-            time: '123',
-            type: '123',
-          }
-        ],
+        patientList: [],
         patientRecord: [],  //病人体检单号列表
         currentPage1: 5,
         currentPage3: 5,
@@ -167,20 +161,27 @@
     },
     mounted () {
       this.$axios({
-        url: 'getDocsPatient',
+        url: 'user/listTicket',
         method: 'post',
-        headers: {
-          'Content-Type': 'application/json; charset=UTF-8'
-        },
         data: {
-          DoctorPhone: this.$session.get('phone')
+          userId: this.$session.get('userId')
         },
-        // headers: {'content-type': 'application/x-www-form-urlencoded'}
       }).then(res => {
-        // console.log(res.data)
-        this.patientList = res.data
-
+        // console.log("这v爱上",res.data)
+        // this.patientList = res.data.data
+        console.log("data2:", res.data.data)
+        for (const i in res.data.data) {
+          console.log(i,  res.data.data[i])
+          var list = {
+            num: res.data.data[i].ticket_id,
+            time: res.data.data[i].create_time,
+            type: "增值税发票",
+          }
+          this.patientList.push(list)
+        }
       })
+      // console.log("patientList:",this.patientList)
+      // console.log("data2:", res)
     },
     methods: {
       LookPatient (row) {  //查看所有体检单
@@ -270,6 +271,7 @@
         this.patientNum = row['num']
       },
       showTicket (row) {
+        console.log('num:', row['num'])
         this.$axios({
           url: 'user/showTicket',
           method: 'post',
