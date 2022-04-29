@@ -299,6 +299,11 @@
                     </el-table>
                 </div>
             </div>
+          <el-button
+              type="primary"
+              @click="openFullScreen2">
+            服务方式
+          </el-button>
         </template>
 
     </div>
@@ -572,7 +577,32 @@
             message: '上传成功！',
             type: 'success'
           })
+          this.openFullScreen2()
         }
+        ;
+        //   const loading = this.$loading({
+        //     lock: true,
+        //     text: 'Loading',
+        //     spinner: 'el-icon-loading',
+        //     background: 'rgba(0, 0, 0, 0.7)'
+        //   });
+        //   setTimeout(() => {
+        //     loading.close();
+        //   }, 2000);
+        // }  //加载等待的时间
+
+      },
+
+      openFullScreen2() {
+        const loading = this.$loading({
+          lock: true,
+          text: 'Loading',
+          spinner: 'el-icon-loading',
+          background: 'rgba(0, 0, 0, 0.7)'
+        });
+        setTimeout(() => {
+          loading.close();
+        }, 2000);
       },
 
       handleRemove (file, fileList) {
@@ -587,7 +617,7 @@
 
       saveTicket: function () {
         console.log('userId:', this.$session.get('userId'))
-        console.log('imageName:',this.imageName)
+        console.log('imageName:', this.imageName)
         html2canvas(this.$refs.exportPdf, {
           backgroundColor: '#ffffff',
           useCORS: true,
@@ -605,51 +635,51 @@
         })
 
         this.$axios(
-          {
-            url: 'user/saveTicket',
-            method: 'post',
-            data: {
-              userId:this.$session.get('userId'),
-              ticketImg: this.ticketImg,
-              username: this.username,
-              password: this.password,
-              phone: this.phoneNumber,
-              value: this.value,
-              imageName: this.imageName,
-              vatInvoice: {
-                InvoiceCode: this.InvoiceCode,
-                MachineCode: this.MachineCode,
-                InvoiceTypeOrg: this.InvoiceTypeOrg,
-                InvoiceNum: this.InvoiceNum,
-                InvoiceDate: this.InvoiceDate,
-                PurchaserName: this.PurchaserName,
-                PurchaserRegisterNum: this.PurchaserRegisterNum,
-                PurchaserAddress: this.PurchaserAddress,
-                PurchaserBank: this.PurchaserBank,
-                Password: this.Password,
-                CommodityName: this.CommodityName + '',
-                CommodityType: this.CommodityType + '',
-                CommodityUnit: this.CommodityUnit + '',
-                CommodityNum: this.CommodityNum + '',
-                CommodityPrice: this.CommodityPrice + '',
-                CommodityAmount: this.CommodityAmount + '',
-                TotalAmount: this.TotalAmount + '',
-                CommodityTaxRate: this.CommodityTaxRate + '',
-                CommodityTax: this.CommodityTax + '',
-                TotalTax: this.TotalTax + '',
-                AmountInWords: this.AmountInWords + '',
-                AmountInFiguers: this.AmountInFiguers + '',
-                SellerName: this.SellerName,
-                SellerRegisterNum: this.SellerRegisterNum,
-                SellerAddress: this.SellerAddress,
-                SellerBank: this.SellerBank,
-                Payee: this.Payee,
-                Checker: this.Checker,
-                NoteDrawer: this.NoteDrawer,
-                Remarks: this.Remarks,
+            {
+              url: 'user/saveTicket',
+              method: 'post',
+              data: {
+                userId: this.$session.get('userId'),
+                ticketImg: this.ticketImg,
+                username: this.username,
+                password: this.password,
+                phone: this.phoneNumber,
+                value: this.value,
+                imageName: this.imageName,
+                vatInvoice: {
+                  InvoiceCode: this.InvoiceCode,
+                  MachineCode: this.MachineCode,
+                  InvoiceTypeOrg: this.InvoiceTypeOrg,
+                  InvoiceNum: this.InvoiceNum,
+                  InvoiceDate: this.InvoiceDate,
+                  PurchaserName: this.PurchaserName,
+                  PurchaserRegisterNum: this.PurchaserRegisterNum,
+                  PurchaserAddress: this.PurchaserAddress,
+                  PurchaserBank: this.PurchaserBank,
+                  Password: this.Password,
+                  CommodityName: this.CommodityName + '',
+                  CommodityType: this.CommodityType + '',
+                  CommodityUnit: this.CommodityUnit + '',
+                  CommodityNum: this.CommodityNum + '',
+                  CommodityPrice: this.CommodityPrice + '',
+                  CommodityAmount: this.CommodityAmount + '',
+                  TotalAmount: this.TotalAmount + '',
+                  CommodityTaxRate: this.CommodityTaxRate + '',
+                  CommodityTax: this.CommodityTax + '',
+                  TotalTax: this.TotalTax + '',
+                  AmountInWords: this.AmountInWords + '',
+                  AmountInFiguers: this.AmountInFiguers + '',
+                  SellerName: this.SellerName,
+                  SellerRegisterNum: this.SellerRegisterNum,
+                  SellerAddress: this.SellerAddress,
+                  SellerBank: this.SellerBank,
+                  Payee: this.Payee,
+                  Checker: this.Checker,
+                  NoteDrawer: this.NoteDrawer,
+                  Remarks: this.Remarks,
+                }
               }
             }
-          }
         ).then(res => {
 
         })
