@@ -9,8 +9,9 @@
                 :on-preview="handlePreview"
                 :on-remove="handleRemove"
                 :on-success="handle_success"
+                :on-progress="handle_progress"
                 :show-file-list="false"
-                :beforeUpload="beforeAvatarUpload"
+                :beforeUpload="handle_progress"
                 :on-exceed="handleExceed">
             <el-button id="initSlide" type="primary" @click="uploadImage">点击上传</el-button>
             <el-button id="initSlide2" type="primary">重新识别</el-button>
@@ -312,6 +313,7 @@
 
 <script>
   import html2canvas from 'html2canvas' // 转为图片
+  import { Loading } from 'element-ui';
   import printJS from 'print-js' // 打印
   export default {
     name: 'Upload',
@@ -401,7 +403,6 @@
         Checker: '',
         NoteDrawer: '',
         Remarks: '',
-
         dialogTableVisible: false,
 
         //发票图片
@@ -417,6 +418,7 @@
       // })
     },
     methods: {
+
       //转图片打印
       toImg () { // 转图片打印
         html2canvas(this.$refs.exportPdf, {
@@ -533,10 +535,14 @@
         }
         return isLt2M
       },
+      handle_progress (){
+        // this.openFullScreen2()
+        startLoading()
+      },
       handle_success (res) {
-
         console.log('data:', res)
         if (res.code === 0) {
+            // loading.close();
           console.log('AmountInFiguers:', res.data.AmountInFiguers)
           this.InvoiceCode = res.data.InvoiceCode
           this.MachineCode = res.data.MachineCode
@@ -572,12 +578,13 @@
 
           this.imageName = res.imageName
           console.log('图片:', this.imageName)
+endLoading()
           this.$message({
             showClose: true,
             message: '上传成功！',
             type: 'success'
           })
-          this.openFullScreen2()
+
         }
         ;
         //   const loading = this.$loading({
@@ -593,22 +600,23 @@
 
       },
 
-      openFullScreen2() {
-        const loading = this.$loading({
-          lock: true,
-          text: 'Loading',
-          spinner: 'el-icon-loading',
-          background: 'rgba(0, 0, 0, 0.7)'
-        });
-        setTimeout(() => {
-          loading.close();
-        }, 2000);
-      },
+      // openFullScreen2() {
+      //   const loading = this.$loading({
+      //     lock: true,
+      //     text: 'Loading',
+      //     spinner: 'el-icon-loading',
+      //     background: 'rgba(0, 0, 0, 0.7)'
+      //   });
+      //   setTimeout(() => {
+      //     loading.close();
+      //   }, 20000);
+      // },
 
       handleRemove (file, fileList) {
         console.log(file, fileList)
       },
       handlePreview (file) {
+
         console.log(file)
       },
       handleExceed (files, fileList) {
@@ -688,6 +696,22 @@
 
     }
   }
+
+  let loading        //定义loading变量
+
+  function startLoading() {    //使用Element loading-start 方法
+    loading = Loading.service({ fullscreen: true,
+      lock: true,
+      text: '正在识别',
+      spinner: 'el-icon-loading',
+      background: 'rgba(0, 0, 0, 0.7)'
+    });
+
+  }
+  function endLoading() {    //使用Element loading-close 方法
+    loading.close()
+  }
+
 </script>
 
 <style scoped>

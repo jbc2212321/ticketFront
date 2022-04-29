@@ -52,7 +52,7 @@
                                 size="small"
                                 plain
                                 type="danger"
-                                @click="initChart(scope.row)">删除
+                                @click="open(scope.row)">删除
                         </el-button>
                     </template>
                 </el-table-column>
@@ -239,12 +239,49 @@
       handleCurrentChange (val) {
         this.currentPage2 = val
       },
-      open () {
+      open (row) {
+
         this.$confirm('此操作将永久删除该条目, 是否继续?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
+          //没用
+            // for (const i in this.patientList) {
+            //   if (this.patientList[i].num===row["num"]){
+            //     console.log(i,this.patientList[i])
+            //     delete this.patientList[i]
+            //     console.log("list:",this.patientList)
+            //   }
+            // }
+
+          this.$axios({
+            url: '/user/delTicket',
+            method: 'post',
+            data: {
+              ticketId:row['num']
+            }
+          }).then(res => {
+            this.$axios({
+              url: 'user/listTicket',
+              method: 'post',
+              data: {
+                userId: this.$session.get('userId')
+              },
+            }).then(res => {
+              this.patientList=[]
+              for (const i in res.data.data) {
+                console.log(i,  res.data.data[i])
+                var list = {
+                  num: res.data.data[i].ticket_id,
+                  time: res.data.data[i].create_time,
+                  type: "增值税发票",
+                }
+                this.patientList.push(list)
+              }
+            })
+          })
+
           this.$message({
             type: 'success',
             message: '删除成功!'

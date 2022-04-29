@@ -19,7 +19,7 @@
 
                 <router-link to="Show" class="a">
                     <el-menu-item index="2">
-                        <i class="el-icon-s-custom"></i>
+                        <i class="el-icon-tickets"></i>
                         <span slot="title">小票展示</span>
                     </el-menu-item>
                 </router-link>
@@ -40,7 +40,7 @@
 
                 <router-link to="Upload" class="a">
                     <el-menu-item index="4">
-                        <i class="el-icon-message-solid"></i>
+                        <i class="el-icon-upload2"></i>
                         <span slot="title">上传小票</span>
                     </el-menu-item>
                 </router-link>
