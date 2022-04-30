@@ -14,7 +14,7 @@
                 :beforeUpload="handle_progress"
                 :on-exceed="handleExceed">
             <el-button id="initSlide" type="primary" @click="uploadImage">点击上传</el-button>
-            <el-button id="initSlide2" type="primary">重新识别</el-button>
+<!--            <el-button id="initSlide2" type="primary">重新识别</el-button>-->
             <!--            <div slot="tip" class="el-upload__tip">只能上传csv文件</div>-->
         </el-upload>
 
@@ -177,9 +177,9 @@
                 </el-form>
                 <br>
                 <el-col :span="8" :offset="11">
-                    <el-button type="primary" round @click="saveTicket">确 认</el-button>
+                    <el-button type="primary" round @click="saveTicket">确认并保存</el-button>
                     <!--              <el-button type="primary" round v-print="'#printTest'">打 印</el-button>-->
-                    <el-button type="primary" @click="toImg">打印</el-button>
+<!--                    <el-button type="primary" @click="toImg">打印</el-button>-->
                 </el-col>
                 <br></div>
         </el-dialog>
@@ -314,57 +314,7 @@
     name: 'Upload',
     data () {
       return {
-        tableData: [{
-          rowNum: 1,
-          CommodityName: 'ballpen',
-          CommodityType: '1',
-          CommodityUnit: '2',
-          CommodityNum: '3',
-          CommodityPrice: '4',
-          CommodityAmount: '5',
-          CommodityTaxRate: '6',
-          CommodityTax: '7'
-        }, {
-          rowNum: 2,
-          CommodityName: 'ball',
-          CommodityType: '1',
-          CommodityUnit: '2',
-          CommodityNum: '3',
-          CommodityPrice: '4',
-          CommodityAmount: '5',
-          CommodityTaxRate: '6',
-          CommodityTax: '7'
-        }, {
-          rowNum: 3,
-          CommodityName: 'QingJiang11111111111111111111',
-          CommodityType: '1',
-          CommodityUnit: '2',
-          CommodityNum: '3',
-          CommodityPrice: '4',
-          CommodityAmount: '5',
-          CommodityTaxRate: '6',
-          CommodityTax: '7'
-        }, {
-          rowNum: 4,
-          CommodityName: 'pen',
-          CommodityType: '1',
-          CommodityUnit: '2',
-          CommodityNum: '3',
-          CommodityPrice: '4',
-          CommodityAmount: '5',
-          CommodityTaxRate: '6',
-          CommodityTax: '7'
-        }, {
-          rowNum: 5,
-          CommodityName: '',
-          CommodityType: '',
-          CommodityUnit: '',
-          CommodityNum: '',
-          CommodityPrice: '',
-          CommodityAmount: '',
-          CommodityTaxRate: '',
-          CommodityTax: ''
-        }],
+        tableData: [],
         selectlistRow: [],
 
         //发票数据
@@ -415,35 +365,21 @@
     methods: {
 
       //转图片打印
-      toImg () { // 转图片打印
-        html2canvas(this.$refs.exportPdf, {
-          backgroundColor: '#ffffff',
-          useCORS: true,
-          // width: window.screen.availWidth,
-          // height: window.screen.availHeight,
-          // windowHeight: document.body.scrollHeight,
-          // y:window.pageYOffset
-
-          width: 960,
-          height: 590,
-          windowHeight: 1250,
-          y: 0
-        }).then((canvas) => {
-          // let url = canvas.toDataURL('image/jpeg', 1.0)
-          const url = canvas.toDataURL()
-          this.img = url
-          this.ticketImg = url
-          //打印图片
-          // alert("打印")
-          // printJS({
-          //   printable: url,
-          //   type: 'image',
-          //   documentTitle: '打印图片'
-          // })
-          //base64格式图片打印查看
-          console.log(url)
-        })
-      },
+      // toImg () { // 转图片打印
+      //   html2canvas(this.$refs.exportPdf, {
+      //     backgroundColor: '#ffffff',
+      //     useCORS: true,
+      //     width: 960,
+      //     height: 590,
+      //     windowHeight: 1250,
+      //     y: 0
+      //   }).then((canvas) => {
+      //     const url = canvas.toDataURL()
+      //     this.img = url
+      //     this.ticketImg = url
+      //     // console.log(url)
+      //   })
+      // },
 
       // 获取表格选中时的数据
       selectRow (val) {
@@ -477,7 +413,8 @@
         this.CommodityTax = ''
         // console.log('weis:',this.InvoiceTypeOrg)
         // console.log("是这个吗：",this.tableData[0])
-        // console.log('整个;',this.tableData)
+        console.log('整个;',this.tableData.length)
+        // if(this.tableData.length)
         for (let i = 0; i < this.tableData.length; i++) {
           this.CommodityName += this.tableData[i].CommodityName + '\n'
           this.CommodityType += this.tableData[i].CommodityType + '\n'
@@ -549,15 +486,15 @@
           this.PurchaserAddress = res.data.PurchaserAddress
           this.PurchaserBank = res.data.PurchaserBank
           this.Password = res.data.Password
-          this.CommodityName = res.data.CommodityName
-          this.CommodityType = res.data.CommodityType
-          this.CommodityUnit = res.data.CommodityUnit
-          this.CommodityNum = res.data.CommodityNum
-          this.CommodityPrice = res.data.CommodityPrice
-          this.CommodityAmount = res.data.CommodityAmount
+          // this.CommodityName = res.data.CommodityName
+          // this.CommodityType = res.data.CommodityType
+          // this.CommodityUnit = res.data.CommodityUnit
+          // this.CommodityNum = res.data.CommodityNum
+          // this.CommodityPrice = res.data.CommodityPrice
+          // this.CommodityAmount = res.data.CommodityAmount
           this.TotalAmount = res.data.TotalAmount
-          this.CommodityTaxRate = res.data.CommodityTaxRate
-          this.CommodityTax = res.data.CommodityTax
+          // this.CommodityTaxRate = res.data.CommodityTaxRate
+          // this.CommodityTax = res.data.CommodityTax
           this.TotalTax = res.data.TotalTax
           this.AmountInWords = res.data.AmountInWords
           this.AmountInFiguers = res.data.AmountInFiguers
@@ -618,10 +555,10 @@ endLoading()
         this.$message.warning(`当前限制选择 1 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`)
       },
 
-      saveTicket: function () {
+      saveTicket: async function () {
         console.log('userId:', this.$session.get('userId'))
         console.log('imageName:', this.imageName)
-        html2canvas(this.$refs.exportPdf, {
+        await html2canvas(this.$refs.exportPdf, {
           backgroundColor: '#ffffff',
           useCORS: true,
           width: 960,
@@ -629,62 +566,66 @@ endLoading()
           windowHeight: 1250,
           y: 0
         }).then((canvas) => {
-          // let url = canvas.toDataURL('image/jpeg', 1.0)
           const url = canvas.toDataURL()
           this.img = url
           this.ticketImg = url
-          //base64格式图片打印查看
-          console.log(url)
+          // console.log(url)
         })
 
         this.$axios(
-            {
-              url: 'user/saveTicket',
-              method: 'post',
-              data: {
-                userId: this.$session.get('userId'),
-                ticketImg: this.ticketImg,
-                username: this.username,
-                password: this.password,
-                phone: this.phoneNumber,
-                value: this.value,
-                imageName: this.imageName,
-                vatInvoice: {
-                  InvoiceCode: this.InvoiceCode,
-                  MachineCode: this.MachineCode,
-                  InvoiceTypeOrg: this.InvoiceTypeOrg,
-                  InvoiceNum: this.InvoiceNum,
-                  InvoiceDate: this.InvoiceDate,
-                  PurchaserName: this.PurchaserName,
-                  PurchaserRegisterNum: this.PurchaserRegisterNum,
-                  PurchaserAddress: this.PurchaserAddress,
-                  PurchaserBank: this.PurchaserBank,
-                  Password: this.Password,
-                  CommodityName: this.CommodityName + '',
-                  CommodityType: this.CommodityType + '',
-                  CommodityUnit: this.CommodityUnit + '',
-                  CommodityNum: this.CommodityNum + '',
-                  CommodityPrice: this.CommodityPrice + '',
-                  CommodityAmount: this.CommodityAmount + '',
-                  TotalAmount: this.TotalAmount + '',
-                  CommodityTaxRate: this.CommodityTaxRate + '',
-                  CommodityTax: this.CommodityTax + '',
-                  TotalTax: this.TotalTax + '',
-                  AmountInWords: this.AmountInWords + '',
-                  AmountInFiguers: this.AmountInFiguers + '',
-                  SellerName: this.SellerName,
-                  SellerRegisterNum: this.SellerRegisterNum,
-                  SellerAddress: this.SellerAddress,
-                  SellerBank: this.SellerBank,
-                  Payee: this.Payee,
-                  Checker: this.Checker,
-                  NoteDrawer: this.NoteDrawer,
-                  Remarks: this.Remarks,
-                }
+          {
+            url: 'user/saveTicket',
+            method: 'post',
+            data: {
+              userId: this.$session.get('userId'),
+              ticketImg: this.ticketImg,
+              username: this.username,
+              password: this.password,
+              phone: this.phoneNumber,
+              value: this.value,
+              imageName: this.imageName,
+              vatInvoice: {
+                InvoiceCode: this.InvoiceCode,
+                MachineCode: this.MachineCode,
+                InvoiceTypeOrg: this.InvoiceTypeOrg,
+                InvoiceNum: this.InvoiceNum,
+                InvoiceDate: this.InvoiceDate,
+                PurchaserName: this.PurchaserName,
+                PurchaserRegisterNum: this.PurchaserRegisterNum,
+                PurchaserAddress: this.PurchaserAddress,
+                PurchaserBank: this.PurchaserBank,
+                Password: this.Password,
+                CommodityName: this.CommodityName + '',
+                CommodityType: this.CommodityType + '',
+                CommodityUnit: this.CommodityUnit + '',
+                CommodityNum: this.CommodityNum + '',
+                CommodityPrice: this.CommodityPrice + '',
+                CommodityAmount: this.CommodityAmount + '',
+                TotalAmount: this.TotalAmount + '',
+                CommodityTaxRate: this.CommodityTaxRate + '',
+                CommodityTax: this.CommodityTax + '',
+                TotalTax: this.TotalTax + '',
+                AmountInWords: this.AmountInWords + '',
+                AmountInFiguers: this.AmountInFiguers + '',
+                SellerName: this.SellerName,
+                SellerRegisterNum: this.SellerRegisterNum,
+                SellerAddress: this.SellerAddress,
+                SellerBank: this.SellerBank,
+                Payee: this.Payee,
+                Checker: this.Checker,
+                NoteDrawer: this.NoteDrawer,
+                Remarks: this.Remarks,
               }
             }
+          }
         ).then(res => {
-
+          if (res.data.code===0){
+            this.$message({
+              showClose: true,
+              message: '保存成功！',
+              type: 'success'
+            })
+          }
         })
 
       }

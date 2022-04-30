@@ -30,7 +30,7 @@
                         width="200">
                     <template slot-scope="scope">
                         <el-tag
-                                :type="scope.row.type === '收款票据' ? 'primary' : 'success'"
+                                :type="scope.row.type === '增值税发票' ? 'primary' : 'success'"
                                 disable-transitions>{{scope.row.type}}
                         </el-tag>
                     </template>
@@ -175,7 +175,7 @@
           var list = {
             num: res.data.data[i].ticket_id,
             time: res.data.data[i].create_time,
-            type: "增值税发票",
+            type: res.data.data[i].type,
           }
           this.patientList.push(list)
         }
@@ -275,7 +275,7 @@
                 var list = {
                   num: res.data.data[i].ticket_id,
                   time: res.data.data[i].create_time,
-                  type: "增值税发票",
+                  type: res.data.data[i].type,
                 }
                 this.patientList.push(list)
               }

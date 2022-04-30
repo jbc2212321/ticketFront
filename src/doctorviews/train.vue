@@ -14,99 +14,141 @@
                 :beforeUpload="handle_progress"
                 :on-exceed="handleExceed">
             <el-button id="initSlide" type="primary" @click="uploadImage">点击上传</el-button>
-            <el-button id="initSlide2" type="primary">重新识别</el-button>
+<!--            <el-button id="initSlide2" type="primary">重新识别</el-button>-->
             <!--            <div slot="tip" class="el-upload__tip">只能上传csv文件</div>-->
         </el-upload>
 
         <el-button type="text" @click=merge>识别结果展示</el-button>
 
-<!--        <el-button type="text" @click="printImg">打印测试</el-button>-->
-      <br>
-
+        <!--        <el-button type="text" @click="printImg">打印测试</el-button>-->
+        <br>
 
 
         <el-dialog :visible.sync="dialogTableVisible" width="500px" top="10px">
-          <div ref="exportPdf">
-          <div class="ticketfont">
-            <el-row>
-              <el-col :span="23" :offset="1"><div class="red">{{Identification_number}}</div></el-col>
-            </el-row>
-            <el-row>
-              <el-col :span="8"><div class="station">{{starting_station}}</div></el-col>
-              <el-col :span="8"><div class="arrow">{{train_num}}<br>————————></div></el-col>
-              <el-col :span="8"><div class="station">{{destination_station}}</div></el-col>
-            </el-row>
-            <el-row>
-              <el-col :span="8"><div class="center">{{date}}</div></el-col>
-              <el-col :span="8"><div class="center">{{time}}</div></el-col>
-              <el-col :span="7" :offset="1"><div>{{seat_num}}</div></el-col>
-            </el-row>
-            <el-row>
-              <el-col :span="4" :offset="2"><div>{{ticket_rates}}</div></el-col>
-              <el-col :span="8" :offset="2"><div class="center">网</div></el-col>
-              <el-col :span="7" :offset="1"><div>&nbsp;{{seat_category}}</div></el-col>
-            </el-row>
-            <el-row>
-              <el-col :span="6" :offset="2"><div>限乘当日当次车</div></el-col>
-              <el-col :span="16"><div></div></el-col>
-            </el-row>
-            <el-row>
-              <el-col :span="24"><div></div></el-col>
-            </el-row>
-            <br>
-            <el-row>
-              <el-col :span="8" :offset="2"><div>{{id_num}}</div></el-col>
-              <el-col :span="6"><div>{{name}}</div></el-col>
-              <el-col :span="8"><div></div></el-col>
-            </el-row>
-            <el-row>
-              <el-col :span="12" :offset="3"><div class="bor">买票请到12306 发货请到95306<br>中国铁路祝您旅途愉快</div></el-col>
-              <el-col :span="9"><div></div></el-col>
-            </el-row>
-            <el-row>
-              <el-col :span="8" :offset="2"><div class="smallfont">{{serial_number}}</div></el-col>
-              <el-col :span="8"><div>{{sales_station}}</div></el-col>
-              <el-col :span="6"><div></div></el-col>
-            </el-row>
-          </div>
-          <br>
-          <el-col :span="9" :offset="7">
-            <el-button type="primary" round @click="saveTicket">确 认</el-button>
-            <!--              <el-button type="primary" round v-print="'#printTest'">打 印</el-button>-->
-            <el-button type="primary" @click="toImg">打印</el-button>
+            <div ref="exportPdf">
+                <div class="ticketfont">
+                    <el-row>
+                        <el-col :span="23" :offset="1">
+                            <div class="red">{{Identification_number}}</div>
+                        </el-col>
+                    </el-row>
+                    <el-row>
+                        <el-col :span="8">
+                            <div class="station">{{starting_station}}</div>
+                        </el-col>
+                        <el-col :span="8">
+                            <div class="arrow">{{train_num}}<br>————————></div>
+                        </el-col>
+                        <el-col :span="8">
+                            <div class="station">{{destination_station}}</div>
+                        </el-col>
+                    </el-row>
+                    <el-row>
+                        <el-col :span="8">
+                            <div class="center">{{date}}</div>
+                        </el-col>
+                        <el-col :span="8">
+                            <div class="center">{{time}}</div>
+                        </el-col>
+                        <el-col :span="7" :offset="1">
+                            <div>{{seat_num}}</div>
+                        </el-col>
+                    </el-row>
+                    <el-row>
+                        <el-col :span="4" :offset="2">
+                            <div>{{ticket_rates}}</div>
+                        </el-col>
+                        <el-col :span="8" :offset="2">
+                            <div class="center">网</div>
+                        </el-col>
+                        <el-col :span="7" :offset="1">
+                            <div>&nbsp;{{seat_category}}</div>
+                        </el-col>
+                    </el-row>
+                    <el-row>
+                        <el-col :span="6" :offset="2">
+                            <div>限乘当日当次车</div>
+                        </el-col>
+                        <el-col :span="16">
+                            <div></div>
+                        </el-col>
+                    </el-row>
+                    <el-row>
+                        <el-col :span="24">
+                            <div></div>
+                        </el-col>
+                    </el-row>
+                    <br>
+                    <el-row>
+                        <el-col :span="8" :offset="2">
+                            <div>{{id_num}}</div>
+                        </el-col>
+                        <el-col :span="6">
+                            <div>{{name}}</div>
+                        </el-col>
+                        <el-col :span="8">
+                            <div></div>
+                        </el-col>
+                    </el-row>
+                    <el-row>
+                        <el-col :span="12" :offset="3">
+                            <div class="bor">买票请到12306 发货请到95306<br>中国铁路祝您旅途愉快</div>
+                        </el-col>
+                        <el-col :span="9">
+                            <div></div>
+                        </el-col>
+                    </el-row>
+                    <el-row>
+                        <el-col :span="8" :offset="2">
+                            <div class="smallfont">{{serial_number}}</div>
+                        </el-col>
+                        <el-col :span="8">
+                            <div>{{sales_station}}</div>
+                        </el-col>
+                        <el-col :span="6">
+                            <div></div>
+                        </el-col>
+                    </el-row>
+                </div>
+                <br>
+            </div>
+            <el-col :span="9" :offset="9">
+                <el-button type="primary" round @click="saveTicket">确认并保存</el-button>
+                <!--              <el-button type="primary" round v-print="'#printTest'">打 印</el-button>-->
+<!--                <el-button type="primary" @click="toImg">打印</el-button>-->
 
-          </el-col>
-          <br> <br>
-          </div>
+            </el-col>
+            <br> <br>
+
         </el-dialog>
 
         识别号：
         <input type="text" name="Identification_number" v-model="Identification_number" border="0px">
-        车票号：
-        <input type="text" name="ticket_num" v-model="ticket_num">
+        <!--        车票号：-->
+        <!--        <input type="text" name="ticket_num" v-model="ticket_num">-->
         始发站：
-        <input type="text" name="starting_station" v-model="starting_station" size="18"><br>
+        <input type="text" name="starting_station" v-model="starting_station" size="18">
         车次号：
-        <input type="text" name="train_num" v-model="train_num" size="18">
+        <input type="text" name="train_num" v-model="train_num" size="18"><br>
         到达站：
         <input type="text" name="destination_station" v-model="destination_station" size="18">
-        到达日期：<input type="text" name="date" v-model="date"><br>
+        到达日期：<input type="text" name="date" v-model="date">
         车票金额：
-        <input type="text" name="ticket_rates" v-model="ticket_rates">
+        <input type="text" name="ticket_rates" v-model="ticket_rates" size="13"><br>
         席别：
         <input type="text" name="seat_category" v-model="seat_category">
         姓名：
-        <input type="text" name="name" v-model="name"><br>
+        <input type="text" name="name" v-model="name">
         身份证：
-      <input type="text" name="id_num" v-model="id_num">
+        <input type="text" name="id_num" v-model="id_num"><br>
         序列号：
-      <input type="text" name="serial_number" v-model="serial_number">
-      售站：
-      <input type="text" name="sales_station" v-model="sales_station"><br>
-      时间：
-      <input type="text" name="time" v-model="time">
-      座位号：
-      <input type="text" name="seat_num" v-model="seat_num"><br>
+        <input type="text" name="serial_number" v-model="serial_number">
+        售站：
+        <input type="text" name="sales_station" v-model="sales_station">
+        <!--      时间：-->
+        <!--      <input type="text" name="time" v-model="time">-->
+        座位号：
+        <input type="text" name="seat_num" v-model="seat_num"><br>
 
 
     </div>
@@ -115,27 +157,27 @@
 
 <script>
   import html2canvas from 'html2canvas' // 转为图片
-  import { Loading } from 'element-ui';
+  import { Loading } from 'element-ui'
   import printJS from 'print-js' // 打印
   export default {
     name: 'train',
     data () {
       return {
-        user_id:'',
-        Identification_number:'X006460',
-        ticket_num:'',
-        starting_station:'广州站',
-        train_num:'Z90',
-        destination_station:'石家庄站',
-        date:'2019年09月29日',
-        ticket_rates:'￥224.0元',
-        seat_category:'新空调硬座',
-        name:'张智清',
-        id_num:'1301231997****0015',
-        serial_number:'65870300070929X006460',
-        sales_station:'汕尾售',
-        time:'13:50开',
-        seat_num:'01车047号',
+        userId: this.$session.get('userId'),
+        Identification_number: '',
+        ticket_num: '',
+        starting_station: '',
+        train_num: '',
+        destination_station: '',
+        date: '',
+        ticket_rates: '',
+        seat_category: '',
+        name: '',
+        id_num: '',
+        serial_number: '',
+        sales_station: '',
+        time: ':',
+        seat_num: '',
 
         dialogTableVisible: false,
 
@@ -154,35 +196,20 @@
     methods: {
 
       //转图片打印
-      toImg () { // 转图片打印
-        html2canvas(this.$refs.exportPdf, {
-          backgroundColor: '#ffffff',
-          useCORS: true,
-          // width: window.screen.availWidth,
-          // height: window.screen.availHeight,
-          // windowHeight: document.body.scrollHeight,
-          // y:window.pageYOffset
-
-          width: 460,
-          height: 226,
-          windowHeight: 1250,
-          y: 0
-        }).then((canvas) => {
-          // let url = canvas.toDataURL('image/jpeg', 1.0)
-          const url = canvas.toDataURL()
-          this.img = url
-          this.ticketImg = url
-          //打印图片
-          // alert("打印")
-          // printJS({
-          //   printable: url,
-          //   type: 'image',
-          //   documentTitle: '打印图片'
-          // })
-          //base64格式图片打印查看
-          console.log(url)
-        })
-      },
+      // toImg () { // 转图片打印
+      //   html2canvas(this.$refs.exportPdf, {
+      //     backgroundColor: '#ffffff',
+      //     useCORS: true,
+      //     width: 458,
+      //     height: 250,
+      //     windowHeight: 1250,
+      //     y: 0
+      //   }).then((canvas) => {
+      //     const url = canvas.toDataURL()
+      //     this.img = url
+      //     this.ticketImg = url
+      //   })
+      // },
 
       // 获取表格选中时的数据
       selectRow (val) {
@@ -268,7 +295,7 @@
         }
         return isLt2M
       },
-      handle_progress (){
+      handle_progress () {
         // this.openFullScreen2()
         startLoading()
       },
@@ -277,37 +304,18 @@
         if (res.code === 0) {
           // loading.close();
           console.log('res:', res)
-          this.InvoiceCode = res.data.InvoiceCode
-          this.MachineCode = res.data.MachineCode
-          this.InvoiceTypeOrg = res.data.InvoiceTypeOrg
-          this.InvoiceNum = res.data.InvoiceNum
-          this.InvoiceDate = res.data.InvoiceDate
-          this.PurchaserName = res.data.PurchaserName
-          this.PurchaserRegisterNum = res.data.PurchaserRegisterNum
-          this.PurchaserAddress = res.data.PurchaserAddress
-          this.PurchaserBank = res.data.PurchaserBank
-          this.Password = res.data.Password
-          this.CommodityName = res.data.CommodityName
-          this.CommodityType = res.data.CommodityType
-          this.CommodityUnit = res.data.CommodityUnit
-          this.CommodityNum = res.data.CommodityNum
-          this.CommodityPrice = res.data.CommodityPrice
-          this.CommodityAmount = res.data.CommodityAmount
-          this.TotalAmount = res.data.TotalAmount
-          this.CommodityTaxRate = res.data.CommodityTaxRate
-          this.CommodityTax = res.data.CommodityTax
-          this.TotalTax = res.data.TotalTax
-          this.AmountInWords = res.data.AmountInWords
-          this.AmountInFiguers = res.data.AmountInFiguers
-          this.SellerRegisterNum = res.data.SellerRegisterNum
-          this.SellerName = res.data.SellerName
-          this.SellerAddress = res.data.SellerAddress
-          this.SellerAddress = res.data.SellerAddress
-          this.SellerBank = res.data.SellerBank
-          this.Payee = res.data.Payee
-          this.Checker = res.data.Checker
-          this.NoteDrawer = res.data.NoteDrawer
-          this.Remarks = res.data.Remarks
+          this.Identification_number = res.data.Identification_number
+          this.date = res.data.date
+          this.destination_station = res.data.destination_station
+          this.sales_station = res.data.destination_station
+          this.seat_category = res.data.seat_category
+          this.starting_station = res.data.starting_station
+          this.ticket_rates = res.data.ticket_rates
+          this.train_num = res.data.train_num
+          this.name = res.data.name
+          this.id_num = res.data.id_num
+          this.serial_number = res.data.serial_number
+          this.seat_num = res.data.seat_num
 
           this.imageName = res.imageName
           console.log('图片:', this.imageName)
@@ -319,7 +327,7 @@
           })
 
         }
-        ;
+
         //   const loading = this.$loading({
         //     lock: true,
         //     text: 'Loading',
@@ -356,28 +364,25 @@
         this.$message.warning(`当前限制选择 1 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`)
       },
 
-      saveTicket: function () {
-        console.log('userId:', this.$session.get('userId'))
-        console.log('imageName:', this.imageName)
-        html2canvas(this.$refs.exportPdf, {
+      saveTicket:async function () {
+        await html2canvas(this.$refs.exportPdf, {
           backgroundColor: '#ffffff',
           useCORS: true,
-          width: 960,
-          height: 590,
+          width: 458,
+          height: 250,
           windowHeight: 1250,
           y: 0
         }).then((canvas) => {
-          // let url = canvas.toDataURL('image/jpeg', 1.0)
           const url = canvas.toDataURL()
           this.img = url
-          this.ticketImg = url
-          //base64格式图片打印查看
-          console.log(url)
-        })
 
+          this.ticketImg = url
+        })
+        console.log('userId:', this.$session.get('userId'))
+        console.log('ticketImg:', this.ticketImg)
         this.$axios(
           {
-            url: 'user/saveTicket',
+            url: 'user/train/saveTrain',
             method: 'post',
             data: {
               userId: this.$session.get('userId'),
@@ -387,42 +392,30 @@
               phone: this.phoneNumber,
               value: this.value,
               imageName: this.imageName,
-              vatInvoice: {
-                InvoiceCode: this.InvoiceCode,
-                MachineCode: this.MachineCode,
-                InvoiceTypeOrg: this.InvoiceTypeOrg,
-                InvoiceNum: this.InvoiceNum,
-                InvoiceDate: this.InvoiceDate,
-                PurchaserName: this.PurchaserName,
-                PurchaserRegisterNum: this.PurchaserRegisterNum,
-                PurchaserAddress: this.PurchaserAddress,
-                PurchaserBank: this.PurchaserBank,
-                Password: this.Password,
-                CommodityName: this.CommodityName + '',
-                CommodityType: this.CommodityType + '',
-                CommodityUnit: this.CommodityUnit + '',
-                CommodityNum: this.CommodityNum + '',
-                CommodityPrice: this.CommodityPrice + '',
-                CommodityAmount: this.CommodityAmount + '',
-                TotalAmount: this.TotalAmount + '',
-                CommodityTaxRate: this.CommodityTaxRate + '',
-                CommodityTax: this.CommodityTax + '',
-                TotalTax: this.TotalTax + '',
-                AmountInWords: this.AmountInWords + '',
-                AmountInFiguers: this.AmountInFiguers + '',
-                SellerName: this.SellerName,
-                SellerRegisterNum: this.SellerRegisterNum,
-                SellerAddress: this.SellerAddress,
-                SellerBank: this.SellerBank,
-                Payee: this.Payee,
-                Checker: this.Checker,
-                NoteDrawer: this.NoteDrawer,
-                Remarks: this.Remarks,
+              train: {
+                Identification_number: this.Identification_number,
+                date: this.date,
+                destination_station: this.destination_station,
+                sales_station: this.destination_station,
+                seat_category: this.seat_category,
+                starting_station: this.starting_station,
+                ticket_rates: this.ticket_rates,
+                train_num: this.train_num,
+                name: this.name,
+                id_num: this.id_num,
+                serial_number: this.serial_number,
+                seat_num: this.seat_num,
               }
             }
           }
         ).then(res => {
-
+            if (res.data.code===0){
+              this.$message({
+                showClose: true,
+                message: '保存成功！',
+                type: 'success'
+              })
+            }
         })
 
       }
@@ -432,62 +425,68 @@
 
   let loading        //定义loading变量
 
-  function startLoading() {    //使用Element loading-start 方法
-    loading = Loading.service({ fullscreen: true,
+  function startLoading () {    //使用Element loading-start 方法
+    loading = Loading.service({
+      fullscreen: true,
       lock: true,
       text: '正在识别',
       spinner: 'el-icon-loading',
       background: 'rgba(0, 0, 0, 0.7)'
-    });
+    })
 
   }
-  function endLoading() {    //使用Element loading-close 方法
+
+  function endLoading () {    //使用Element loading-close 方法
     loading.close()
   }
 
 </script>
 
 <style scoped>
-    .red{
-      font-size: 25px;
-      color: rgb(193, 46, 92);
-      font-weight:500;
-    }
-    .station{
-      font-size: 30px;
-      font-weight:bold;
-      text-align: center;
-    }
-    .arrow{
-      text-align: center;
-      font-weight:600;
-      font-family:"微软雅黑";
-    }
-    .ticketfont{
-      font-weight:600;
-      color:black;
-      border-width:1px; border-style:solid; border-color:black;
-      background-color: lightcyan;
-    }
-    .smallfont{
-      font-size:10px;
-      font-weight:500;
+    .red {
+        font-size: 25px;
+        color: rgb(193, 46, 92);
+        font-weight: 500;
     }
 
-    .bor{
-      border:2px dashed;
-      text-align: center;
+    .station {
+        font-size: 30px;
+        font-weight: bold;
+        text-align: center;
+    }
+
+    .arrow {
+        text-align: center;
+        font-weight: 600;
+        font-family: "微软雅黑";
+    }
+
+    .ticketfont {
+        font-weight: 600;
+        color: black;
+        border-width: 1px;
+        border-style: solid;
+        border-color: black;
+        background-color: lightcyan;
+    }
+
+    .smallfont {
+        font-size: 10px;
+        font-weight: 500;
+    }
+
+    .bor {
+        border: 2px dashed;
+        text-align: center;
     }
 
 
-
-
-    #train{
-      height:800px;
+    #train {
+        height: 800px;
     }
 
-    .center{
-      text-align:center;
+    .center {
+        text-align: center;
     }
 
 
