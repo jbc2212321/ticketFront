@@ -8,12 +8,13 @@
                 <el-input v-model="songid"></el-input>
             </el-col></el-form-item>
 
-            <el-form-item label="买方id"><el-col :span="7">
-                <el-input v-model="userid" ></el-input>
+            <el-form-item label="对方id"><el-col :span="7">
+                <el-input v-model="buyerid" ></el-input>
             </el-col></el-form-item>
 
-            <el-col :span="4" :offset="3">
-            <el-button type="primary" @click="onSubmit">提交交易</el-button>
+            <el-col :span="9" :offset="3">
+            <el-button type="primary" @click="onSubmit">版权授权</el-button>
+            <el-button type="primary" @click="onSubmit">版权转让</el-button>
 <!--            <el-button type="danger">清空</el-button>-->
             </el-col>
 
@@ -28,7 +29,7 @@
     data() {
       return {
           songid:'',
-          userid:''
+          buyerid:''
       }
     },
     mounted () {

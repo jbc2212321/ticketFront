@@ -55,6 +55,7 @@
                     :on-remove="handleRemove"
                     :on-success="handle_success"
                     :show-file-list="false"
+                    :on-progress="handle_progress"
                     :on-exceed="handleExceed">
                 <el-button id="initSlide" type="primary">点击上传</el-button>
             </el-upload>
@@ -64,12 +65,13 @@
         </el-col>
         <br>
         <br> <br>
-        <el-button type="primary" @click="openFullScreen1" v-loading.fullscreen.lock="fullscreenLoading">测试Loading
-        </el-button>
+<!--        <el-button type="primary" @click="openFullScreen1" v-loading.fullscreen.lock="fullscreenLoading">测试Loading-->
+<!--        </el-button>-->
     </div>
 </template>
 
 <script>
+import { Loading } from 'element-ui';
   export default {
     name: 'Upload',
     data () {
@@ -80,13 +82,6 @@
         songname:"",
         fullscreenLoading: false
       }
-    },
-    open () {
-      this.$notify({
-        title: '提示',
-        message: '歌曲已存在，请勿重复上传',
-        duration: 0
-      })
     },
     mounted: function (){
       console.log("userId:",this.$session.get('userId'))
@@ -111,6 +106,7 @@
           this.fullscreenLoading = false
         }, 2000)
       },
+
       // openFullScreen2() {
       //   const loading = this.$loading({
       //     lock: true,
@@ -136,11 +132,21 @@
       },
       handle_success (res) {
         console.log("res:",res)
+        endLoading()
+
+        //成功提示
+          this.$notify({
+            title: '提示',
+            message: '歌曲上传成功，可以申请版权',
+            showClose: false,
+            type: 'success'
+          })
+
         if (res.code === 0){
           this.songid=res.data["id"]
           this.songname=res.data["name"]
         }else{
-        alert("dsasda")
+        alert("歌曲已存在，请勿重复上传!")
         }
 
         // if (res === '命名不正确') {
@@ -162,6 +168,10 @@
         //     type: 'success'
         //   })
         // }
+      },
+      handle_progress (){
+        // this.openFullScreen2()
+        startLoading()
       },
       handle_cp(){
         console.log("userid:",this.$session.get('userId'))
@@ -192,6 +202,20 @@
         this.$message.warning(`当前限制选择 1 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`)
       },
     }
+  }
+  let loading        //定义loading变量
+
+  function startLoading() {    //使用Element loading-start 方法
+    loading = Loading.service({ fullscreen: true,
+      lock: true,
+      text: '正在识别',
+      spinner: 'el-icon-loading',
+      background: 'rgba(0, 0, 0, 0.7)'
+    });
+
+  }
+  function endLoading() {    //使用Element loading-close 方法
+    loading.close()
   }
 </script>
 
