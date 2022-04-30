@@ -1,70 +1,71 @@
 <template>
     <div id="Upload">
 
-      <br>
-      <el-col :span="6">
-      歌曲名称:
-      <el-input
-        placeholder="请输入内容"
-        v-model="songid"
-        :disabled="true">
-      </el-input>
-      </el-col>
-      <br>
-      <br>
-      <br>
-      <el-col :span="6">
-      编号:
-      <el-input
-        placeholder="请输入内容"
-        v-model="songname"
-        :disabled="true">
-      </el-input>
-      </el-col>
-      <br>
-      <br>
-      <br>
-      <el-col :span="6">
-      作者ID:
-      <el-input
-        placeholder="请输入内容"
-        v-model="userid"
-        :disabled="true">
-      </el-input>
-      </el-col>
-      <br>
-      <br>
-      <br>
-      <el-col :span="6">
-      作者名:
-      <el-input
-        placeholder="请输入内容"
-        v-model="username"
-        :disabled="true">
-      </el-input>
-      </el-col>
-      <br>
-      <br>
-      <br> <br>
-      <el-col :span="3" :offset="1">
-      <el-upload
-        class="upload-demo"
-        action="http://localhost:8096/user/upload"
-        accept=".wav"
-        :on-preview="handlePreview"
-        :on-remove="handleRemove"
-        :on-success="handle_success"
-        :show-file-list="false"
-        :on-exceed="handleExceed">
-        <el-button id="initSlide" type="primary">点击上传</el-button>
-      </el-upload>
-      </el-col>
+        <br>
+        <el-col :span="6">
+            歌曲名称:
+            <el-input
+                    placeholder="请输入内容"
+                    v-model="songid"
+                    :disabled="true">
+            </el-input>
+        </el-col>
+        <br>
+        <br>
+        <br>
+        <el-col :span="6">
+            编号:
+            <el-input
+                    placeholder="请输入内容"
+                    v-model="songname"
+                    :disabled="true">
+            </el-input>
+        </el-col>
+        <br>
+        <br>
+        <br>
+        <el-col :span="6">
+            作者ID:
+            <el-input
+                    placeholder="请输入内容"
+                    v-model="userid"
+                    :disabled="true">
+            </el-input>
+        </el-col>
+        <br>
+        <br>
+        <br>
+        <el-col :span="6">
+            作者名:
+            <el-input
+                    placeholder="请输入内容"
+                    v-model="username"
+                    :disabled="true">
+            </el-input>
+        </el-col>
+        <br>
+        <br>
+        <br> <br>
+        <el-col :span="3" :offset="1">
+            <el-upload
+                    class="upload-demo"
+                    action="http://localhost:8096/user/song/upload"
+                    accept=".wav"
+                    :on-preview="handlePreview"
+                    :on-remove="handleRemove"
+                    :on-success="handle_success"
+                    :show-file-list="false"
+                    :on-exceed="handleExceed">
+                <el-button id="initSlide" type="primary">点击上传</el-button>
+            </el-upload>
+        </el-col>
         <el-col :span="2">
-      <el-button type="primary">申请版权</el-button>
-      </el-col>
-      <br>
-      <br> <br>
-      <el-button type="primary" @click="openFullScreen1" v-loading.fullscreen.lock="fullscreenLoading">测试Loading</el-button>
+            <el-button type="primary">申请版权</el-button>
+        </el-col>
+        <br>
+        <br> <br>
+        <el-button type="primary" @click="openFullScreen1" v-loading.fullscreen.lock="fullscreenLoading">测试Loading
+        </el-button>
     </div>
 </template>
 
@@ -83,12 +84,26 @@
         duration: 0
       })
     },
+    mounted: function (){
+      console.log("userId:",this.$session.get('userId'))
+      this.$axios({
+        url: 'queryUser',
+        method: 'post',
+        data: {
+          userId: this.$session.get('userId'),
+        }
+      }).then(res => {
+        console.log('data!!!:',res)
+        this.resetData = res.data
+      })
+    }
+    ,
     methods: {
-      openFullScreen1() {
-        this.fullscreenLoading = true;
+      openFullScreen1 () {
+        this.fullscreenLoading = true
         setTimeout(() => {
-          this.fullscreenLoading = false;
-        }, 2000);
+          this.fullscreenLoading = false
+        }, 2000)
       },
       // openFullScreen2() {
       //   const loading = this.$loading({
@@ -104,7 +119,7 @@
 
       // 限制上传大小
       beforeAvatarUpload (file) {
-        const isLt2M = file.size /100/ 1024 / 1024 < 1
+        const isLt2M = file.size / 100 / 1024 / 1024 < 1
         if (!isLt2M) {
           this.$message({
             message: '上传文件大小不能超过 100MB!',
@@ -148,7 +163,7 @@
 </script>
 
 <style scoped>
-#Upload{
-  height:800px
-}
+    #Upload {
+        height: 800px
+    }
 </style>
