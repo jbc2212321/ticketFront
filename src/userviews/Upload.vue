@@ -60,7 +60,7 @@
             </el-upload>
         </el-col>
         <el-col :span="2">
-            <el-button type="primary">申请版权</el-button>
+            <el-button type="primary"  @click="handle_cp">申请版权</el-button>
         </el-col>
         <br>
         <br> <br>
@@ -162,6 +162,25 @@
         //     type: 'success'
         //   })
         // }
+      },
+      handle_cp(){
+        console.log("userid:",this.$session.get('userId'))
+        console.log("songid:",this.songid)
+        this.$axios({
+          url: '/user/song/applyCopyright',
+          method: 'post',
+          data: {
+            userId: this.$session.get('userId')+'',
+            username:this.username,
+            songid:this.songid+"",
+            songname:this.songname,
+          }
+        }).then(res => {
+            console.log("data",res.data)
+          if (res.data.code===0){
+            alert("申请成功")
+          }
+        })
       },
       handleRemove (file, fileList) {
         console.log(file, fileList)
