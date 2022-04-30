@@ -6,7 +6,7 @@
             歌曲名称:
             <el-input
                     placeholder="请输入内容"
-                    v-model="songid"
+                    v-model="songname"
                     :disabled="true">
             </el-input>
         </el-col>
@@ -17,7 +17,7 @@
             编号:
             <el-input
                     placeholder="请输入内容"
-                    v-model="songname"
+                    v-model="songid"
                     :disabled="true">
             </el-input>
         </el-col>
@@ -76,6 +76,8 @@
       return {
         userid:"",
         username:"",
+        songid:"",
+        songname:"",
         fullscreenLoading: false
       }
     },
@@ -133,25 +135,33 @@
         return isLt2M
       },
       handle_success (res) {
-        if (res === '命名不正确') {
-          this.$message({
-            showClose: true,
-            message: '命名不正确！',
-            type: 'error'
-          })
-        } else if (res === '内容不合法') {
-          this.$message({
-            showClose: true,
-            message: '内容不合法！',
-            type: 'error'
-          })
-        } else if (res === '上传成功') {
-          this.$message({
-            showClose: true,
-            message: '上传成功！',
-            type: 'success'
-          })
+        console.log("res:",res)
+        if (res.code === 0){
+          this.songid=res.data["id"]
+          this.songname=res.data["name"]
+        }else{
+        alert("dsasda")
         }
+
+        // if (res === '命名不正确') {
+        //   this.$message({
+        //     showClose: true,
+        //     message: '命名不正确！',
+        //     type: 'error'
+        //   })
+        // } else if (res === '内容不合法') {
+        //   this.$message({
+        //     showClose: true,
+        //     message: '内容不合法！',
+        //     type: 'error'
+        //   })
+        // } else if (res === '上传成功') {
+        //   this.$message({
+        //     showClose: true,
+        //     message: '上传成功！',
+        //     type: 'success'
+        //   })
+        // }
       },
       handleRemove (file, fileList) {
         console.log(file, fileList)
