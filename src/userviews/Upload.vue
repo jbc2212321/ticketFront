@@ -74,6 +74,8 @@
     name: 'Upload',
     data () {
       return {
+        userid:"",
+        username:"",
         fullscreenLoading: false
       }
     },
@@ -93,8 +95,10 @@
           userId: this.$session.get('userId'),
         }
       }).then(res => {
-        console.log('data!!!:',res)
-        this.resetData = res.data
+        console.log('data!!!:',res.data.data)
+        console.log('name!!!:',res.data.data["username"])
+        this.userid = res.data.data["id"]
+        this.username=res.data.data["username"]
       })
     }
     ,
