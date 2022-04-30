@@ -184,128 +184,34 @@
                 <br></div>
         </el-dialog>
         <br>
-        机器编号：
-        <input type="text" name="MachineCode" v-model="MachineCode" border="0px">
-        发票类型：
-        <input type="text" name="InvoiceTypeOrg" v-model="InvoiceTypeOrg"><br>
-        发票代码：
-        <input type="text" name="InvoiceCode" v-model="InvoiceCode" size="18">
-        发票号码：
-        <input type="text" name="InvoiceNum" v-model="InvoiceNum" size="18">
-        开票日期：
-        <input type="text" name="InvoiceDate" v-model="InvoiceDate" size="18">
-        <br>购买方:<br>
-        名&nbsp;称：<input type="text" name="PurchaserName" v-model="PurchaserName">
-        纳税人识别号：
-        <input type="text" name="PurchaserRegisterNum" v-model="PurchaserRegisterNum">
-        地址、&nbsp;电话：
-        <input type="text" name="PurchaserAddress" v-model="PurchaserAddress">
-        开户行及账号：
-        <input type="text" name="PurchaserBank" v-model="PurchaserBank"><br>
-        密码区：
-        <el-input type="text" v-model="Password" rows="4"></el-input>
-        合计：
-        <el-input type="text" v-model="TotalAmount" rows="4"></el-input>
-        <el-input type="text" v-model="TotalTax" rows="4"></el-input>
-        <td>价税合计(大写)</td>
-        <div type="text" style="width: 60%"><input type="text" name="AmountInWords" v-model="AmountInWords" size="40">
-        </div>
-        <div type="text" style="width: 40%"> (小写)</div>
-        <input type="text" name="AmountInFiguers" v-model="AmountInFiguers"
-               size="40">
+        识别号：
+        <input type="text" name="Identification_number" v-model="Identification_number" border="0px">
+        车票号：
+        <input type="text" name="ticket_num" v-model="ticket_num">
+        始发站：
+        <input type="text" name="starting_station" v-model="starting_station" size="18"><br>
+        车次号：
+        <input type="text" name="train_num" v-model="train_num" size="18">
+        到达站：
+        <input type="text" name="destination_station" v-model="destination_station" size="18">
+        到达日期：<input type="text" name="date" v-model="date"><br>
+        车票金额：
+        <input type="text" name="ticket_rates" v-model="ticket_rates">
+        席别：
+        <input type="text" name="seat_category" v-model="seat_category">
+        姓名：
+        <input type="text" name="name" v-model="name"><br>
+        身份证：
+      <input type="text" name="id_num" v-model="id_num">
+        序列号：
+      <input type="text" name="serial_number" v-model="serial_number">
+      售站：
+      <input type="text" name="sales_station" v-model="sales_station"><br>
+      时间：
+      <input type="text" name="time" v-model="time">
+      座位号：
+      <input type="text" name="seat_num" v-model="seat_num"><br>
 
-
-        <br>销售方:<br>
-
-        名&nbsp;称：
-        <input type="text" name="SellerName" v-model="SellerName">
-
-        纳税人识别号：<input type="text" name="SellerRegisterNum" v-model="SellerRegisterNum">
-
-        地址、&nbsp;电话：<input type="text" name="SellerAddress" v-model="SellerAddress">
-
-        开户行及账号：<input type="text" name="PurchaserBank" v-model="PurchaserBank">
-
-        <br>备注：<br>
-        <el-input type="text" v-model="Remarks" rows="4"></el-input>
-
-        收款人：<input type="text" name="Payee" v-model="Payee">
-
-        复核：<input type="text" name="Checker" v-model="Checker">
-
-        开票人：<input type="text" name="NoteDrawer" v-model="NoteDrawer">
-
-
-        <template>
-            <div class="tableDate">
-                <div class="button" style="width:3%;float:right;">
-                    <P>
-                        <el-button class="el-icon-plus" @click.prevent="addRow()"></el-button>
-                    </P>
-                    <p>
-                        <el-button class="el-icon-minus" @click.prevent="delData()"></el-button>
-                    </p>
-                </div>
-                <div class="table">
-                    <el-table
-                            :data="tableData"
-                            ref="table"
-                            tooltip-effect="dark"
-                            border
-                            stripe
-                            style="width: 95%"
-                            @selection-change='selectRow'>
-                        <el-table-column type="selection" width="45" align="center"></el-table-column>
-                        <el-table-column label="序号" type="index" width="60" align="center"></el-table-column>
-                        <el-table-column label="货物或应税劳务、服务名称" align="center">
-                            <template slot-scope="scope">
-                                <el-input v-model="scope.row.CommodityName"></el-input>
-                            </template>
-                        </el-table-column>
-                        <el-table-column label="规格型号">
-                            <template slot-scope="scope">
-                                <el-input v-model="scope.row.CommodityType"></el-input>
-                            </template>
-                        </el-table-column>
-                        <el-table-column label="单位">
-                            <template slot-scope="scope">
-                                <el-input v-model="scope.row.CommodityUnit"></el-input>
-                            </template>
-                        </el-table-column>
-                        <el-table-column label="数量">
-                            <template slot-scope="scope">
-                                <el-input v-model="scope.row.CommodityNum"></el-input>
-                            </template>
-                        </el-table-column>
-                        <el-table-column label="单价">
-                            <template slot-scope="scope">
-                                <el-input v-model="scope.row.CommodityPrice"></el-input>
-                            </template>
-                        </el-table-column>
-                        <el-table-column label="金额">
-                            <template slot-scope="scope">
-                                <el-input v-model="scope.row.CommodityAmount"></el-input>
-                            </template>
-                        </el-table-column>
-                        <el-table-column label="税率">
-                            <template slot-scope="scope">
-                                <el-input v-model="scope.row.CommodityTaxRate"></el-input>
-                            </template>
-                        </el-table-column>
-                        <el-table-column label="税额">
-                            <template slot-scope="scope">
-                                <el-input v-model="scope.row.CommodityTax"></el-input>
-                            </template>
-                        </el-table-column>
-                    </el-table>
-                </div>
-            </div>
-            <el-button
-                    type="primary"
-                    @click="openFullScreen2">
-                服务方式
-            </el-button>
-        </template>
 
     </div>
 </template>
@@ -319,90 +225,22 @@
     name: 'train',
     data () {
       return {
-        tableData: [{
-          rowNum: 1,
-          CommodityName: 'ballpen',
-          CommodityType: '1',
-          CommodityUnit: '2',
-          CommodityNum: '3',
-          CommodityPrice: '4',
-          CommodityAmount: '5',
-          CommodityTaxRate: '6',
-          CommodityTax: '7'
-        }, {
-          rowNum: 2,
-          CommodityName: 'ball',
-          CommodityType: '1',
-          CommodityUnit: '2',
-          CommodityNum: '3',
-          CommodityPrice: '4',
-          CommodityAmount: '5',
-          CommodityTaxRate: '6',
-          CommodityTax: '7'
-        }, {
-          rowNum: 3,
-          CommodityName: 'QingJiang11111111111111111111',
-          CommodityType: '1',
-          CommodityUnit: '2',
-          CommodityNum: '3',
-          CommodityPrice: '4',
-          CommodityAmount: '5',
-          CommodityTaxRate: '6',
-          CommodityTax: '7'
-        }, {
-          rowNum: 4,
-          CommodityName: 'pen',
-          CommodityType: '1',
-          CommodityUnit: '2',
-          CommodityNum: '3',
-          CommodityPrice: '4',
-          CommodityAmount: '5',
-          CommodityTaxRate: '6',
-          CommodityTax: '7'
-        }, {
-          rowNum: 5,
-          CommodityName: '',
-          CommodityType: '',
-          CommodityUnit: '',
-          CommodityNum: '',
-          CommodityPrice: '',
-          CommodityAmount: '',
-          CommodityTaxRate: '',
-          CommodityTax: ''
-        }],
-        selectlistRow: [],
+        user_id:'',
+        Identification_number:'',
+        ticket_num:'',
+        starting_station:'',
+        train_num:'',
+        destination_station:'',
+        date:'',
+        ticket_rates:'',
+        seat_category:'',
+        name:'',
+        id_num:'',
+        serial_number:'',
+        sales_station:'',
+        time:'',
+        seat_num:'',
 
-        //发票数据
-        InvoiceCode: '',
-        MachineCode: '',
-        InvoiceTypeOrg: 'XX省增值税专用发票',
-        InvoiceNum: '',
-        InvoiceDate: '',
-        PurchaserName: '',
-        PurchaserRegisterNum: '',
-        PurchaserAddress: '',
-        PurchaserBank: '',
-        Password: '',
-        CommodityName: '',
-        CommodityType: '',
-        CommodityUnit: '',
-        CommodityNum: '',
-        CommodityPrice: '',
-        CommodityAmount: '',
-        TotalAmount: '',
-        CommodityTaxRate: '',
-        CommodityTax: '',
-        TotalTax: '',
-        AmountInWords: '',
-        AmountInFiguers: '',
-        SellerName: '',
-        SellerRegisterNum: '',
-        SellerAddress: '',
-        SellerBank: '',
-        Payee: '',
-        Checker: '',
-        NoteDrawer: '',
-        Remarks: '',
         dialogTableVisible: false,
 
         //发票图片
@@ -975,5 +813,8 @@
 
     .headerMiddle {
         margin-right: 15px;
+    }
+    #train{
+      height:800px;
     }
 </style>

@@ -47,8 +47,8 @@
 
                 <router-link to="train" class="a">
                     <el-menu-item index="5">
-                        <i class="el-icon-upload2"></i>
-                        <span slot="title">火车票识别</span>
+                        <i class="el-icon-upload"></i>
+                        <span slot="title">上传车票</span>
                     </el-menu-item>
                 </router-link>
 

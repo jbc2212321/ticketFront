@@ -20,7 +20,7 @@
 
         <el-button type="text" @click=merge>识别结果展示</el-button>
 
-        <el-button type="text" @click="printImg">打印测试</el-button>
+<!--        <el-button type="text" @click="printImg">打印测试</el-button>-->
 
 
         <el-dialog :visible.sync="dialogTableVisible" width="1000px" top="10px">
@@ -300,11 +300,6 @@
                     </el-table>
                 </div>
             </div>
-          <el-button
-              type="primary"
-              @click="openFullScreen2">
-            服务方式
-          </el-button>
         </template>
 
     </div>
@@ -975,5 +970,8 @@ endLoading()
 
     .headerMiddle {
         margin-right: 15px;
+    }
+    #UploadCsv{
+      height:800px
     }
 </style>
