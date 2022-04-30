@@ -20,170 +20,66 @@
 
         <el-button type="text" @click=merge>识别结果展示</el-button>
 
-        <el-button type="text" @click="printImg">打印测试</el-button>
+<!--        <el-button type="text" @click="printImg">打印测试</el-button>-->
+      <br>
 
 
-        <el-dialog :visible.sync="dialogTableVisible" width="1000px" top="10px">
-            <div ref="exportPdf">
-                <el-form model="form" class="form_class">
-                    <div class="invoicMain">
-                        <!-- head start -->
-                        <div class="invoiceHeader">
-                            <div class="invoiceHeader-left">
-                                <ul class="headerLeft">
 
-                                    <li>
-                                        <!-- <img src="./qrcode.png" alt=""> -->
-                                        <br>
-                                        <br>
-                                        <br>
-                                        <br>
-                                        <br>
+        <el-dialog :visible.sync="dialogTableVisible" width="500px" top="10px">
+          <div ref="exportPdf">
+          <div class="ticketfont">
+            <el-row>
+              <el-col :span="23" :offset="1"><div class="red">{{Identification_number}}</div></el-col>
+            </el-row>
+            <el-row>
+              <el-col :span="8"><div class="station">{{starting_station}}</div></el-col>
+              <el-col :span="8"><div class="arrow">{{train_num}}<br>————————></div></el-col>
+              <el-col :span="8"><div class="station">{{destination_station}}</div></el-col>
+            </el-row>
+            <el-row>
+              <el-col :span="8"><div class="center">{{date}}</div></el-col>
+              <el-col :span="8"><div class="center">{{time}}</div></el-col>
+              <el-col :span="7" :offset="1"><div>{{seat_num}}</div></el-col>
+            </el-row>
+            <el-row>
+              <el-col :span="4" :offset="2"><div>{{ticket_rates}}</div></el-col>
+              <el-col :span="8" :offset="2"><div class="center">网</div></el-col>
+              <el-col :span="7" :offset="1"><div>&nbsp;{{seat_category}}</div></el-col>
+            </el-row>
+            <el-row>
+              <el-col :span="6" :offset="2"><div>限乘当日当次车</div></el-col>
+              <el-col :span="16"><div></div></el-col>
+            </el-row>
+            <el-row>
+              <el-col :span="24"><div></div></el-col>
+            </el-row>
+            <br>
+            <el-row>
+              <el-col :span="8" :offset="2"><div>{{id_num}}</div></el-col>
+              <el-col :span="6"><div>{{name}}</div></el-col>
+              <el-col :span="8"><div></div></el-col>
+            </el-row>
+            <el-row>
+              <el-col :span="12" :offset="3"><div class="bor">买票请到12306 发货请到95306<br>中国铁路祝您旅途愉快</div></el-col>
+              <el-col :span="9"><div></div></el-col>
+            </el-row>
+            <el-row>
+              <el-col :span="8" :offset="2"><div class="smallfont">{{serial_number}}</div></el-col>
+              <el-col :span="8"><div>{{sales_station}}</div></el-col>
+              <el-col :span="6"><div></div></el-col>
+            </el-row>
+          </div>
+          <br>
+          <el-col :span="9" :offset="7">
+            <el-button type="primary" round @click="saveTicket">确 认</el-button>
+            <!--              <el-button type="primary" round v-print="'#printTest'">打 印</el-button>-->
+            <el-button type="primary" @click="toImg">打印</el-button>
 
-                                    </li>
-                                    <li>
-                                        <label>机器编号：</label><span>{{MachineCode}}</span>
-                                    </li>
-                                </ul>
-                                <div class="headerMiddle">
-                                    <h1>{{InvoiceTypeOrg}}</h1>
-                                    <div class="line"></div>
-                                </div>
-                            </div>
-
-                            <ul class="headerRight">
-                                <br><br>
-                                <li>
-                                    <label> 发票代码： </label><span>{{InvoiceCode}}</span>
-                                </li>
-                                <li>
-                                    <label> 发票号码： </label><span>{{InvoiceNum}}</span>
-                                </li>
-                                <li>
-                                    <label> 开票日期： </label><span>{{InvoiceDate}}</span>
-                                </li>
-                                <!--                    <li>-->
-                                <!--                      <label> 校&nbsp;&nbsp;验&nbsp;&nbsp;码： </label><span>{{}}</span>-->
-                                <!--                    </li>-->
-                            </ul>
-                        </div>
-                        <!-- head end -->
-                        <!-- invoice body start -->
-                        <div class="invoiceBody">
-                            <div class="userInfo">
-                                <div class="buy">购买方</div>
-                                <ul>
-                                    <li>
-                                        <label>名&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;称：</label><span>{{PurchaserName}}</span>
-                                    </li>
-                                    <li>
-                                        <label>纳税人识别号：</label><span>{{PurchaserRegisterNum}}</span>
-                                    </li>
-                                    <li>
-                                        <label>地址、&nbsp;&nbsp;&nbsp;电话：</label><span>{{PurchaserAddress}}</span>
-                                    </li>
-                                    <li>
-                                        <label>开户行及账号：</label><span>{{PurchaserBank}}</span>
-                                    </li>
-                                </ul>
-                                <div class="password">密码区</div>
-                                <div class="pwdInfo">{{Password}}</div>
-                            </div>
-                            <div>
-                                <table class="GoodsTable" cellpadding="0" cellspacing="0">
-                                    <tr>
-                                        <td style="width: 24%">货物或应税劳务、服务名称</td>
-                                        <td style="width: 10%">规格型号</td>
-                                        <td style="width: 7%">单位</td>
-                                        <td style="width: 10%">数量</td>
-                                        <td style="width: 10%">单价</td>
-                                        <td style="width: 16%">金额</td>
-                                        <td style="width: 7%">税率</td>
-                                        <td style="width: 16%; border-right: none;">税额</td>
-                                    </tr>
-                                    <tr class="invoice-list">
-                                        <!--                        <table :data="CommodityName"></table>-->
-                                        <td>{{CommodityName}}</td>
-                                        <td>{{CommodityType}}</td>
-                                        <td>{{CommodityUnit}}</td>
-                                        <td>{{CommodityNum}}</td>
-                                        <td>{{CommodityPrice}}</td>
-                                        <td style="text-align:right;white-space:pre">{{CommodityAmount}}</td>
-                                        <td style="text-align:right">{{CommodityTaxRate}}</td>
-                                        <td style="text-align:right;white-space:pre">{{CommodityTax}}</td>
-                                    </tr>
-
-
-                                    <tr class="total">
-                                        <td>合计</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>{{TotalAmount}}</td>
-                                        <td></td>
-                                        <td>{{TotalTax}}</td>
-                                    </tr>
-                                    <tr class="GoodsTotal">
-                                        <td>价税合计(大写)</td>
-                                        <td colspan="7">
-                                            <div style="width: 100%;display:flex">
-                                                <div type="text" style="width: 60%">{{AmountInWords}}</div>
-
-                                                <div type="text" style="width: 30%"> (小写){{AmountInFiguers}}</div>
-                                            </div>
-
-                                        </td>
-                                    </tr>
-                                </table>
-                                <div class="userInfo">
-                                    <div class="buy">购买方</div>
-                                    <ul>
-                                        <li>
-                                            <label>名&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;称：</label><span>{{SellerName}}</span>
-                                        </li>
-                                        <li>
-                                            <label>纳税人识别号：</label><span>{{SellerRegisterNum}}</span>
-                                        </li>
-                                        <li>
-                                            <label>地址、&nbsp;&nbsp;&nbsp;电话：</label><span>{{SellerAddress}}</span>
-                                        </li>
-                                        <li>
-                                            <label>开户行及账号：</label><span>{{PurchaserBank}}</span>
-                                        </li>
-                                    </ul>
-                                    <div class="password">备注</div>
-                                    <div class="pwdInfo">{{Remarks}}</div>
-                                </div>
-                            </div>
-
-                        </div>
-                        <!-- invoice body start -->
-                        <ul class="invoicetFooter">
-                            <li>
-                                <label>收款人：{{Payee}}</label>
-                            </li>
-                            <li>
-                                <label>复核：{{Checker}}</label>
-                            </li>
-                            <li>
-                                <label>开票人：{{NoteDrawer}}</label>
-                            </li>
-                            <li>
-                                <label>销售方：（章）</label>
-                            </li>
-                        </ul>
-                    </div>
-                </el-form>
-                <br>
-                <el-col :span="8" :offset="11">
-                    <el-button type="primary" round @click="saveTicket">确 认</el-button>
-                    <!--              <el-button type="primary" round v-print="'#printTest'">打 印</el-button>-->
-                    <el-button type="primary" @click="toImg">打印</el-button>
-                </el-col>
-                <br></div>
+          </el-col>
+          <br> <br>
+          </div>
         </el-dialog>
-        <br>
+
         识别号：
         <input type="text" name="Identification_number" v-model="Identification_number" border="0px">
         车票号：
@@ -267,8 +163,8 @@
           // windowHeight: document.body.scrollHeight,
           // y:window.pageYOffset
 
-          width: 960,
-          height: 590,
+          width: 460,
+          height: 226,
           windowHeight: 1250,
           y: 0
         }).then((canvas) => {
@@ -307,7 +203,6 @@
         }
         this.tableData.push(list)
       },
-
       merge () {
         this.dialogTableVisible = true
         this.CommodityName = ''
@@ -553,268 +448,47 @@
 </script>
 
 <style scoped>
-    .rright {: align = "right"
+    .red{
+      font-size: 25px;
+      color: rgb(193, 46, 92);
+      font-weight:500;
+    }
+    .station{
+      font-size: 30px;
+      font-weight:bold;
+      text-align: center;
+    }
+    .arrow{
+      text-align: center;
+      font-weight:600;
+      font-family:"微软雅黑";
+    }
+    .ticketfont{
+      font-weight:600;
+      color:black;
+      border-width:1px; border-style:solid; border-color:black;
+      background-color: lightcyan;
+    }
+    .smallfont{
+      font-size:10px;
+      font-weight:500;
     }
 
-    .btn {
-        width: 16em;
-        margin-left: 0rem;
-        margin-top: 0rem;
-        text-align: center;
+    .bor{
+      border:2px dashed;
+      text-align: center;
     }
 
-    #wsInputDiv {
-        width: 18em;
-        opacity: 0.7;
-    }
 
-    .result-item {
-        list-style: none;
-        padding: 0;
-        position: relative;
-        margin: 0 0 14px;
-        overflow: hidden
-    }
 
-    .form-control, .result-name {
-        display: inline-block;
-        vertical-align: top;
-        font-size: 14px;
-        color: #333;
-        line-height: 20px
-    }
 
-    .result-name {
-        width: 90px;
-    }
-
-    .form-control {
-        width: 196px;
-    }
-
-    #UploadCsv {
-        padding: 20px 0 0 20px;
-    }
-
-    #ul,
-    ul li {
-        list-style: none;
-        margin: 0;
-        padding: 0;
-    }
-
-    label {
-        color: #9c5223;
-    }
-
-    .invoicMain {
-        white-space: pre-line;
-        /*千万不要删*/
-        width: 920px;
-        margin: 0 auto;
-        font-size: 14px;
-        color: #000;
-        padding: 20px;
-        border: 3px solid #000;
-    }
-
-    .invoiceHeader {
-        height: 126px;
-        display: flex;
-        /* justify-content: space-between; */
-        align-items: center;
-    }
-
-    .headerLeft li:nth-child(1) {
-        text-indent: 1em;
-    }
-
-    .headerLeft li img {
-        width: 105px;
-        height: 105px;
-
-    }
-
-    .headerMiddle h1 {
-        font-size: 32px;
-        color: #9c5223;
-        font-family: 'kaiti';
-        margin: 5px 12px;
-    }
-
-    .line {
-        height: 2px;
-        border-top: #9c5223 1px solid;
-        border-bottom: #9c5223 1px solid;
-    }
-
-    .headerRight li {
-        line-height: 24px;
-    }
-
-    .invoiceBody {
-        border: 1px solid #9c5223;
-    }
-
-    .userInfo {
-        width: 100%;
-        display: flex;
-        align-items: center;
-        height: 96px;
-        border-bottom: 1px solid #9c5223;
-    }
-
-    .userInfo ul {
-        width: 50%;
-        margin: 0 5px;
-        padding: 0;
-
-    }
-
-    .userInfo ul li {
-        line-height: 24px;
-    }
-
-    .buy {
-        width: 20px;
-        border-right: 1px solid #9c5223;
-        padding: 0 10px;
-        text-align: center;
-        height: 100%;
-        display: flex;
-        align-items: center;
-        color: #9c5223;
-    }
-
-    .password {
-        width: 20px;
-        padding: 0 10px;
-        border-right: 1px solid #9c5223;
-        border-left: 1px solid #9c5223;
-        text-align: center;
-        height: 100%;
-        display: flex;
-        align-items: center;
-        color: #9c5223;
-    }
-
-    .pwdInfo {
-        flex: 1;
-        padding-left: 5px;
-    }
-
-    .goodsInfo {
-        height: 210px;
-        margin: 0;
-        padding: 0;
-
-    }
-
-    .goodsInfo li {
-        display: flex;
-        color: #9c5223;
-        text-align: center;
-    }
-
-    .name {
-        width: 260px;
-        border-right: 1px solid #9c5223;
-    }
-
-    .spec {
-        width: 140px;
-        border-right: 1px solid #9c5223;
-    }
-
-    .qty {
-        width: 108px;
-        border-right: 1px solid #9c5223;
-    }
-
-    .unit,
-    .taxRate {
-        width: 65px;
-        border-right: 1px solid #9c5223;
-    }
-
-    .qty,
-    .price {
-        width: 160px;
-        border-right: 1px solid #9c5223;
-    }
-
-    .money {
-        flex: 1;
-        border-right: 1px solid #9c5223;
-    }
-
-    .taxAmount {
-        flex: 1;
-    }
-
-    .GoodsTable {
-        height: 210px;
-        width: 100%;
-        border-collapse: collapse;
-    }
-
-    .GoodsTable .invoice-list {
-        /* height: 24px; */
-    }
-
-    .GoodsTable td {
-        border-right: 1px solid #9c5223;
-        color: #9c5223;
-    }
-
-    .GoodsTable tr:nth-child(1),
-    .GoodsTable tr:nth-last-child(2) {
-        height: 24px;
-    }
-
-    .GoodsTable tr:nth-last-child(1) {
-        height: 34px;
-    }
-
-    .GoodsTable tr:nth-child(1) td {
-        text-align: center;
-    }
-
-    .GoodsTotal {
-        border-top: 1px solid #9c5223;
-        border-bottom: 1px solid #9c5223;
-    }
-
-    .total td:nth-child(1) {
-        text-align: center;
-    }
-
-    .invoicetFooter {
-        margin: 0;
-        padding: 0;
-        display: flex;
-        justify-content: space-between;
-    }
-
-    .invoicetFooter li {
-        width: 25%;
-    }
-
-    .invoiceHeader-left {
-        width: 67%;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-    }
-
-    .headerRight {
-        margin-left: 28px;
-    }
-
-    .headerMiddle {
-        margin-right: 15px;
-    }
     #train{
       height:800px;
     }
+
+    .center{
+      text-align:center;
+    }
+
+
 </style>
