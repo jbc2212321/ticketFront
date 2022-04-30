@@ -45,6 +45,13 @@
                     </el-menu-item>
                 </router-link>
 
+                <router-link to="train" class="a">
+                    <el-menu-item index="5">
+                        <i class="el-icon-upload2"></i>
+                        <span slot="title">火车票识别</span>
+                    </el-menu-item>
+                </router-link>
+
             </el-menu>
 
             <el-container>

@@ -20,6 +20,7 @@ import DoctorAppointment from '../doctorviews/DoctorAppointment'
 import LogManagement from '../adminviews/LogManagement'
 import TodoList from '../adminviews/TodoList'
 import Upload from '../doctorviews/Upload'
+import train from '../doctorviews/train'
 
 Vue.use(VueRouter)
 
@@ -305,6 +306,15 @@ const routes = [
       {
         path: '/user/Upload',
         component: Upload,
+        meta: {
+          requireAuth: true,
+          identity: 0
+        },
+      },
+      //火车票识别
+      {
+        path: '/user/train',
+        component: train,
         meta: {
           requireAuth: true,
           identity: 0
