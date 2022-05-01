@@ -10,7 +10,7 @@
         stripe>
 
         <el-table-column
-          prop="num"
+          prop="list_id"
           label="编号"
           sortable
           width="120"
@@ -49,7 +49,6 @@
         >
         </el-table-column>
 
-
       </el-table>
     </template>
     <br>
@@ -61,71 +60,27 @@ export default {
   name: 'LogManagement',
   data () {
     return {
-      ManageData:[
-        {
-          num:'1',
-          songid:'2',
-          songname:'3',
-          userid:'4',
-          username:'5',
-          manage:''
-        },
-        {
-          num:'2',
-          songid:'2',
-          songname:'3',
-          userid:'4',
-          username:'5',
-          manage:''
-        }
-      ]
-      // date: '',
-      // currentPage: 1,
-      // pagesize: 8,
-      // PageData: [],
-      // filters: [{
-      //   text: '病人',
-      //   value: '病人'
-      // }, {
-      //   text: '医生',
-      //   value: '医生'
-      // }, {
-      //   text: '管理员',
-      //   value: '管理员'
-      // }],
-      // filterList: [],
-      // AllData: [],
-      // resultData: [],
+      list_id:'',
+      userid:'',
+      username:'',
+      songid:'',
+      songname:'',
     }
   },
   mounted () {
-    this.axios()
+    this.axios({
+      url:'',
+      method: 'post'
+    }).then(res => {
+      this.list_id= res.list_id
+      this.userid = res.userid
+      this.username = res.username
+      this.songid = res.songid
+      this.songname = res.songname
+    })
+
   },
-  watch: {
-    filterList (n, o) {
-      if (n) {
-        if (n.length === 3 || n.length === 0) {
-          this.PageData = this.AllData
-          this.currentPage = 1
-          this.pagesize = 8
-        }
-        if (n.length === 1) {
-          this.PageData = this.AllData.filter((i) => {
-            return i.account === n[0]
-          })
-          this.currentPage = 1
-          this.pagesize = 8
-        }
-        if (n.length === 2) {
-          this.PageData = this.AllData.filter((i) => {
-            return i.account === n[0] || i.account === n[1]
-          })
-          this.currentPage = 1
-          this.pagesize = 8
-        }
-      }
-    }
-  },
+
   methods: {
 
     agree (row) {

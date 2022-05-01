@@ -13,11 +13,10 @@
             </el-col></el-form-item>
 
             <el-col :span="9" :offset="3">
-            <el-button type="primary" @click="onSubmit">版权授权</el-button>
-            <el-button type="primary" @click="onSubmit">版权转让</el-button>
+            <el-button type="primary" @click="onSubmit1">版权授权</el-button>
+            <el-button type="primary" @click="onSubmit2">版权转让</el-button>
 <!--            <el-button type="danger">清空</el-button>-->
             </el-col>
-
         </el-form>
 
     </div>
@@ -29,46 +28,56 @@
     data() {
       return {
           songid:'',
-          buyerid:''
+          buyerid:'',
+          status:''
       }
     },
     mounted () {
-        this.$axios({
-          url:"getPatientDetail",
-          method:"post",
-          data:{
-            phone:this.$session.get("phone")
-          }
-        }).then(res=>{
-            console.log(res.data)
-            this.patientID=res.data["patientID"]
-            this.paccountNo=res.data["paccountNo"]
-            this.patientName=res.data["patientName"]
-            this.phoneNo=res.data["phoneNo"]
-            this.birthday=res.data["birthday"]
-            this.sex=res.data["sex"]
-        })
+
     },
     methods: {
-      onSubmit() {
+      //授权
+      onSubmit1() {
         this.$axios({
-          url:"updatePatientDetail",
+          url:"", //url
           method:"post",
           data:{
-            patientID: this.patientID,
-            paccountNo: this.paccountNo,
-            patientName: this.patientName,
-            phoneNo: this.$session.get("phone"),
-            birthday: this.moment(this.birthday).format('YYYY-MM-DD'),
-            sex: this.sex,
-          }
+            ownerid:this.$session.get('userId'),
+            buyerid: this.buyerid,
+            songid: this.songid,
+            status:1,
+          },
         }).then(res=>{
-          this.$message({
-            showClose: true,
-            message: "修改成功！",
-            type: 'success'
-          })
+          // this.$message({
+          //   showClose: true,
+          //   message: "修改成功！",
+          //   type: 'success'
+          // })
+          // console.log(123+this.ownerid+this.buyerid+this.songid+status)
+        })
+      },
 
+      //转让 交易
+      onSubmit2() {
+        this.$axios({
+          url:"", //url
+          method:"post",
+          data:{
+            ownerid:this.$session.get('userId'),
+            buyerid: this.buyerid,
+            songid: this.songid,
+            status:0,
+          },
+        }).then(res=>{
+          if(res.data.code===0){
+
+          }
+          // this.$message({
+          //   showClose: true,
+          //   message: "修改成功！",
+          //   type: 'success'
+          // })
+          // console.log(123+this.ownerid+this.buyerid+this.songid+status)
         })
       }
     }
