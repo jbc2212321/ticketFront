@@ -1,5 +1,5 @@
 <template>
-    <div id="LogManagement">
+    <div id="VerifyManagement">
         <template>
             <el-table
                     ref="filterTable"
@@ -66,7 +66,7 @@
 
 <script>
   export default {
-    name: 'LogManagement',
+    name: 'VerifyManagement',
     data () {
       return {
         ManageData:[
@@ -87,53 +87,12 @@
             manage:''
           }
         ]
-        // date: '',
-        // currentPage: 1,
-        // pagesize: 8,
-        // PageData: [],
-        // filters: [{
-        //   text: '病人',
-        //   value: '病人'
-        // }, {
-        //   text: '医生',
-        //   value: '医生'
-        // }, {
-        //   text: '管理员',
-        //   value: '管理员'
-        // }],
-        // filterList: [],
-        // AllData: [],
-        // resultData: [],
       }
     },
     mounted () {
       this.axios()
     },
-    watch: {
-      filterList (n, o) {
-        if (n) {
-          if (n.length === 3 || n.length === 0) {
-            this.PageData = this.AllData
-            this.currentPage = 1
-            this.pagesize = 8
-          }
-          if (n.length === 1) {
-            this.PageData = this.AllData.filter((i) => {
-              return i.account === n[0]
-            })
-            this.currentPage = 1
-            this.pagesize = 8
-          }
-          if (n.length === 2) {
-            this.PageData = this.AllData.filter((i) => {
-              return i.account === n[0] || i.account === n[1]
-            })
-            this.currentPage = 1
-            this.pagesize = 8
-          }
-        }
-      }
-    },
+
     methods: {
 
       agree (row) {
@@ -146,22 +105,19 @@
             url: 'updateTodoList',
             method: 'post',
             data: {
-              num: row.num,
-              state: 1,
-              content: row.content,
-              phone: row.tel,
-              type: row.type
+              num: row['num']
             }
           }).then(res => {
             this.$axios({
-              url: 'getTodoListReset',
-              method: 'get',
+              url: '/admin/log/listLog',
+              method: 'post'
             }).then(res => {
-              this.resetData = res.data
-            })
-            this.$message({
-              type: 'success',
-              message: '操作成功!'
+              this.AllData = res.data.data
+              this.PageData = [...res.data.data]
+              this.$message({
+                type: 'success',
+                message: '操作成功!'
+              })
             })
           })
         }).catch(() => {
@@ -171,33 +127,31 @@
           })
         })
       },
-      refuse (row) {
-        this.$confirm('操作后将不可更改, 是否确认?', '提示', {
+      deleteRow (row) {
+        this.$confirm('执行删除操作后不可恢复, 是否确认操作?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
           this.$axios({
-            url: 'updateTodoList',
+            url: '/admin/log/delLog',
             method: 'post',
             data: {
-              num: row.num,
-              state: 2,
-              content: row.content,
-              phone: row.tel,
-              type: row.type
+              num: row['num']
             }
           }).then(res => {
             this.$axios({
-              url: 'getTodoListReset',
-              method: 'get',
+              url: '/admin/log/listLog',
+              method: 'post'
             }).then(res => {
-              this.resetData = res.data
+              this.AllData = res.data.data
+              this.PageData = [...res.data.data]
+              this.$message({
+                type: 'success',
+                message: '操作成功!'
+              })
             })
-            this.$message({
-              type: 'success',
-              message: '操作成功!'
-            })
+
           })
         }).catch(() => {
           this.$message({
@@ -207,35 +161,6 @@
         })
       },
 
-      axios () {
-        this.$axios({
-          url: 'getAllLog',
-          method: 'get'
-        }).then(res => {
-          this.AllData = res.data
-          this.PageData = [...res.data]
-        })
-      },
-      filterTag (value, row) {
-        return row.account === value
-      },
-      handleSizeChange (val) {
-        this.currentPage = 1
-        this.pagesize = val
-      },
-      handleCurrentChange (val) {
-        this.currentPage = val
-      },
-      handleFilterChange (value) {
-        this.filterList = value.status
-      },
-      //   handleClose(done) {
-      //   this.$confirm('确认关闭？')
-      //     .then(_ => {
-      //       done();
-      //     })
-      //     .catch(_ => {});
-      // }
     }
   }
 </script>

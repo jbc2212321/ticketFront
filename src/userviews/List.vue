@@ -56,7 +56,20 @@
         userid:'',
         username:'',
       }
-    }
+    },
+    mounted () {
+      this.axios({
+        url:'',
+        method: 'post'
+      }).then(res => {
+        this.num= res.num
+        this.userid = res.userid
+        this.username = res.username
+        this.songid = res.songid
+        this.songname = res.songname
+      })
+
+    },
   }
 </script>
 

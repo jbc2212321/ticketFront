@@ -75,76 +75,58 @@
         },
       }
     },
-    computed: {
-      // tableData: function () {
-      //   return this.DocList.filter(item => {
-      //     if (this.filter.length === 1) {
-      //       if (item['tag'] !== this.filter[0]) {
-      //         return false
-      //       }
-      //     }
-      //     return true
-      //   })
-      // },
-      // PageData: function () {
-      //
-      //   return this.tableData.slice((this.currentPage - 1) * this.pagesize, this.currentPage * this.pagesize)
-      //
-      // },
-    },
     mounted () {
       //初始化列表
       this.$axios({
-        url: 'getAllDoc',
-        method: 'get',
-      }).then(res => {
-        this.DocList = res.data //修改
-      })
-
-      //初始化列表 axios
-      this.$axios({
-        url: 'getRelationship',
+        url: '',
         method: 'post',
-        data: {
-          PatientPhone: this.$session.get('phone')
-        }
+        data: {}
       }).then(res => {
         this.tableData = res.data
-        console.log(this.tableData)
       })
-    },
-    methods: {
-      handleFilterChange (value) {
-        this.filter = value.status
-      },
-      handleSizeChange (val) {
-        this.currentPage = 1
-        this.pagesize = val
-      },
-      handleCurrentChange (val) {
-        this.currentPage = val
-      },
-      filterTag (value, row) {
-        return row.tag === value
-      },
 
-      handleClose (done) {
-        this.$confirm('确认关闭？')
-          .then(_ => {
-            done()
-            this.checked = []
-            this.$axios({
-              url: 'getAllDoc',
-              method: 'get',
-            }).then(res => {
-              this.DocList = res.data
-            })
-          })
-          .catch(_ => {
-          })
-      },
-
-
+    //   //初始化列表 axios
+    //   this.$axios({
+    //     url: 'getRelationship',
+    //     method: 'post',
+    //     data: {
+    //       PatientPhone: this.$session.get('phone')
+    //     }
+    //   }).then(res => {
+    //     this.tableData = res.data
+    //     console.log(this.tableData)
+    //   })
+    // },
+    // methods: {
+    //   handleFilterChange (value) {
+    //     this.filter = value.status
+    //   },
+    //   handleSizeChange (val) {
+    //     this.currentPage = 1
+    //     this.pagesize = val
+    //   },
+    //   handleCurrentChange (val) {
+    //     this.currentPage = val
+    //   },
+    //   filterTag (value, row) {
+    //     return row.tag === value
+    //   },
+    //
+    //   handleClose (done) {
+    //     this.$confirm('确认关闭？')
+    //       .then(_ => {
+    //         done()
+    //         this.checked = []
+    //         this.$axios({
+    //           url: 'getAllDoc',
+    //           method: 'get',
+    //         }).then(res => {
+    //           this.DocList = res.data
+    //         })
+    //       })
+    //       .catch(_ => {
+    //       })
+    //   },
     }
   }
 </script>

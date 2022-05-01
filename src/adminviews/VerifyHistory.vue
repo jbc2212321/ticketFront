@@ -3,7 +3,6 @@
     <template>
       <el-table
         ref="filterTable"
-        :data="ManageData"
         @filter-change="handleFilterChange"
         style="width: 100%"
         height="800px"
@@ -57,7 +56,7 @@
 
 <script>
 export default {
-  name: 'LogManagement',
+  name: 'VerifyManagement',
   data () {
     return {
       list_id:'',

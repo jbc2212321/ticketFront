@@ -8,7 +8,7 @@ import Register from '@/views/Register'
 import Inquiry from '../userviews/Inquiry'
 import Trade from '../userviews/Trade'
 import Upload from '../userviews/Upload'
-import LogManagement from '../adminviews/LogManagement'
+import LogManagement from '../adminviews/VerifyManagement'
 import VerifyHistory from '../adminviews/VerifyHistory'
 import TradeList from "@/adminviews/TradeList";
 import List from "@/userviews/List"
