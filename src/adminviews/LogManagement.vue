@@ -1,15 +1,6 @@
 <template>
     <div id="LogManagement">
         <template>
-            <el-date-picker
-                    v-model="date"
-                    align="right"
-                    type="date"
-                    placeholder="选择日期"
-            >
-            </el-date-picker>
-            <el-button @click="chooseDate" type="primary">提交筛选</el-button>
-
             <el-table
                     ref="filterTable"
                     @filter-change="handleFilterChange"
@@ -22,7 +13,7 @@
                         prop="num"
                         label="编号"
                         sortable
-                        width="120"
+                        width="240"
                         column-key="num"
                         align="center">
                 </el-table-column>
@@ -30,7 +21,23 @@
                 <el-table-column
                         prop="id"
                         label="用户ID"
-                        width="200"
+                        width="240"
+                        align="center"
+                        sortable>
+                </el-table-column>
+
+                <el-table-column
+                        prop="username"
+                        label="用户名"
+                        width="120"
+                        align="center"
+                        sortable>
+                </el-table-column>
+
+                <el-table-column
+                        prop="phone"
+                        label="电话号码"
+                        width="120"
                         align="center"
                         sortable>
                 </el-table-column>
@@ -45,8 +52,9 @@
                         :filter-method="filterTag">
                     <template slot-scope="scope">
                         <el-tag
-                                :type="scope.row.account === '管理员' ? 'warning' :scope.row.account === '病人' ? 'primary'
-                : scope.row.account === '医生' ? 'success':'danger'"
+                                :type="scope.row.account === '管理员' ? 'warning' :scope.row.account === '用户' ? 'primary'
+                : scope.row.account === '其他' ? 'success':'danger'"
+                                :effect="scope.row.action === '管理员' ? 'dark' :scope.row.action === '用户' ? 'dark':'dark'"
                                 disable-transitions>{{scope.row.account}}
                         </el-tag>
                     </template>
@@ -59,25 +67,19 @@
                     <template slot-scope="scope">
                         <div class="white">
                             <el-tag
-                                    :effect="scope.row.action === '登录' ? 'plain' :scope.row.action === '查看病人列表' ? 'plain'
-              : scope.row.action === '添加用户' ? 'plain': scope.row.action === '删除医生或病患' ? 'plain'
-              : scope.row.action === '查询预约' ? 'plain': scope.row.action === '登出' ? 'plain'
-              : scope.row.action === '查询' ? 'light': scope.row.action === '修改密码' ? 'light'
-              : scope.row.action === '上传' ? 'light': scope.row.action === '修改医生权限' ? 'light'
-              : scope.row.action === '查看日志' ? 'light': scope.row.action === '删除日志' ? 'light'
-              : scope.row.action === '绘制图表' ? 'dark': scope.row.action === '修改个人信息' ? 'dark'
-              : scope.row.action === '预约医生' ? 'dark': scope.row.action === '同意预约' ? 'dark'
-              : scope.row.action === '查看用户管理界面' ? 'dark': scope.row.action === '取消预约' ? 'dark':'dark'"
+                                    :effect="scope.row.action === '登录' ? 'plain' :scope.row.action === '注册' ? 'plain'
+              : scope.row.action === '' ? 'plain': scope.row.action === '删除用户' ? 'plain'
 
-                                    :type="scope.row.action === '登录' ? 'success' :scope.row.action === '修改个人信息' ? 'info'
-              : scope.row.action === '添加用户' ? 'warning': scope.row.action === '删除医生或病患' ? 'danger'
-              : scope.row.action === '修改医生权限' ? 'primary': scope.row.action === '登出' ? 'danger'
-              : scope.row.action === '查询' ? 'info': scope.row.action === '修改密码' ? 'success'
-              : scope.row.action === '上传' ? 'warning': scope.row.action === '查看用户管理界面' ? 'primary'
-              : scope.row.action === '查看日志' ? 'info': scope.row.action === '删除日志' ? 'danger'
-              : scope.row.action === '绘制图表' ? 'primary': scope.row.action === '查看病人列表' ? 'info'
-              : scope.row.action === '预约医生' ? 'warning': scope.row.action === '同意预约' ? 'success'
-              : scope.row.action === '查询预约' ? 'primary': scope.row.action === '取消预约' ? 'danger':'danger'"
+              : scope.row.action === '保存发票' ? 'light': scope.row.action === '查看小票' ? 'light'
+              : scope.row.action === '展示小票' ? 'light': scope.row.action === '删除小票' ? 'light'
+              : scope.row.action === '保存车票' ? 'light': scope.row.action === '' ? 'light':'dark'"
+
+                                    :type="scope.row.action === '登录' ? 'success' :scope.row.action === '注册' ? 'info'
+              : scope.row.action === '' ? 'warning': scope.row.action === '删除用户' ? 'danger'
+
+              : scope.row.action === '保存发票' ? 'success': scope.row.action === '展示小票' ? 'primary'
+              : scope.row.action === '查看小票' ? 'primary': scope.row.action === '保存车票' ? 'success'
+              : scope.row.action === '删除小票' ? 'danger':'warning'"
 
                                     disable-transitions>{{scope.row.action}}
                             </el-tag>
@@ -96,7 +98,8 @@
                 <el-table-column
                         prop="manage"
                         label="管理"
-                        width="200">
+                        align="center"
+                        width="150">
                     <template slot-scope="scope">
                         <el-button size="small" type="danger" @click="deleteRow(scope.row)">删除</el-button>
                     </template>
@@ -126,12 +129,9 @@
         pagesize: 8,
         PageData: [],
         filters: [{
-          text: '病人',
-          value: '病人'
-        }, {
-          text: '医生',
-          value: '医生'
-        }, {
+          text: '用户',
+          value: '用户'
+        },{
           text: '管理员',
           value: '管理员'
         }],
@@ -193,11 +193,12 @@
       },
       axios () {
         this.$axios({
-          url: 'getAllLog',
-          method: 'get'
+          url: 'admin/log/listLog',
+          method: 'post'
         }).then(res => {
-          this.AllData = res.data
-          this.PageData = [...res.data]
+          console.log('日志：',res.data.data)
+          this.AllData = res.data.data
+          this.PageData = [...res.data.data]
         })
       },
       filterTag (value, row) {
@@ -220,18 +221,18 @@
           type: 'warning'
         }).then(() => {
           this.$axios({
-            url: 'deleteLogByNum',
+            url: '/admin/log/delLog',
             method: 'post',
             data: {
               num: row['num']
             }
           }).then(res => {
             this.$axios({
-              url: 'getAllLog',
-              method: 'get'
+              url: '/admin/log/listLog',
+              method: 'post'
             }).then(res => {
-              this.AllData = res.data
-              this.PageData = [...res.data]
+              this.AllData = res.data.data
+              this.PageData = [...res.data.data]
               this.$message({
                 type: 'success',
                 message: '操作成功!'

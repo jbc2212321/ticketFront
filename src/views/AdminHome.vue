@@ -19,7 +19,7 @@
 
                 <router-link to="/admin/UserManagement" class="a">
                     <el-menu-item index="2">
-                        <i class="el-icon-s-custom"></i>
+                        <i class="el-icon-user-solid"></i>
                         <span slot="title">用户管理</span>
                     </el-menu-item>
                 </router-link>
@@ -31,19 +31,19 @@
                     </el-menu-item>
                 </router-link>
 
-                <router-link to="UploadCsv" class="a">
-                    <el-menu-item index="4">
-                        <i class="el-icon-upload2"></i>
-                        <span slot="title">上传加密</span>
-                    </el-menu-item>
-                </router-link>
+<!--                <router-link to="UploadCsv" class="a">-->
+<!--                    <el-menu-item index="4">-->
+<!--                        <i class="el-icon-upload2"></i>-->
+<!--                        <span slot="title">上传加密</span>-->
+<!--                    </el-menu-item>-->
+<!--                </router-link>-->
 
-                <router-link to="TodoList" class="a">
-                    <el-menu-item index="5">
-                        <i class="el-icon-message-solid"></i>
-                        <span slot="title">待办事项</span>
-                    </el-menu-item>
-                </router-link>
+<!--                <router-link to="TodoList" class="a">-->
+<!--                    <el-menu-item index="5">-->
+<!--                        <i class="el-icon-message-solid"></i>-->
+<!--                        <span slot="title">待办事项</span>-->
+<!--                    </el-menu-item>-->
+<!--                </router-link>-->
             </el-menu>
 
             <el-container>

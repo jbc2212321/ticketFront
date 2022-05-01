@@ -259,7 +259,8 @@
             url: '/user/delTicket',
             method: 'post',
             data: {
-              ticketId:row['num']
+              ticketId:row['num'],
+              userId: this.$session.get('userId')
             }
           }).then(res => {
             this.$axios({
@@ -314,6 +315,7 @@
           method: 'post',
           data: {
             // doctorPhone: this.$session.get('phone'),
+            userId: this.$session.get('userId'),
             ticketId: row['num'],
           }
         }).then(res => {

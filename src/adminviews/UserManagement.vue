@@ -13,49 +13,41 @@
                     prop="num"
                     label="编号"
                     sortable
-                    width="180"
+                    width="350"
+                    align="center"
                     column-key="num">
             </el-table-column>
             <el-table-column
                     prop="name"
                     label="用户名"
-                    width="300">
+                    width="200"
+                    align="center">
             </el-table-column>
             <el-table-column
                     prop="tel"
-                    label="手机号">
+                    label="手机号"
+                    align="center">
             </el-table-column>
             <el-table-column
                     ref="choose"
                     column-key="status"
-                    prop="tag"
-                    label="账户类型"
-                    width="180"
-                    :filters="filters"
-                    :filter-method="filterTag">
-                <template slot-scope="scope">
-                    <el-tag
-                            :type="scope.row.tag === '病患' ? 'primary' : 'success'"
-                            disable-transitions>{{scope.row.tag}}
-                    </el-tag>
-                </template>
+                    prop="time"
+                    label="创建时间"
+                    width="400"
+                    align="center">
             </el-table-column>
             <el-table-column
                     prop="tag"
                     label="操作"
-                    width="200">
+                    width="200"
+                    align="center">
                 <template slot-scope="scope">
-                    <el-button
-                            @click.native.prevent="lookRow(scope.$index, PageData)"
-                            size="small">
-                        查看
-                    </el-button>
                     &nbsp;&nbsp;&nbsp;
                     <el-button
                             @click.native.prevent="deleteRow(scope.$index, PageData)"
                             size="small"
                             type="danger">
-                        移除
+                        删除
                     </el-button>
                 </template>
             </el-table-column>
@@ -237,10 +229,11 @@
     },
     mounted () {
       this.$axios({
-        url: 'getAllDocAndPatient',
-        method: 'get',
+        url: 'listUser',
+        method: 'post',
       }).then(res => {
-        this.AllAccount = res.data
+        console.log("用户列表",res.data.data)
+        this.AllAccount = res.data.data
       })
 
     },
@@ -302,18 +295,17 @@
           type: 'warning'
         }).then(() => {
           this.$axios({
-            url: 'deleteDocOrPatient',
+            url: 'delUser',
             method: 'post',
             data: {
-              phone: tableData[index]['tel'],
-              tag: tableData[index]['tag'],
+              userId: tableData[index]['num'],
             }
           }).then(res => {
             this.$axios({
-              url: 'getAllDocAndPatient',
-              method: 'get',
+              url: 'listUser',
+              method: 'post',
             }).then(res => {
-              this.AllAccount = res.data
+              this.AllAccount = res.data.data
               console.log(this.AllAccount)
             })
           })
