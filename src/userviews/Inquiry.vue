@@ -9,7 +9,7 @@
                     height="800">
 
                 <el-table-column
-                        prop="num"
+                        prop="list_id"
                         label="歌曲编号"
                         sortable
                         width="240"
@@ -32,14 +32,14 @@
                         prop="status"
                         label="状态"
                         width="180">
-<!--      :filters="[{ text: '审核中', value: '0' }, { text: '通过', value: '1' }, { text: '不通过', value: '2' }]"
-                        :filter-method="filterTag"
-               <template slot-scope="scope">-->
-<!--                        <el-tag-->
-<!--                                :type="scope.row.state ===0 ? 'info' : scope.row.state === 1 ? 'success':'danger'"-->
-<!--                                disable-transitions>{{trans[scope.row.state]}}-->
-<!--                        </el-tag>-->
-<!--                    </template>-->
+<!--&lt;!&ndash;      :filters="[{ text: '审核中', value: '0' }, { text: '通过', value: '1' }, { text: '不通过', value: '2' }]"-->
+<!--                        :filter-method="filterTag"-->
+               <template slot-scope="scope">
+                        <el-tag
+                                :type="scope.row.status ===0 ? 'info' : scope.row.status === 1 ? 'success':'danger'"
+                                disable-transitions>{{trans[scope.row.status]}}
+                        </el-tag>
+                </template>
                 </el-table-column>
             </el-table>
         </template>
@@ -52,7 +52,7 @@
     data () {
       return {
         tableData:[{
-          num:'1',
+          list_id:'1',
           songid:'123',
           songname:'123',
           userid:'123',
@@ -78,11 +78,14 @@
     mounted () {
       //初始化列表
       this.$axios({
-        url: '',
+        url: '/user/song/inquiry',
         method: 'post',
-        data: {}
+        data: {
+          userId:this.$session.get("userId")
+        }
       }).then(res => {
-        this.tableData = res.data
+        console.log("data:",res.data.data)
+        this.tableData = res.data.data
       })
 
     //   //初始化列表 axios

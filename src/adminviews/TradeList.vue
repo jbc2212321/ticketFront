@@ -33,26 +33,25 @@
                     prop="songid"
                     label="歌曲id"
                     sortable
-                    width="200"
+                    width="120"
                     align="center">
                   </el-table-column>
 
                   <el-table-column
                     prop="songname"
                     label="歌曲名"
-                    sortable
                     align="center">
                   </el-table-column>
 
                     <el-table-column
-                            prop="sellername"
+                            prop="owner"
                             label="原作者名"
-                            width="200"
+                            width="180"
                             align="center">
                     </el-table-column>
 
                   <el-table-column
-                    prop="sellerid"
+                    prop="ownerid"
                     label="原作者id"
                     width="200"
                     align="center">
@@ -62,7 +61,7 @@
                     <el-table-column
                             prop="buyer"
                             label="购买者名"
-                            width="200"
+                            width="180"
                             align="center">
                     </el-table-column>
 
@@ -74,15 +73,14 @@
                   </el-table-column>
 
                     <el-table-column
-                            prop="type"
+                            prop="status"
                             label="交易类型"
-                            width="200"
+                            width="180"
                             align="center">
                         <template slot-scope="scope">
                             <el-tag
-                                    :type="scope.row.type === '授权' ? 'primary' :
-                                    scope.row.type === '转让' ? 'success' : 'warning'"
-                                    disable-transitions>{{scope.row.type}}
+                                    :type="scope.row.status ===0 ? 'primary' : scope.row.status === 1 ? 'success':'danger'"
+                                    disable-transitions>{{trans[scope.row.status]}}
                             </el-tag>
                         </template>
                     </el-table-column>
@@ -90,7 +88,8 @@
                     <el-table-column
                             prop="tag"
                             label="操作"
-                            width="200">
+                            width="200"
+                            align="center">
                         <template slot-scope="scope">
                             <el-button size="small" type="primary" @click="agreeReset(scope.row)">同意</el-button>
                             <el-button size="small" type="danger" @click="refuseReset(scope.row)">拒绝</el-button>
@@ -112,28 +111,34 @@
     data () {
       return {
         tableData:[
-          {},
-          {}
+          {
+            num:'',
+            songid:'',
+            songname:'',
+            owner:'',
+            ownerid:"",
+            buyer:"",
+            buyerid:'',
+            status:""
+          }
         ],
 
         trans: {
-          0: '待处理',
-          1: '已处理'
+          0: '转让',
+          1: '授权'
         }
       }
     },
     mounted: function () {
       this.$axios({
-        url: 'getTodoListReset',
-        method: 'get',
+        url:'/user/song/tradeList',
+        method: 'post',
+
       }).then(res => {
-        this.resetData = res.data
-      })
-      this.$axios({
-        url: 'getTodoListDelete',
-        method: 'get',
-      }).then(res => {
-        this.deleteData = res.data
+        // console.log("res:",res)
+
+        this.tableData = res.data.data
+        console.log("data:",this.tableData)
       })
     },
     methods: {
@@ -143,146 +148,91 @@
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
+          console.log("owner", row.owner)
+          console.log("ownerid", row.ownerid)
+          console.log("buyer", row.buyer)
+          console.log("buyerid", row.buyerid)
+          console.log("status", row.status)
           this.$axios({
-            url: 'updateTodoList',
+            url: '/user/song/buy',
             method: 'post',
             data: {
-              num: row.num,
-              state: 1,
-              content: row.content,
-              phone: row.tel,
-              type: row.type
+              num: row.num+"",
+              songid:row.songid+"",
+              songname:row.songname+"",
+              owner:row.owner,
+              ownerid:row.ownerid+"",
+              buyer:row.buyer,
+              buyerid:row.buyerid+"",
+              status:row.status+""
             }
           }).then(res => {
             this.$axios({
-              url: 'getTodoListReset',
-              method: 'get',
+              url: '/user/song/tradeList',
+              method: 'post',
+
             }).then(res => {
-              this.resetData = res.data
-            })
-            this.$message({
-              type: 'success',
-              message: '操作成功!'
+              this.tableData = res.data.data
+              this.$message({
+                type: 'success',
+                message: '操作成功!'
+              })
             })
           })
         }).catch(() => {
+
           this.$message({
             type: 'info',
             message: '已取消操作'
           })
         })
       },
+
       refuseReset (row) {
         this.$confirm('操作后将不可更改, 是否确认?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
+          console.log("owner", row.owner)
+          console.log("ownerid", row.ownerid)
+          console.log("buyer", row.buyer)
+          console.log("buyerid", row.buyerid)
+          console.log("status", row.status)
           this.$axios({
-            url: 'updateTodoList',
+            url: '/user/song/buyDel',
             method: 'post',
             data: {
-              num: row.num,
-              state: 2,
-              content: row.content,
-              phone: row.tel,
-              type: row.type
+              num: row.num+"",
+              songid:row.songid+"",
+              songname:row.songname+"",
+              owner:row.owner,
+              ownerid:row.ownerid+"",
+              buyer:row.buyer,
+              buyerid:row.buyerid+"",
+              status:row.status+""
             }
           }).then(res => {
             this.$axios({
-              url: 'getTodoListReset',
-              method: 'get',
-            }).then(res => {
-              this.resetData = res.data
-            })
-            this.$message({
-              type: 'success',
-              message: '操作成功!'
-            })
-          })
-        }).catch(() => {
-          this.$message({
-            type: 'info',
-            message: '已取消操作'
-          })
-        })
-      },
-      agreeDelete (row) {
-        this.$confirm('操作后将不可更改, 是否确认?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
-          this.$axios({
-            url: 'updateTodoList',
-            method: 'post',
-            data: {
-              num: row.num,
-              state: 1,
-              content: row.content,
-              patientId:row.id,
-              doctorId: row.doctorId,
-              type: row.type
-            }
-          }).then(res => {
-            this.$axios({
-              url: 'getTodoListDelete',
-              method: 'get',
-            }).then(res => {
-              this.deleteData = res.data
-            })
-            this.$message({
-              type: 'success',
-              message: '操作成功!'
-            })
-          })
-        }).catch(() => {
-          this.$message({
-            type: 'info',
-            message: '已取消操作'
-          })
-        })
-      },
-      refuseDelete (row) {
-        this.$confirm('操作后将不可更改, 是否确认?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
-          this.$axios({
-            url: 'updateTodoList',
-            method: 'post',
-            data: {
-              num: row.num,
-              state: 2,
-              content: row.content,
-              patientId:row.id,
-              doctorId: row.doctorId,
-              type: row.type
-            }
-          }).then(res => {
-            this.$axios({
-              url: 'getTodoListDelete',
-              method: 'get',
-            }).then(res => {
-              this.deleteData = res.data
-            })
-            this.$message({
-              type: 'success',
-              message: '操作成功!'
-            })
-          })
-        }).catch(() => {
-          this.$message({
-            type: 'info',
-            message: '已取消操作'
-          })
-        })
-      },
-      open () {
+              url: '/user/song/tradeList',
+              method: 'post',
 
-      },
+            }).then(res => {
+              this.tableData = res.data.data
+              this.$message({
+                type: 'success',
+                message: '操作成功!'
+              })
+            })
+          })
+        }).catch(() => {
 
+          this.$message({
+            type: 'info',
+            message: '已取消操作'
+          })
+        })
+      },
     }
   }
 </script>

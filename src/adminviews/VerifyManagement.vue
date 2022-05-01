@@ -10,11 +10,11 @@
                     stripe>
 
                 <el-table-column
-                        prop="num"
+                        prop="list_id"
                         label="编号"
                         sortable
                         width="120"
-                        column-key="num"
+                        column-key="list_id"
                         align="center">
                 </el-table-column>
 
@@ -52,6 +52,7 @@
                 <el-table-column
                         prop="manage"
                         label="管理"
+                        align="center"
                         width="200">
                   <template slot-scope="scope">
                     <el-button size="small" type="primary" @click="agree(scope.row)">同意</el-button>
@@ -71,49 +72,55 @@
       return {
         ManageData:[
           {
-            num:'1',
-            songid:'2',
-            songname:'3',
-            userid:'4',
-            username:'5',
+            list_id:'',
+            songid:'',
+            songname:'',
+            userid:'',
+            username:'',
             manage:''
           },
-          {
-            num:'2',
-            songid:'2',
-            songname:'3',
-            userid:'4',
-            username:'5',
-            manage:''
-          }
         ]
       }
     },
     mounted () {
-      this.axios()
+      this.$axios({
+        url:'/user/song/inquiryByStatus',
+        method: 'post',
+        data:{
+          status:"0"
+        }
+      }).then(res => {
+        console.log("data:",res.data.data)
+        this.ManageData = res.data.data
+      })
     },
 
     methods: {
 
-      agree (row) {
+      refuse (row) {
         this.$confirm('操作后将不可更改, 是否确认?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
+          // console.log(":", row['num']+'')
           this.$axios({
-            url: 'updateTodoList',
+            url: 'user/song/updateVerifyList',
             method: 'post',
             data: {
-              num: row['num']
+              num: row['list_id']+'',
+              status:'2'
             }
           }).then(res => {
             this.$axios({
-              url: '/admin/log/listLog',
-              method: 'post'
+              url: '/user/song/inquiryByStatus',
+              method: 'post',
+              data:{
+                status:"0"
+              }
             }).then(res => {
-              this.AllData = res.data.data
-              this.PageData = [...res.data.data]
+              console.log("更新:",res)
+              this.ManageData = res.data.data
               this.$message({
                 type: 'success',
                 message: '操作成功!'
@@ -127,31 +134,35 @@
           })
         })
       },
-      deleteRow (row) {
-        this.$confirm('执行删除操作后不可恢复, 是否确认操作?', '提示', {
+      agree (row) {
+        this.$confirm('操作后将不可更改, 是否确认?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
+          // console.log(":", row['num']+'')
           this.$axios({
-            url: '/admin/log/delLog',
+            url: 'user/song/updateVerifyList',
             method: 'post',
             data: {
-              num: row['num']
+              num: row['list_id']+'',
+              status:'1'
             }
           }).then(res => {
             this.$axios({
-              url: '/admin/log/listLog',
-              method: 'post'
+              url: '/user/song/inquiryByStatus',
+              method: 'post',
+              data:{
+                status:"0"
+              }
             }).then(res => {
-              this.AllData = res.data.data
-              this.PageData = [...res.data.data]
+              console.log("更新:",res)
+              this.ManageData = res.data.data
               this.$message({
                 type: 'success',
                 message: '操作成功!'
               })
             })
-
           })
         }).catch(() => {
           this.$message({

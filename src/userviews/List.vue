@@ -8,11 +8,11 @@
         height="800">
 
         <el-table-column
-          prop="num"
+          prop="list_id"
           label="编号"
           sortable
           width="120"
-          column-key="num">
+          column-key="list_id">
         </el-table-column>
 
         <el-table-column
@@ -50,23 +50,27 @@
   export default {
     data() {
       return {
-        num:'',
-        songid:'',
-        songname:'',
-        userid:'',
-        username:'',
+        tableData:[{
+          num:'',
+          songid:'',
+          songname:'',
+          userid:'',
+          username:'',
+        }]
       }
     },
     mounted () {
-      this.axios({
-        url:'',
-        method: 'post'
+      this.$axios({
+        url:'/user/song/inquiryByStatus',
+        method: 'post',
+      data:{
+          status:"1"
+      }
       }).then(res => {
-        this.num= res.num
-        this.userid = res.userid
-        this.username = res.username
-        this.songid = res.songid
-        this.songname = res.songname
+        // console.log("res:",res)
+
+        this.tableData = res.data.data
+        console.log("data:",this.tableData)
       })
 
     },

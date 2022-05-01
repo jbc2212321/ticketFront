@@ -6,6 +6,7 @@
         @filter-change="handleFilterChange"
         style="width: 100%"
         height="800px"
+        :data="tableData"
         stripe>
 
         <el-table-column
@@ -13,7 +14,7 @@
           label="编号"
           sortable
           width="120"
-          column-key="num"
+          column-key="list_id"
           align="center">
         </el-table-column>
 
@@ -48,6 +49,15 @@
         >
         </el-table-column>
 
+<!--        <el-table-column-->
+<!--                prop="status"-->
+<!--                label="状态"-->
+<!--                sortable-->
+<!--                width="120"-->
+<!--                column-key="num"-->
+<!--                align="center">-->
+<!--        </el-table-column>-->
+
       </el-table>
     </template>
     <br>
@@ -59,23 +69,30 @@ export default {
   name: 'VerifyManagement',
   data () {
     return {
-      list_id:'',
-      userid:'',
-      username:'',
-      songid:'',
-      songname:'',
+      tableData:[{
+        list_id:'1',
+        songid:'123',
+        songname:'123',
+        userid:'123',
+        username:'123',
+        // status:'0',
+      },],
+      // trans: {
+      //   1: '通过',
+      //   2: '不通过',
+      // },
     }
   },
   mounted () {
-    this.axios({
-      url:'',
-      method: 'post'
+    this.$axios({
+      url:'/user/song/inquiryByStatus',
+      method: 'post',
+      data:{
+        status:"1"
+      }
     }).then(res => {
-      this.list_id= res.list_id
-      this.userid = res.userid
-      this.username = res.username
-      this.songid = res.songid
-      this.songname = res.songname
+      console.log("data:",res.data.data)
+      this.tableData = res.data.data
     })
 
   },

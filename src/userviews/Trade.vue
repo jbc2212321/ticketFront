@@ -39,15 +39,16 @@
       //授权
       onSubmit1() {
         this.$axios({
-          url:"", //url
+          url:"user/song/addTradeList", //url
           method:"post",
           data:{
             ownerid:this.$session.get('userId'),
             buyerid: this.buyerid,
             songid: this.songid,
-            status:1,
+            status:"1",
           },
         }).then(res=>{
+          // console.log("结果:",res)
           // this.$message({
           //   showClose: true,
           //   message: "修改成功！",
@@ -60,13 +61,13 @@
       //转让 交易
       onSubmit2() {
         this.$axios({
-          url:"", //url
+          url:"user/song/addTradeList", //url
           method:"post",
           data:{
             ownerid:this.$session.get('userId'),
             buyerid: this.buyerid,
             songid: this.songid,
-            status:0,
+            status:"0",
           },
         }).then(res=>{
           if(res.data.code===0){
